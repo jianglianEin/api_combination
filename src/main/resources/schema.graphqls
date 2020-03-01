@@ -1,0 +1,24 @@
+type Query{
+    login(indexPageSelectionInput: IndexPageSelectionInput): UserOutput
+}
+
+input IndexPageSelectionInput{
+    userInput: UserInput!
+}
+
+input UserInput{
+    username: String
+    password: String
+    icon: String
+    email: String
+    power: String
+}
+
+type UserOutput{
+    id: String
+    password: String
+    username: String
+    icon: String
+    email: String
+    power: String
+}
