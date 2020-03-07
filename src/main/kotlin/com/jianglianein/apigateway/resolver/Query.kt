@@ -1,7 +1,6 @@
 package com.jianglianein.apigateway.resolver
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver
-import com.jianglianein.apigateway.model.dto.Message
 import com.jianglianein.apigateway.model.graphql.IndexPageSelectionInput
 import com.jianglianein.apigateway.model.type.UserOutput
 import com.jianglianein.apigateway.service.RemotePeopleService

@@ -1,0 +1,6 @@
+---
+applications:
+  - name: api_combination
+    memory: 1024M
+    buildpack: java_buildpack
+    path: build/libs/apigateway-0.0.1-SNAPSHOT.jar

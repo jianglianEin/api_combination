@@ -1,4 +1,8 @@
 env: "dev"
 
+microservice:
+  peopleservice:
+    url: https://jianglianeinpeopleservice.cfapps.io
+
 server:
   port: 8080
