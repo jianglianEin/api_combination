@@ -6,4 +6,3 @@ microservice:
 
 server:
   port: 8080
-  address: 10.144.78.161

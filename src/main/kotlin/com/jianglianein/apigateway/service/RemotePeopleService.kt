@@ -2,7 +2,7 @@ package com.jianglianein.apigateway.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.jianglianein.apigateway.config.microserviceproperty.PeopleServiceProperties
-import com.jianglianein.apigateway.model.graphql.IndexPageSelectionInput
+import com.jianglianein.apigateway.model.graphql.SelectionInput
 import com.jianglianein.apigateway.model.type.UserOutput
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpMethod
@@ -19,7 +19,7 @@ class RemotePeopleService {
     @Autowired
     private lateinit var httpClientService: HttpClientService
 
-    fun loginByPeopleService(selectionInput: IndexPageSelectionInput): UserOutput {
+    fun loginByPeopleService(selectionInput: SelectionInput): UserOutput {
         val url = peopleServiceProperties.url + "/user/login"
 
         val params = LinkedMultiValueMap<String, String>()

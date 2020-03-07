@@ -1,9 +1,9 @@
 type Query{
-    login(indexPageSelectionInput: IndexPageSelectionInput): UserOutput
+    login(SelectionInput: SelectionInput): UserOutput
 }
 
-input IndexPageSelectionInput{
-    userInput: UserInput!
+input SelectionInput{
+    userInput: UserInput
 }
 
 input UserInput{
