@@ -1,6 +1,6 @@
 package com.jianglianein.apigateway.resolver
 
-import com.coxautodev.graphql.tools.GraphQLQueryResolver
+import com.coxautodev.graphql.tools.GraphQLMutationResolver
 import com.jianglianein.apigateway.model.graphql.SelectionInput
 import com.jianglianein.apigateway.model.type.MessageOutput
 import com.jianglianein.apigateway.model.type.UserOutput
@@ -10,24 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
 @Component
-class Query : GraphQLQueryResolver {
+class Mutation : GraphQLMutationResolver {
     @Autowired
     private lateinit var remotePeopleService: RemotePeopleService
 
 
     private var logger = KotlinLogging.logger {}
-
-    fun login(selectionInput: SelectionInput): UserOutput {
-        logger.info { "login in" }
-
-        return remotePeopleService.loginByPeopleService(selectionInput)
-    }
-
-    fun logout(username: String): MessageOutput {
-        logger.info { "logout" }
-
-        return remotePeopleService.logoutByPeopleService(username)
-    }
 
     fun register(selectionInput: SelectionInput): MessageOutput {
         logger.info { "register" }
