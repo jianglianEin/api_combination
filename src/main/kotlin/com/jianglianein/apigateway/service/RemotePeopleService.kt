@@ -38,4 +38,15 @@ class RemotePeopleService {
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, MessageOutput::class.java)
     }
+
+    fun registerByPeopleService(selectionInput: SelectionInput): MessageOutput {
+        val url = peopleServiceProperties.url + "/user/register"
+
+        val params = LinkedMultiValueMap<String, String>()
+        params.add("username", selectionInput.userInput!!.username)
+        params.add("password", selectionInput.userInput.password)
+        params.add("email", selectionInput.userInput.email)
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        return objectMapper.readValue(resp, MessageOutput::class.java)
+    }
 }

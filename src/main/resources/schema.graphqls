@@ -1,6 +1,7 @@
 type Query{
     login(selectionInput: SelectionInput): UserOutput
     logout(username: String): MessageOutput
+    register(selectionInput: SelectionInput): MessageOutput
 }
 
 input SelectionInput{

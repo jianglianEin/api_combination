@@ -28,4 +28,10 @@ class Query : GraphQLQueryResolver {
 
         return remotePeopleService.logoutByPeopleService(username)
     }
+
+    fun register(selectionInput: SelectionInput): MessageOutput {
+        logger.info { "logout" }
+
+        return remotePeopleService.registerByPeopleService(selectionInput)
+    }
 }
