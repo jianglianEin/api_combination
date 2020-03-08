@@ -1,5 +1,6 @@
 type Query{
-    login(SelectionInput: SelectionInput): UserOutput
+    login(selectionInput: SelectionInput): UserOutput
+    logout(username: String): MessageOutput
 }
 
 input SelectionInput{
@@ -21,4 +22,9 @@ type UserOutput{
     icon: String
     email: String
     power: String
+}
+
+type MessageOutput{
+    susses: Boolean
+    message: String
 }

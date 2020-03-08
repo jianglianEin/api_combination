@@ -3,6 +3,7 @@ package com.jianglianein.apigateway.service
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.jianglianein.apigateway.config.microserviceproperty.PeopleServiceProperties
 import com.jianglianein.apigateway.model.graphql.SelectionInput
+import com.jianglianein.apigateway.model.type.MessageOutput
 import com.jianglianein.apigateway.model.type.UserOutput
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpMethod
@@ -27,5 +28,14 @@ class RemotePeopleService {
         params.add("password", selectionInput.userInput?.password)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, UserOutput::class.java)
+    }
+
+    fun logoutByPeopleService(username: String): MessageOutput {
+        val url = peopleServiceProperties.url + "/user/logout"
+
+        val params = LinkedMultiValueMap<String, String>()
+        params.add("username", username)
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        return objectMapper.readValue(resp, MessageOutput::class.java)
     }
 }

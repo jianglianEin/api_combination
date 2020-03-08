@@ -2,6 +2,7 @@ package com.jianglianein.apigateway.resolver
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver
 import com.jianglianein.apigateway.model.graphql.SelectionInput
+import com.jianglianein.apigateway.model.type.MessageOutput
 import com.jianglianein.apigateway.model.type.UserOutput
 import com.jianglianein.apigateway.service.RemotePeopleService
 import mu.KotlinLogging
@@ -20,5 +21,11 @@ class Query : GraphQLQueryResolver {
         logger.info { "login in" }
 
         return remotePeopleService.loginByPeopleService(selectionInput)
+    }
+
+    fun logout(username: String): MessageOutput {
+        logger.info { "logout" }
+
+        return remotePeopleService.logoutByPeopleService(username)
     }
 }
