@@ -3,7 +3,6 @@ package com.jianglianein.apigateway.resolver
 import com.coxautodev.graphql.tools.GraphQLMutationResolver
 import com.jianglianein.apigateway.model.graphql.SelectionInput
 import com.jianglianein.apigateway.model.type.MessageOutput
-import com.jianglianein.apigateway.model.type.UserOutput
 import com.jianglianein.apigateway.service.RemotePeopleService
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
