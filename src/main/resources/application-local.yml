@@ -4,5 +4,16 @@ microservice:
   peopleservice:
     url: http://localhost:8000
 
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 0
+      max-file-size: 10MB
+      max-request-size: 10MB
+      location: D:\FinalYearProjects\tomcat\temp\
+
 server:
   port: 8080
+  tomcat:
+    basedir: D:\FinalYearProjects\tomcat\
