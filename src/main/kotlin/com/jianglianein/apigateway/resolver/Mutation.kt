@@ -2,7 +2,7 @@ package com.jianglianein.apigateway.resolver
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver
 import com.jianglianein.apigateway.model.graphql.SelectionInput
-import com.jianglianein.apigateway.model.type.MessageOutput
+import com.jianglianein.apigateway.model.type.ResultOutput
 import com.jianglianein.apigateway.service.RemotePeopleService
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,13 +16,13 @@ class Mutation : GraphQLMutationResolver {
 
     private var logger = KotlinLogging.logger {}
 
-    fun register(selectionInput: SelectionInput): MessageOutput {
+    fun register(selectionInput: SelectionInput): ResultOutput {
         logger.info { "register" }
 
         return remotePeopleService.registerByPeopleService(selectionInput)
     }
 
-    fun updateUser(selectionInput: SelectionInput): MessageOutput {
+    fun updateUser(selectionInput: SelectionInput): ResultOutput {
         logger.info { "updateUser" }
 
         return remotePeopleService.updateUserByPeopleService(selectionInput)

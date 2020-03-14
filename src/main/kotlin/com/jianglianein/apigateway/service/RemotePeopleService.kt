@@ -3,7 +3,7 @@ package com.jianglianein.apigateway.service
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.jianglianein.apigateway.config.microserviceproperty.PeopleServiceProperties
 import com.jianglianein.apigateway.model.graphql.SelectionInput
-import com.jianglianein.apigateway.model.type.MessageOutput
+import com.jianglianein.apigateway.model.type.ResultOutput
 import com.jianglianein.apigateway.model.type.UserOutput
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpMethod
@@ -30,16 +30,16 @@ class RemotePeopleService {
         return objectMapper.readValue(resp, UserOutput::class.java)
     }
 
-    fun logoutByPeopleService(username: String): MessageOutput {
+    fun logoutByPeopleService(username: String): ResultOutput {
         val url = peopleServiceProperties.url + "/user/logout"
 
         val params = LinkedMultiValueMap<String, String>()
         params.add("username", username)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, MessageOutput::class.java)
+        return objectMapper.readValue(resp, ResultOutput::class.java)
     }
 
-    fun registerByPeopleService(selectionInput: SelectionInput): MessageOutput {
+    fun registerByPeopleService(selectionInput: SelectionInput): ResultOutput {
         val url = peopleServiceProperties.url + "/user/register"
 
         val params = LinkedMultiValueMap<String, String>()
@@ -47,10 +47,10 @@ class RemotePeopleService {
         params.add("password", selectionInput.userInput.password)
         params.add("email", selectionInput.userInput.email)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, MessageOutput::class.java)
+        return objectMapper.readValue(resp, ResultOutput::class.java)
     }
 
-    fun updateUserByPeopleService(selectionInput: SelectionInput): MessageOutput {
+    fun updateUserByPeopleService(selectionInput: SelectionInput): ResultOutput {
         val url = peopleServiceProperties.url + "/user/update"
 
         val params = LinkedMultiValueMap<String, String>()
@@ -59,6 +59,6 @@ class RemotePeopleService {
         params.add("icon", selectionInput.userInput?.icon)
         params.add("power", selectionInput.userInput?.power)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, MessageOutput::class.java)
+        return objectMapper.readValue(resp, ResultOutput::class.java)
     }
 }

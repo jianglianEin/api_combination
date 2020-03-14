@@ -1,11 +1,11 @@
 type Query{
     login(selectionInput: SelectionInput): UserOutput
-    logout(username: String): MessageOutput
+    logout(username: String): ResultOutput
 }
 
 type Mutation {
-    register(selectionInput: SelectionInput): MessageOutput
-    updateUser(selectionInput: SelectionInput): MessageOutput
+    register(selectionInput: SelectionInput): ResultOutput
+    updateUser(selectionInput: SelectionInput): ResultOutput
 }
 
 input SelectionInput{
@@ -29,7 +29,7 @@ type UserOutput{
     power: String
 }
 
-type MessageOutput{
+type ResultOutput{
     susses: Boolean
     message: String
 }
