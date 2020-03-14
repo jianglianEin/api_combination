@@ -63,7 +63,7 @@ class ApiGateWayResource {
     private fun createFileAndReturnResult(icon: MultipartFile, targetFile: File): ResultOutput { //在指定路径下创建一个文件
         return try {
             icon.transferTo(targetFile)
-            ResultOutput(true, "upload success")
+            ResultOutput(true, targetFile.name)
         } catch (e: IOException) {
             e.printStackTrace()
             ResultOutput(false, "upload failed")
