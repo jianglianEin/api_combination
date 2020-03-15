@@ -2,8 +2,10 @@ package com.jianglianein.apigateway.resolver
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver
 import com.jianglianein.apigateway.model.graphql.SelectionInput
+import com.jianglianein.apigateway.model.type.CommitOutput
 import com.jianglianein.apigateway.model.type.ResultOutput
 import com.jianglianein.apigateway.model.type.UserOutput
+import com.jianglianein.apigateway.service.RemoteMessageService
 import com.jianglianein.apigateway.service.RemotePeopleService
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,6 +15,9 @@ import org.springframework.stereotype.Component
 class Query : GraphQLQueryResolver {
     @Autowired
     private lateinit var remotePeopleService: RemotePeopleService
+
+    @Autowired
+    private lateinit var remoteMessageService: RemoteMessageService
 
 
     private var logger = KotlinLogging.logger {}
@@ -27,5 +32,11 @@ class Query : GraphQLQueryResolver {
         logger.info { "logout" }
 
         return remotePeopleService.logoutByPeopleService(username)
+    }
+
+    fun getCommitByReceiver(receiver: String): MutableList<CommitOutput> {
+        logger.info { "getCommitByReceiver" }
+
+        return remoteMessageService.getCommitByReceiver(receiver)
     }
 }

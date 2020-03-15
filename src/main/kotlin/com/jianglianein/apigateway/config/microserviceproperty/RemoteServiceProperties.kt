@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-class PeopleServiceProperties {
+class RemoteServiceProperties {
     @Value("\${microservice.peopleservice.url}")
-    lateinit var url: String
+    lateinit var peopleServiceUrl: String
+    @Value("\${microservice.messageservice.url}")
+    lateinit var messageServiceUrl: String
 }

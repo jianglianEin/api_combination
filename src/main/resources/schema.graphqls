@@ -1,6 +1,7 @@
 type Query{
     login(selectionInput: SelectionInput): UserOutput
     logout(username: String): ResultOutput
+    getCommitByReceiver(receiver: String): [CommitOutput]
 }
 
 type Mutation {
@@ -27,6 +28,16 @@ type UserOutput{
     icon: String
     email: String
     power: String
+}
+
+type CommitOutput{
+    id: String
+    description: String
+    announcer: String
+    receiver: String
+    updateTime: String
+    cardId: String
+    read: Boolean
 }
 
 type ResultOutput{
