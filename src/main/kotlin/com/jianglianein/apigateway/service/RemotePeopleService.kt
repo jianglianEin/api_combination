@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.jianglianein.apigateway.config.microserviceproperty.RemoteServiceProperties
 import com.jianglianein.apigateway.model.graphql.SelectionInput
 import com.jianglianein.apigateway.model.type.ResultOutput
+import com.jianglianein.apigateway.model.type.TeamInput
+import com.jianglianein.apigateway.model.type.UserInput
 import com.jianglianein.apigateway.model.type.UserOutput
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpMethod
@@ -39,13 +41,13 @@ class RemotePeopleService {
         return objectMapper.readValue(resp, ResultOutput::class.java)
     }
 
-    fun registerByPeopleService(selectionInput: SelectionInput): ResultOutput {
+    fun registerByPeopleService(userInput: UserInput): ResultOutput {
         val url = remoteServiceProperties.peopleServiceUrl + "/user/register"
 
         val params = LinkedMultiValueMap<String, String>()
-        params.add("username", selectionInput.userInput!!.username)
-        params.add("password", selectionInput.userInput.password)
-        params.add("email", selectionInput.userInput.email)
+        params.add("username", userInput.username)
+        params.add("password", userInput.password)
+        params.add("email", userInput.email)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, ResultOutput::class.java)
     }
@@ -58,6 +60,17 @@ class RemotePeopleService {
         params.add("password", selectionInput.userInput?.password)
         params.add("icon", selectionInput.userInput?.icon)
         params.add("power", selectionInput.userInput?.power)
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        return objectMapper.readValue(resp, ResultOutput::class.java)
+    }
+
+    fun createTeam(teamInput: TeamInput): ResultOutput {
+        val url = remoteServiceProperties.peopleServiceUrl + "/team/create"
+
+        val params = LinkedMultiValueMap<String, String>()
+        params.add("creator", teamInput.creator)
+        params.add("teamname", teamInput.teamname)
+        params.add("description", teamInput.description)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, ResultOutput::class.java)
     }

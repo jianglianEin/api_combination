@@ -7,10 +7,13 @@ type Query{
 type Mutation {
     register(selectionInput: SelectionInput): ResultOutput
     updateUser(selectionInput: SelectionInput): ResultOutput
+
+    createTeam(selectionInput: SelectionInput): ResultOutput
 }
 
 input SelectionInput{
     userInput: UserInput
+    teamInput: TeamInput
 }
 
 input UserInput{
@@ -19,6 +22,13 @@ input UserInput{
     icon: String
     email: String
     power: String
+}
+
+input TeamInput{
+    id: String
+    creator: String
+    teamname: String
+    description: String
 }
 
 type UserOutput{
