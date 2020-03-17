@@ -18,7 +18,7 @@ class RestTemplateConfig {
     @Bean
     fun simpleClientHttpRequestFactory(): ClientHttpRequestFactory {
         val factory = SimpleClientHttpRequestFactory()
-        factory.setReadTimeout(20000) //ms
+        factory.setReadTimeout(5000) //ms
         factory.setConnectTimeout(15000) //ms
         return factory
     }

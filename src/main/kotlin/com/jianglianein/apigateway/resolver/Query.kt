@@ -44,6 +44,6 @@ class Query : GraphQLQueryResolver {
     fun sendEmailToInviteReceiverJoinTeam(emailInput: EmailInput): ResultOutput {
         logger.info { "sendEmailToInviteReceiverJoinTeam" }
 
-        return remotePeopleService.sendEmailToInviteReceivcer(emailInput)
+        return remotePeopleService.sendEmailToInviteReceiver(emailInput)
     }
 }

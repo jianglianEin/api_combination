@@ -72,7 +72,7 @@ class RemotePeopleService {
         return objectMapper.readValue(resp, ResultOutput::class.java)
     }
 
-    fun sendEmailToInviteReceivcer(emailInput: EmailInput): ResultOutput {
+    fun sendEmailToInviteReceiver(emailInput: EmailInput): ResultOutput {
         val url = remoteServiceProperties.peopleServiceUrl + "/mail/send"
 
         val params = LinkedMultiValueMap<String, String>()
