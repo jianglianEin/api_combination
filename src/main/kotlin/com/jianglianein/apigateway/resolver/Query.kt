@@ -3,6 +3,7 @@ package com.jianglianein.apigateway.resolver
 import com.coxautodev.graphql.tools.GraphQLQueryResolver
 import com.jianglianein.apigateway.model.graphql.SelectionInput
 import com.jianglianein.apigateway.model.type.CommitOutput
+import com.jianglianein.apigateway.model.type.EmailInput
 import com.jianglianein.apigateway.model.type.ResultOutput
 import com.jianglianein.apigateway.model.type.UserOutput
 import com.jianglianein.apigateway.service.RemoteMessageService
@@ -38,5 +39,11 @@ class Query : GraphQLQueryResolver {
         logger.info { "getCommitByReceiver" }
 
         return remoteMessageService.getCommitByReceiver(receiver)
+    }
+    
+    fun sendEmailToInviteReceiverJoinTeam(emailInput: EmailInput): ResultOutput {
+        logger.info { "sendEmailToInviteReceiverJoinTeam" }
+
+        return remotePeopleService.sendEmailToInviteReceivcer(emailInput)
     }
 }

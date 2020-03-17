@@ -3,10 +3,7 @@ package com.jianglianein.apigateway.service
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.jianglianein.apigateway.config.microserviceproperty.RemoteServiceProperties
 import com.jianglianein.apigateway.model.graphql.SelectionInput
-import com.jianglianein.apigateway.model.type.ResultOutput
-import com.jianglianein.apigateway.model.type.TeamInput
-import com.jianglianein.apigateway.model.type.UserInput
-import com.jianglianein.apigateway.model.type.UserOutput
+import com.jianglianein.apigateway.model.type.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
@@ -71,6 +68,17 @@ class RemotePeopleService {
         params.add("creator", teamInput.creator)
         params.add("teamname", teamInput.teamname)
         params.add("description", teamInput.description)
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        return objectMapper.readValue(resp, ResultOutput::class.java)
+    }
+
+    fun sendEmailToInviteReceivcer(emailInput: EmailInput): ResultOutput {
+        val url = remoteServiceProperties.peopleServiceUrl + "/mail/send"
+
+        val params = LinkedMultiValueMap<String, String>()
+        params.add("receiverMail", emailInput.receiverMail)
+        params.add("announcer", emailInput.announcer)
+        params.add("teamId", emailInput.teamId)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, ResultOutput::class.java)
     }

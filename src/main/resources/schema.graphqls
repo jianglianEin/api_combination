@@ -2,6 +2,7 @@ type Query{
     login(selectionInput: SelectionInput): UserOutput
     logout(username: String): ResultOutput
     getCommitByReceiver(receiver: String): [CommitOutput]
+    sendEmailToInviteReceiverJoinTeam(emailInput: EmailInput): ResultOutput
 }
 
 type Mutation {
@@ -14,6 +15,12 @@ type Mutation {
 input SelectionInput{
     userInput: UserInput
     teamInput: TeamInput
+}
+
+input EmailInput{
+    receiverMail: String
+    announcer: String
+    teamId: String
 }
 
 input UserInput{
