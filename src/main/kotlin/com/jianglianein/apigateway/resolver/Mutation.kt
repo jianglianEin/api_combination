@@ -33,4 +33,10 @@ class Mutation : GraphQLMutationResolver {
 
         return remotePeopleService.createTeam(selectionInput.teamInput!!)
     }
+
+    fun updateTeam(selectionInput: SelectionInput): ResultOutput {
+        logger.info { "updateTeam" }
+
+        return remotePeopleService.updateTeam(selectionInput.teamInput!!)
+    }
 }

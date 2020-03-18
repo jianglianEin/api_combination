@@ -11,6 +11,7 @@ type Mutation {
     updateUser(selectionInput: SelectionInput): ResultOutput
 
     createTeam(selectionInput: SelectionInput): ResultOutput
+    updateTeam(selectionInput: SelectionInput): ResultOutput
 }
 
 input SelectionInput{
