@@ -35,6 +35,12 @@ class Query : GraphQLQueryResolver {
         return remotePeopleService.logoutByPeopleService(username)
     }
 
+    fun selectUserBySubstring(usernameSubstring: String): MutableList<UserOutput> {
+        logger.info { "selectUserBySubstring" }
+
+        return remotePeopleService.selectUserBySubstring(usernameSubstring)
+    }
+
     fun getCommitByReceiver(receiver: String): MutableList<CommitOutput> {
         logger.info { "getCommitByReceiver" }
 

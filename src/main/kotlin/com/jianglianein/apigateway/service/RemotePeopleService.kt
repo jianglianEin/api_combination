@@ -82,4 +82,15 @@ class RemotePeopleService {
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, ResultOutput::class.java)
     }
+
+    fun selectUserBySubstring(usernameSubstring: String): MutableList<UserOutput> {
+        val url = remoteServiceProperties.peopleServiceUrl + "/user/select"
+
+        val params = LinkedMultiValueMap<String, String>()
+        params.add("inputName", usernameSubstring)
+
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        val javaType = objectMapper.typeFactory.constructParametricType(MutableList::class.java, UserOutput::class.java)
+        return objectMapper.readValue(resp, javaType)
+    }
 }

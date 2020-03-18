@@ -3,6 +3,7 @@ type Query{
     logout(username: String): ResultOutput
     getCommitByReceiver(receiver: String): [CommitOutput]
     sendEmailToInviteReceiverJoinTeam(emailInput: EmailInput): ResultOutput
+    selectUserBySubstring(usernameSubstring: String): [UserOutput]
 }
 
 type Mutation {
