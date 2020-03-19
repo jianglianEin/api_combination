@@ -3,6 +3,8 @@ env: "dev"
 microservice:
   peopleservice:
     url: https://jianglianeinpeopleservice.cfapps.io
+  scrumprojectservice:
+    url: https://jianglianeinscrumprojectservice.cfapps.io
   messageservice:
     url: https://jianglianeinmessageservice.cfapps.io
 

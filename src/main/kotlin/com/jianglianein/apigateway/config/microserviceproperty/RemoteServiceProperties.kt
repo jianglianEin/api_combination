@@ -7,6 +7,8 @@ import org.springframework.context.annotation.Configuration
 class RemoteServiceProperties {
     @Value("\${microservice.peopleservice.url}")
     lateinit var peopleServiceUrl: String
+    @Value("\${microservice.scrumprojectservice.url}")
+    lateinit var projectServiceUrl: String
     @Value("\${microservice.messageservice.url}")
     lateinit var messageServiceUrl: String
 }

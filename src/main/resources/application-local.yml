@@ -3,6 +3,8 @@ env: "local"
 microservice:
   peopleservice:
     url: http://localhost:8000
+  scrumprojectservice:
+    url: http://localhost:8001
   messageservice:
     url: http://localhost:8002
 
