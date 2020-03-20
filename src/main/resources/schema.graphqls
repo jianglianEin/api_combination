@@ -4,6 +4,7 @@ type Query{
     getCommitByReceiver(receiver: String): [CommitOutput]
     sendEmailToInviteReceiverJoinTeam(emailInput: EmailInput): ResultOutput
     selectUserBySubstring(usernameSubstring: String): [UserOutput]
+    selectProjectByCreator(creator: String): [ProjectOutput]
 }
 
 type Mutation {
@@ -62,4 +63,15 @@ type CommitOutput{
 type ResultOutput{
     susses: Boolean
     message: String
+}
+
+type ProjectOutput{
+    id: String
+    projectName: String
+    creator: String
+    teamId: String
+    createTime: String
+    colTitle: [String]
+    rowTitle: [String]
+    iteration: Int
 }
