@@ -6,7 +6,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
-import org.springframework.util.MultiValueMap
+import org.springframework.util.LinkedMultiValueMap
 import org.springframework.web.client.RestTemplate
 
 
@@ -15,7 +15,7 @@ class HttpClientService {
     @Autowired
     private lateinit var client: RestTemplate
 
-    fun client(url: String, method: HttpMethod, params: MultiValueMap<String, String>): String? {
+    fun client(url: String, method: HttpMethod, params: LinkedMultiValueMap<String, Any>): String? {
         val headers = HttpHeaders()
 
         headers.contentType = MediaType.MULTIPART_FORM_DATA

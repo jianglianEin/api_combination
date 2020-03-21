@@ -22,7 +22,7 @@ class RemotePeopleService {
     fun loginByPeopleService(selectionInput: SelectionInput): UserOutput {
         val url = remoteServiceProperties.peopleServiceUrl + "/user/login"
 
-        val params = LinkedMultiValueMap<String, String>()
+        val params = LinkedMultiValueMap<String, Any>()
         params.add("username", selectionInput.userInput?.username)
         params.add("password", selectionInput.userInput?.password)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
@@ -32,7 +32,7 @@ class RemotePeopleService {
     fun logoutByPeopleService(username: String): ResultOutput {
         val url = remoteServiceProperties.peopleServiceUrl + "/user/logout"
 
-        val params = LinkedMultiValueMap<String, String>()
+        val params = LinkedMultiValueMap<String, Any>()
         params.add("username", username)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, ResultOutput::class.java)
@@ -41,7 +41,7 @@ class RemotePeopleService {
     fun registerByPeopleService(userInput: UserInput): ResultOutput {
         val url = remoteServiceProperties.peopleServiceUrl + "/user/register"
 
-        val params = LinkedMultiValueMap<String, String>()
+        val params = LinkedMultiValueMap<String, Any>()
         params.add("username", userInput.username)
         params.add("password", userInput.password)
         params.add("email", userInput.email)
@@ -52,7 +52,7 @@ class RemotePeopleService {
     fun updateUserByPeopleService(selectionInput: SelectionInput): ResultOutput {
         val url = remoteServiceProperties.peopleServiceUrl + "/user/update"
 
-        val params = LinkedMultiValueMap<String, String>()
+        val params = LinkedMultiValueMap<String, Any>()
         params.add("username", selectionInput.userInput?.username)
         params.add("password", selectionInput.userInput?.password)
         params.add("icon", selectionInput.userInput?.icon)
@@ -64,7 +64,7 @@ class RemotePeopleService {
     fun createTeam(teamInput: TeamInput): ResultOutput {
         val url = remoteServiceProperties.peopleServiceUrl + "/team/create"
 
-        val params = LinkedMultiValueMap<String, String>()
+        val params = LinkedMultiValueMap<String, Any>()
         params.add("creator", teamInput.creator)
         params.add("teamname", teamInput.teamname)
         params.add("description", teamInput.description)
@@ -75,7 +75,7 @@ class RemotePeopleService {
     fun sendEmailToInviteReceiver(emailInput: EmailInput): ResultOutput {
         val url = remoteServiceProperties.peopleServiceUrl + "/mail/send"
 
-        val params = LinkedMultiValueMap<String, String>()
+        val params = LinkedMultiValueMap<String, Any>()
         params.add("receiverMail", emailInput.receiverMail)
         params.add("announcer", emailInput.announcer)
         params.add("teamId", emailInput.teamId)
@@ -86,7 +86,7 @@ class RemotePeopleService {
     fun selectUserBySubstring(usernameSubstring: String): MutableList<UserOutput> {
         val url = remoteServiceProperties.peopleServiceUrl + "/user/select"
 
-        val params = LinkedMultiValueMap<String, String>()
+        val params = LinkedMultiValueMap<String, Any>()
         params.add("inputName", usernameSubstring)
 
         val resp = httpClientService.client(url, HttpMethod.POST, params)
@@ -97,7 +97,7 @@ class RemotePeopleService {
     fun updateTeam(teamInput: TeamInput): ResultOutput {
         val url = remoteServiceProperties.peopleServiceUrl + "/team/update"
 
-        val params = LinkedMultiValueMap<String, String>()
+        val params = LinkedMultiValueMap<String, Any>()
         params.add("id", teamInput.id)
         params.add("creator", teamInput.creator)
         params.add("teamname", teamInput.teamname)

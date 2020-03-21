@@ -21,7 +21,7 @@ class RemoteMessageService {
     fun getCommitByReceiver(receiver: String): MutableList<CommitOutput> {
         val url = remoteServiceProperties.messageServiceUrl + "/commit/getByReceiver"
 
-        val params = LinkedMultiValueMap<String, String>()
+        val params = LinkedMultiValueMap<String, Any>()
         params.add("receiver", receiver)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         val javaType = objectMapper.typeFactory.constructParametricType(MutableList::class.java, CommitOutput::class.java)

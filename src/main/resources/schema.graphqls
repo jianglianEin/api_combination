@@ -13,11 +13,14 @@ type Mutation {
 
     createTeam(selectionInput: SelectionInput): ResultOutput
     updateTeam(selectionInput: SelectionInput): ResultOutput
+
+    createProject(selectionInput: SelectionInput): ResultOutput
 }
 
 input SelectionInput{
     userInput: UserInput
     teamInput: TeamInput
+    projectInput: ProjectInput
 }
 
 input EmailInput{
@@ -39,6 +42,15 @@ input TeamInput{
     creator: String
     teamname: String
     description: String
+}
+
+input ProjectInput{
+    projectName: String
+    creator: String
+    teamId: String
+    colTitle: [String]
+    rowTitle: [String]
+    iteration: Int
 }
 
 type UserOutput{
