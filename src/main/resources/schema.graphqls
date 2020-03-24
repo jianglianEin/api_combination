@@ -15,6 +15,7 @@ type Mutation {
     updateTeam(selectionInput: SelectionInput): ResultOutput
 
     createProject(selectionInput: SelectionInput): ResultOutput
+    updateProject(selectionInput: SelectionInput): ResultOutput
 }
 
 input SelectionInput{
@@ -45,6 +46,7 @@ input TeamInput{
 }
 
 input ProjectInput{
+    id: String
     projectName: String
     creator: String
     teamId: String

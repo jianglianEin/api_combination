@@ -48,4 +48,10 @@ class Mutation : GraphQLMutationResolver {
 
         return remoteScrumProjectService.createProject(selectionInput.projectInput!!)
     }
+
+    fun updateProject(selectionInput: SelectionInput): ResultOutput {
+        logger.info { "updateProject" }
+
+        return remoteScrumProjectService.updateProject(selectionInput.projectInput!!)
+    }
 }

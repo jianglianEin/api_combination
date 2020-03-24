@@ -31,27 +31,50 @@ class RemoteScrumProjectService {
 
     fun createProject(projectInput: ProjectInput): ResultOutput {
         val url = remoteServiceProperties.projectServiceUrl + "/scrum_project/create"
+        val params = initProjectCreateParams(projectInput)
 
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        return objectMapper.readValue(resp, ResultOutput::class.java)
+    }
+
+    fun updateProject(projectInput: ProjectInput): ResultOutput {
+        val url = remoteServiceProperties.projectServiceUrl + "/scrum_project/update"
+        val params = initProjectUpdateParams(projectInput)
+
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        return objectMapper.readValue(resp, ResultOutput::class.java)
+    }
+
+    private fun initProjectCreateParams(projectInput: ProjectInput): LinkedMultiValueMap<String, Any> {
         val params = LinkedMultiValueMap<String, Any>()
         params.add("projectName", projectInput.projectName)
         params.add("creator", projectInput.creator)
+        params.add("rowTitle", projectInput.rowTitle)
+        params.add("iteration", projectInput.iteration)
 
-        if (projectInput.teamId == null){
+        if (projectInput.teamId == null) {
             params.add("teamId", "None")
-        }else {
+        } else {
             params.add("teamId", projectInput.teamId)
         }
 
-        if (projectInput.colTitle == null){
-            params.add("colTitle", arrayListOf("block", "confirm", "dev", "test", "sign off"))
-        }else {
+        if (projectInput.colTitle == null) {
+            params.add("colTitle", "block, confirm, dev, test, sign off")
+        } else {
             params.add("colTitle", projectInput.colTitle)
         }
 
-        params.add("rowTitle", projectInput.rowTitle)
+        return params
+    }
 
+    private fun initProjectUpdateParams(projectInput: ProjectInput): LinkedMultiValueMap<String, Any> {
+        val params = LinkedMultiValueMap<String, Any>()
+        params.add("projectId", projectInput.id)
+        params.add("projectName", projectInput.projectName)
+        params.add("rowTitle", projectInput.rowTitle)
         params.add("iteration", projectInput.iteration)
-        val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, ResultOutput::class.java)
+        params.add("teamId", projectInput.teamId)
+        params.add("colTitle", projectInput.colTitle)
+        return params
     }
 }
