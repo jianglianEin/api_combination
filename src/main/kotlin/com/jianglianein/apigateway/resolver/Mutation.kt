@@ -54,4 +54,10 @@ class Mutation : GraphQLMutationResolver {
 
         return remoteScrumProjectService.updateProject(selectionInput.projectInput!!)
     }
+
+    fun removeProject(projectId: String): ResultOutput {
+        logger.info { "removeProject" }
+
+        return remoteScrumProjectService.removeProject(projectId)
+    }
 }

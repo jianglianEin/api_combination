@@ -16,6 +16,7 @@ type Mutation {
 
     createProject(selectionInput: SelectionInput): ResultOutput
     updateProject(selectionInput: SelectionInput): ResultOutput
+    removeProject(projectId: String): ResultOutput
 }
 
 input SelectionInput{

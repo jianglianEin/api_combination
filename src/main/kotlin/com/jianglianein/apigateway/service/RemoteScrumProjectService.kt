@@ -77,4 +77,14 @@ class RemoteScrumProjectService {
         params.add("colTitle", projectInput.colTitle)
         return params
     }
+
+    fun removeProject(projectId: String): ResultOutput {
+        val url = remoteServiceProperties.projectServiceUrl + "/scrum_project/remove"
+
+        val params = LinkedMultiValueMap<String, Any>()
+        params.add("projectId", projectId)
+
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        return objectMapper.readValue(resp, ResultOutput::class.java)
+    }
 }
