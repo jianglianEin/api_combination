@@ -2,6 +2,7 @@ package com.jianglianein.apigateway.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.jianglianein.apigateway.config.microserviceproperty.RemoteServiceProperties
+import com.jianglianein.apigateway.model.type.BoardInput
 import com.jianglianein.apigateway.model.type.ProjectInput
 import com.jianglianein.apigateway.model.type.ProjectOutput
 import com.jianglianein.apigateway.model.type.ResultOutput
@@ -83,6 +84,16 @@ class RemoteScrumProjectService {
 
         val params = LinkedMultiValueMap<String, Any>()
         params.add("projectId", projectId)
+
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        return objectMapper.readValue(resp, ResultOutput::class.java)
+    }
+
+    fun createBoard(boardInput: BoardInput): ResultOutput {
+        val url = remoteServiceProperties.projectServiceUrl + "/board/create"
+
+        val params = LinkedMultiValueMap<String, Any>()
+        params.add("projectId", boardInput.projectId)
 
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, ResultOutput::class.java)

@@ -17,12 +17,15 @@ type Mutation {
     createProject(selectionInput: SelectionInput): ResultOutput
     updateProject(selectionInput: SelectionInput): ResultOutput
     removeProject(projectId: String): ResultOutput
+
+    createBoard(selectionInput: SelectionInput): ResultOutput
 }
 
 input SelectionInput{
     userInput: UserInput
     teamInput: TeamInput
     projectInput: ProjectInput
+    boardInput: BoardInput
 }
 
 input EmailInput{
@@ -54,6 +57,10 @@ input ProjectInput{
     colTitle: [String]
     rowTitle: [String]
     iteration: Int
+}
+
+input BoardInput{
+    projectId: String
 }
 
 type UserOutput{
