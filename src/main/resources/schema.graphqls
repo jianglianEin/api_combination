@@ -5,6 +5,7 @@ type Query{
     sendEmailToInviteReceiverJoinTeam(emailInput: EmailInput): ResultOutput
     selectUserBySubstring(usernameSubstring: String): [UserOutput]
     selectProjectByCreator(creator: String): [ProjectOutput]
+    selectBoardsByProjectId(projectId: String): [BoardOutput]
 }
 
 type Mutation {
@@ -19,6 +20,7 @@ type Mutation {
     removeProject(projectId: String): ResultOutput
 
     createBoard(selectionInput: SelectionInput): ResultOutput
+    removeBoard(boardId: String): ResultOutput
 }
 
 input SelectionInput{
@@ -96,4 +98,9 @@ type ProjectOutput{
     colTitle: [String]
     rowTitle: [String]
     iteration: Int
+}
+
+type BoardOutput{
+    id: String
+    createTime: String
 }

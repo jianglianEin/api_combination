@@ -66,4 +66,10 @@ class Mutation : GraphQLMutationResolver {
 
         return remoteScrumProjectService.createBoard(selectionInput.boardInput!!)
     }
+
+    fun removeBoard(boardId: String): ResultOutput {
+        logger.info { "removeBoard" }
+
+        return remoteScrumProjectService.removeBoard(boardId)
+    }
 }

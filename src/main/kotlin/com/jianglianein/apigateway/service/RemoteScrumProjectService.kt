@@ -2,10 +2,7 @@ package com.jianglianein.apigateway.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.jianglianein.apigateway.config.microserviceproperty.RemoteServiceProperties
-import com.jianglianein.apigateway.model.type.BoardInput
-import com.jianglianein.apigateway.model.type.ProjectInput
-import com.jianglianein.apigateway.model.type.ProjectOutput
-import com.jianglianein.apigateway.model.type.ResultOutput
+import com.jianglianein.apigateway.model.type.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
@@ -97,5 +94,26 @@ class RemoteScrumProjectService {
 
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, ResultOutput::class.java)
+    }
+
+    fun removeBoard(boardId: String): ResultOutput {
+        val url = remoteServiceProperties.projectServiceUrl + "/board/remove"
+
+        val params = LinkedMultiValueMap<String, Any>()
+        params.add("boardId", boardId)
+
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        return objectMapper.readValue(resp, ResultOutput::class.java)
+    }
+
+    fun selectBoardsByProjectId(projectId: String): MutableList<BoardOutput> {
+        val url = remoteServiceProperties.projectServiceUrl + "/board/selectByProject"
+
+        val params = LinkedMultiValueMap<String, Any>()
+        params.add("projectId", projectId)
+
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        val javaType = objectMapper.typeFactory.constructParametricType(MutableList::class.java, BoardOutput::class.java)
+        return objectMapper.readValue(resp, javaType)
     }
 }
