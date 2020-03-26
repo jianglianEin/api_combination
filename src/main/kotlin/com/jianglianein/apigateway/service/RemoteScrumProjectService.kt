@@ -149,4 +149,15 @@ class RemoteScrumProjectService {
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, ResultOutput::class.java)
     }
+
+    fun selectCardsByBoardId(boardId: String): MutableList<CardOutput> {
+        val url = remoteServiceProperties.projectServiceUrl + "/card/selectByBoard"
+
+        val params = LinkedMultiValueMap<String, Any>()
+        params.add("boardId", boardId)
+
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        val javaType = objectMapper.typeFactory.constructParametricType(MutableList::class.java, CardOutput::class.java)
+        return objectMapper.readValue(resp, javaType)
+    }
 }

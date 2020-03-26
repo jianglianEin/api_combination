@@ -6,6 +6,7 @@ type Query{
     selectUserBySubstring(usernameSubstring: String): [UserOutput]
     selectProjectByCreator(creator: String): [ProjectOutput]
     selectBoardsByProjectId(projectId: String): [BoardOutput]
+    selectCardsByBoardId(boardId: String): [CardOutput]
 }
 
 type Mutation {
@@ -119,4 +120,16 @@ type ProjectOutput{
 type BoardOutput{
     id: String
     createTime: String
+}
+
+type CardOutput{
+    id: String
+    createTime: String
+    title: String
+    description: String
+    priority: String
+    storyPoints: Int
+    processor: String
+    founder: String
+    status: String
 }
