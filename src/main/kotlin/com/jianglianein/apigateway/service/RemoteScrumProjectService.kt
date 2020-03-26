@@ -133,4 +133,20 @@ class RemoteScrumProjectService {
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, ResultOutput::class.java)
     }
+
+    fun updateCard(cardInput: CardInput): ResultOutput {
+        val url = remoteServiceProperties.projectServiceUrl + "/card/update"
+
+        val params = LinkedMultiValueMap<String, Any>()
+        params.add("cardId", cardInput.id)
+        params.add("title", cardInput.title)
+        params.add("description", cardInput.description)
+        params.add("storyPoints", cardInput.storyPoints)
+        params.add("priority", cardInput.priority)
+        params.add("processor", cardInput.processor)
+        params.add("status", cardInput.status)
+
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        return objectMapper.readValue(resp, ResultOutput::class.java)
+    }
 }

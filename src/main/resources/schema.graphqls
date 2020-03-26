@@ -23,6 +23,7 @@ type Mutation {
     removeBoard(boardId: String): ResultOutput
 
     createCard(selectionInput: SelectionInput): ResultOutput
+    updateCard(selectionInput: SelectionInput): ResultOutput
 }
 
 input SelectionInput{
@@ -69,6 +70,7 @@ input BoardInput{
 }
 
 input CardInput{
+    id: String
     title: String
     description: String
     priority: String

@@ -78,4 +78,10 @@ class Mutation : GraphQLMutationResolver {
 
         return remoteScrumProjectService.createCard(selectionInput.cardInput!!)
     }
+
+    fun updateCard(selectionInput: SelectionInput): ResultOutput {
+        logger.info { "updateCard" }
+
+        return remoteScrumProjectService.updateCard(selectionInput.cardInput!!)
+    }
 }

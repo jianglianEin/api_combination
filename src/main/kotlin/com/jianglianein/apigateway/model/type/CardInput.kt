@@ -1,6 +1,7 @@
 package com.jianglianein.apigateway.model.type
 
-data class CardInput (val title: String? = null,
+data class CardInput (val id: String? = null,
+                      val title: String? = null,
                       val description: String? = null,
                       val priority: String? = "lowest",
                       val storyPoints: Int? = null,
