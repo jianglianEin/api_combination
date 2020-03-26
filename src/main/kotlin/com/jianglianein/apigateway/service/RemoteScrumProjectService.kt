@@ -116,4 +116,21 @@ class RemoteScrumProjectService {
         val javaType = objectMapper.typeFactory.constructParametricType(MutableList::class.java, BoardOutput::class.java)
         return objectMapper.readValue(resp, javaType)
     }
+
+    fun createCard(cardInput: CardInput): ResultOutput {
+        val url = remoteServiceProperties.projectServiceUrl + "/card/create"
+
+        val params = LinkedMultiValueMap<String, Any>()
+        params.add("title", cardInput.title)
+        params.add("description", cardInput.description)
+        params.add("storyPoints", cardInput.storyPoints)
+        params.add("priority", cardInput.priority)
+        params.add("processor", cardInput.processor)
+        params.add("founder", cardInput.founder)
+        params.add("status", cardInput.status)
+        params.add("boardId", cardInput.boardId)
+
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        return objectMapper.readValue(resp, ResultOutput::class.java)
+    }
 }

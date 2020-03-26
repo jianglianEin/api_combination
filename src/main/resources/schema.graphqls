@@ -21,6 +21,8 @@ type Mutation {
 
     createBoard(selectionInput: SelectionInput): ResultOutput
     removeBoard(boardId: String): ResultOutput
+
+    createCard(selectionInput: SelectionInput): ResultOutput
 }
 
 input SelectionInput{
@@ -28,6 +30,7 @@ input SelectionInput{
     teamInput: TeamInput
     projectInput: ProjectInput
     boardInput: BoardInput
+    cardInput: CardInput
 }
 
 input EmailInput{
@@ -63,6 +66,17 @@ input ProjectInput{
 
 input BoardInput{
     projectId: String
+}
+
+input CardInput{
+    title: String
+    description: String
+    priority: String
+    storyPoints: Int
+    processor: String
+    founder: String
+    status: String
+    boardId: String
 }
 
 type UserOutput{
