@@ -3,6 +3,7 @@ package com.jianglianein.apigateway.resolver
 import com.coxautodev.graphql.tools.GraphQLMutationResolver
 import com.jianglianein.apigateway.model.graphql.SelectionInput
 import com.jianglianein.apigateway.model.type.ResultOutput
+import com.jianglianein.apigateway.service.RemoteMessageService
 import com.jianglianein.apigateway.service.RemotePeopleService
 import com.jianglianein.apigateway.service.RemoteScrumProjectService
 import mu.KotlinLogging
@@ -15,6 +16,8 @@ class Mutation : GraphQLMutationResolver {
     private lateinit var remotePeopleService: RemotePeopleService
     @Autowired
     private lateinit var remoteScrumProjectService: RemoteScrumProjectService
+    @Autowired
+    private lateinit var remoteMessageService: RemoteMessageService
 
 
     private var logger = KotlinLogging.logger {}
@@ -89,5 +92,11 @@ class Mutation : GraphQLMutationResolver {
         logger.info { "removeCard" }
 
         return remoteScrumProjectService.removeCard(cardId)
+    }
+
+    fun createCommit(selectionInput: SelectionInput): ResultOutput {
+        logger.info { "createCommit" }
+
+        return remoteMessageService.createCommit(selectionInput.commitInput!!)
     }
 }

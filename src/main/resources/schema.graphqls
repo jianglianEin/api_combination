@@ -26,6 +26,8 @@ type Mutation {
     createCard(selectionInput: SelectionInput): ResultOutput
     updateCard(selectionInput: SelectionInput): ResultOutput
     removeCard(cardId: String): ResultOutput
+
+    createCommit(selectionInput: SelectionInput): ResultOutput
 }
 
 input SelectionInput{
@@ -34,6 +36,7 @@ input SelectionInput{
     projectInput: ProjectInput
     boardInput: BoardInput
     cardInput: CardInput
+    commitInput: CommitInput
 }
 
 input EmailInput{
@@ -81,6 +84,13 @@ input CardInput{
     founder: String
     status: String
     boardId: String
+}
+
+input CommitInput{
+    description: String
+    announcer: String
+    receiver: String
+    cardId: String
 }
 
 type UserOutput{
