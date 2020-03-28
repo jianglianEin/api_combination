@@ -28,6 +28,7 @@ type Mutation {
     removeCard(cardId: String): ResultOutput
 
     createCommit(selectionInput: SelectionInput): CommitOutput
+    updateCommit(selectionInput: SelectionInput): CommitOutput
 }
 
 input SelectionInput{
@@ -87,10 +88,12 @@ input CardInput{
 }
 
 input CommitInput{
+    id: String
     description: String
     announcer: String
     receiver: String
     cardId: String
+    read: Boolean
 }
 
 type UserOutput{

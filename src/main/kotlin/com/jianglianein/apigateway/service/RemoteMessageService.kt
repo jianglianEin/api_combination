@@ -41,4 +41,17 @@ class RemoteMessageService {
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, CommitOutput::class.java)
     }
+
+    fun updateCommit(commitInput: CommitInput): CommitOutput {
+        val url = remoteServiceProperties.messageServiceUrl + "/commit/update"
+
+        val params = LinkedMultiValueMap<String, Any>()
+        params.add("description", commitInput.description)
+        params.add("isRead", commitInput.read)
+        params.add("commitId", commitInput.id)
+
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        return objectMapper.readValue(resp, CommitOutput::class.java)
+
+    }
 }

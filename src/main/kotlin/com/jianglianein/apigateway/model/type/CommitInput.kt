@@ -1,6 +1,8 @@
 package com.jianglianein.apigateway.model.type
 
-data class CommitInput (val description: String? = null,
+data class CommitInput (val id: String? = null,
+                        val description: String? = null,
                         val announcer: String? = null,
                         val receiver: String? = null,
-                        var cardId: String? = null)
+                        val cardId: String? = null,
+                        val read: Boolean? = false)
