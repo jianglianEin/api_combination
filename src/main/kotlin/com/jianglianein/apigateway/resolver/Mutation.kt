@@ -102,7 +102,7 @@ class Mutation : GraphQLMutationResolver {
     }
 
     fun updateCommit(selectionInput: SelectionInput): CommitOutput {
-        logger.info { "createCommit" }
+        logger.info { "updateCommit" }
 
         return remoteMessageService.updateCommit(selectionInput.commitInput!!)
     }
