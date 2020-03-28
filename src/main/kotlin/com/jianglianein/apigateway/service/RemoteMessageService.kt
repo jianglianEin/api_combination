@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.jianglianein.apigateway.config.microserviceproperty.RemoteServiceProperties
 import com.jianglianein.apigateway.model.type.CommitInput
 import com.jianglianein.apigateway.model.type.CommitOutput
+import com.jianglianein.apigateway.model.type.ResultOutput
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
@@ -53,5 +54,15 @@ class RemoteMessageService {
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, CommitOutput::class.java)
 
+    }
+
+    fun removeCommit(commitId: String): ResultOutput {
+        val url = remoteServiceProperties.messageServiceUrl + "/commit/remove"
+
+        val params = LinkedMultiValueMap<String, Any>()
+        params.add("commitId", commitId)
+
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        return objectMapper.readValue(resp, ResultOutput::class.java)
     }
 }

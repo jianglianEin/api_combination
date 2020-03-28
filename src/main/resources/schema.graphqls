@@ -29,6 +29,7 @@ type Mutation {
 
     createCommit(selectionInput: SelectionInput): CommitOutput
     updateCommit(selectionInput: SelectionInput): CommitOutput
+    removeCommit(commitId: String): ResultOutput
 }
 
 input SelectionInput{

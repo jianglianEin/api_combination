@@ -106,4 +106,10 @@ class Mutation : GraphQLMutationResolver {
 
         return remoteMessageService.updateCommit(selectionInput.commitInput!!)
     }
+
+    fun removeCommit(commitId: String): ResultOutput {
+        logger.info { "removeCommit" }
+
+        return remoteMessageService.removeCommit(commitId)
+    }
 }
