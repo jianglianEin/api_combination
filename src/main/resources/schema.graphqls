@@ -16,15 +16,15 @@ type Mutation {
     createTeam(selectionInput: SelectionInput): ResultOutput
     updateTeam(selectionInput: SelectionInput): ResultOutput
 
-    createProject(selectionInput: SelectionInput): ResultOutput
-    updateProject(selectionInput: SelectionInput): ResultOutput
+    createProject(selectionInput: SelectionInput): ProjectOutput
+    updateProject(selectionInput: SelectionInput): ProjectOutput
     removeProject(projectId: String): ResultOutput
 
-    createBoard(selectionInput: SelectionInput): ResultOutput
+    createBoard(selectionInput: SelectionInput): BoardOutput
     removeBoard(boardId: String): ResultOutput
 
-    createCard(selectionInput: SelectionInput): ResultOutput
-    updateCard(selectionInput: SelectionInput): ResultOutput
+    createCard(selectionInput: SelectionInput): CardOutput
+    updateCard(selectionInput: SelectionInput): CardOutput
     removeCard(cardId: String): ResultOutput
 
     createCommit(selectionInput: SelectionInput): CommitOutput

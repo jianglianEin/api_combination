@@ -2,8 +2,7 @@ package com.jianglianein.apigateway.resolver
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver
 import com.jianglianein.apigateway.model.graphql.SelectionInput
-import com.jianglianein.apigateway.model.type.CommitOutput
-import com.jianglianein.apigateway.model.type.ResultOutput
+import com.jianglianein.apigateway.model.type.*
 import com.jianglianein.apigateway.service.RemoteMessageService
 import com.jianglianein.apigateway.service.RemotePeopleService
 import com.jianglianein.apigateway.service.RemoteScrumProjectService
@@ -47,13 +46,13 @@ class Mutation : GraphQLMutationResolver {
         return remotePeopleService.updateTeam(selectionInput.teamInput!!)
     }
 
-    fun createProject(selectionInput: SelectionInput): ResultOutput {
+    fun createProject(selectionInput: SelectionInput): ProjectOutput {
         logger.info { "createProject" }
 
         return remoteScrumProjectService.createProject(selectionInput.projectInput!!)
     }
 
-    fun updateProject(selectionInput: SelectionInput): ResultOutput {
+    fun updateProject(selectionInput: SelectionInput): ProjectOutput {
         logger.info { "updateProject" }
 
         return remoteScrumProjectService.updateProject(selectionInput.projectInput!!)
@@ -65,7 +64,7 @@ class Mutation : GraphQLMutationResolver {
         return remoteScrumProjectService.removeProject(projectId)
     }
 
-    fun createBoard(selectionInput: SelectionInput): ResultOutput {
+    fun createBoard(selectionInput: SelectionInput): BoardOutput {
         logger.info { "createBoard" }
 
         return remoteScrumProjectService.createBoard(selectionInput.boardInput!!)
@@ -77,13 +76,13 @@ class Mutation : GraphQLMutationResolver {
         return remoteScrumProjectService.removeBoard(boardId)
     }
 
-    fun createCard(selectionInput: SelectionInput): ResultOutput {
+    fun createCard(selectionInput: SelectionInput): CardOutput {
         logger.info { "createCard" }
 
         return remoteScrumProjectService.createCard(selectionInput.cardInput!!)
     }
 
-    fun updateCard(selectionInput: SelectionInput): ResultOutput {
+    fun updateCard(selectionInput: SelectionInput): CardOutput {
         logger.info { "updateCard" }
 
         return remoteScrumProjectService.updateCard(selectionInput.cardInput!!)

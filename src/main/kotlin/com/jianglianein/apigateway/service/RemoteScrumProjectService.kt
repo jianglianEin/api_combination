@@ -27,20 +27,20 @@ class RemoteScrumProjectService {
         return objectMapper.readValue(resp, javaType)
     }
 
-    fun createProject(projectInput: ProjectInput): ResultOutput {
+    fun createProject(projectInput: ProjectInput): ProjectOutput {
         val url = remoteServiceProperties.projectServiceUrl + "/scrum_project/create"
         val params = initProjectCreateParams(projectInput)
 
         val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, ResultOutput::class.java)
+        return objectMapper.readValue(resp, ProjectOutput::class.java)
     }
 
-    fun updateProject(projectInput: ProjectInput): ResultOutput {
+    fun updateProject(projectInput: ProjectInput): ProjectOutput {
         val url = remoteServiceProperties.projectServiceUrl + "/scrum_project/update"
         val params = initProjectUpdateParams(projectInput)
 
         val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, ResultOutput::class.java)
+        return objectMapper.readValue(resp, ProjectOutput::class.java)
     }
 
     private fun initProjectCreateParams(projectInput: ProjectInput): LinkedMultiValueMap<String, Any> {
@@ -86,14 +86,14 @@ class RemoteScrumProjectService {
         return objectMapper.readValue(resp, ResultOutput::class.java)
     }
 
-    fun createBoard(boardInput: BoardInput): ResultOutput {
+    fun createBoard(boardInput: BoardInput): BoardOutput {
         val url = remoteServiceProperties.projectServiceUrl + "/board/create"
 
         val params = LinkedMultiValueMap<String, Any>()
         params.add("projectId", boardInput.projectId)
 
         val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, ResultOutput::class.java)
+        return objectMapper.readValue(resp, BoardOutput::class.java)
     }
 
     fun removeBoard(boardId: String): ResultOutput {
@@ -117,7 +117,7 @@ class RemoteScrumProjectService {
         return objectMapper.readValue(resp, javaType)
     }
 
-    fun createCard(cardInput: CardInput): ResultOutput {
+    fun createCard(cardInput: CardInput): CardOutput {
         val url = remoteServiceProperties.projectServiceUrl + "/card/create"
 
         val params = LinkedMultiValueMap<String, Any>()
@@ -131,10 +131,10 @@ class RemoteScrumProjectService {
         params.add("boardId", cardInput.boardId)
 
         val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, ResultOutput::class.java)
+        return objectMapper.readValue(resp, CardOutput::class.java)
     }
 
-    fun updateCard(cardInput: CardInput): ResultOutput {
+    fun updateCard(cardInput: CardInput): CardOutput {
         val url = remoteServiceProperties.projectServiceUrl + "/card/update"
 
         val params = LinkedMultiValueMap<String, Any>()
@@ -147,7 +147,7 @@ class RemoteScrumProjectService {
         params.add("status", cardInput.status)
 
         val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, ResultOutput::class.java)
+        return objectMapper.readValue(resp, CardOutput::class.java)
     }
 
     fun selectCardsByBoardId(boardId: String): MutableList<CardOutput> {
