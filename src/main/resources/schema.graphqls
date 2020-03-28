@@ -27,7 +27,7 @@ type Mutation {
     updateCard(selectionInput: SelectionInput): ResultOutput
     removeCard(cardId: String): ResultOutput
 
-    createCommit(selectionInput: SelectionInput): ResultOutput
+    createCommit(selectionInput: SelectionInput): CommitOutput
 }
 
 input SelectionInput{

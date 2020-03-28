@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.jianglianein.apigateway.config.microserviceproperty.RemoteServiceProperties
 import com.jianglianein.apigateway.model.type.CommitInput
 import com.jianglianein.apigateway.model.type.CommitOutput
-import com.jianglianein.apigateway.model.type.ResultOutput
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
@@ -30,7 +29,7 @@ class RemoteMessageService {
         return objectMapper.readValue(resp, javaType)
     }
 
-    fun createCommit(commitInput: CommitInput): ResultOutput {
+    fun createCommit(commitInput: CommitInput): CommitOutput {
         val url = remoteServiceProperties.messageServiceUrl + "/commit/create"
 
         val params = LinkedMultiValueMap<String, Any>()
@@ -40,6 +39,6 @@ class RemoteMessageService {
         params.add("cardId", commitInput.cardId)
 
         val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, ResultOutput::class.java)
+        return objectMapper.readValue(resp, CommitOutput::class.java)
     }
 }

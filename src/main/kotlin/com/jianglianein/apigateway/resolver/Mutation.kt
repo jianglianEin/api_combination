@@ -2,6 +2,7 @@ package com.jianglianein.apigateway.resolver
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver
 import com.jianglianein.apigateway.model.graphql.SelectionInput
+import com.jianglianein.apigateway.model.type.CommitOutput
 import com.jianglianein.apigateway.model.type.ResultOutput
 import com.jianglianein.apigateway.service.RemoteMessageService
 import com.jianglianein.apigateway.service.RemotePeopleService
@@ -94,9 +95,15 @@ class Mutation : GraphQLMutationResolver {
         return remoteScrumProjectService.removeCard(cardId)
     }
 
-    fun createCommit(selectionInput: SelectionInput): ResultOutput {
+    fun createCommit(selectionInput: SelectionInput): CommitOutput {
         logger.info { "createCommit" }
 
         return remoteMessageService.createCommit(selectionInput.commitInput!!)
     }
+
+//    fun updateCommit(selectionInput: SelectionInput): ResultOutput {
+//        logger.info { "createCommit" }
+//
+//        return remoteMessageService.createCommit(selectionInput.commitInput!!)
+//    }
 }
