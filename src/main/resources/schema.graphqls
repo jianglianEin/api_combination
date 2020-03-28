@@ -3,6 +3,7 @@ type Query{
     logout(username: String): ResultOutput
     getCommitByReceiver(receiver: String): [CommitOutput]
     sendEmailToInviteReceiverJoinTeam(emailInput: EmailInput): ResultOutput
+    selectTeamByUsername(username: String): [TeamOutput]
     selectUserBySubstring(usernameSubstring: String): [UserOutput]
     selectProjectByCreator(creator: String): [ProjectOutput]
     selectBoardsByProjectId(projectId: String): [BoardOutput]

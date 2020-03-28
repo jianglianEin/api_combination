@@ -54,6 +54,12 @@ class Query : GraphQLQueryResolver {
         return remotePeopleService.sendEmailToInviteReceiver(emailInput)
     }
 
+    fun selectTeamByUsername(username: String): MutableList<TeamOutPut> {
+        logger.info { "selectTeamByUsername" }
+
+        return remotePeopleService.selectTeamByUsername(username)
+    }
+
     fun selectProjectByCreator(creator: String): MutableList<ProjectOutput> {
         logger.info { "selectProjectByCreator" }
 

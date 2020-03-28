@@ -106,4 +106,15 @@ class RemotePeopleService {
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, TeamOutPut::class.java)
     }
+
+    fun selectTeamByUsername(username: String): MutableList<TeamOutPut> {
+        val url = remoteServiceProperties.peopleServiceUrl + "/team/selectTeamByUsername"
+
+        val params = LinkedMultiValueMap<String, Any>()
+        params.add("username", username)
+
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        val javaType = objectMapper.typeFactory.constructParametricType(MutableList::class.java, TeamOutPut::class.java)
+        return objectMapper.readValue(resp, javaType)
+    }
 }
