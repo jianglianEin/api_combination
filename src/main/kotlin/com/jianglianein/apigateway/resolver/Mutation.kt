@@ -28,19 +28,19 @@ class Mutation : GraphQLMutationResolver {
         return remotePeopleService.registerByPeopleService(selectionInput.userInput!!)
     }
 
-    fun updateUser(selectionInput: SelectionInput): ResultOutput {
+    fun updateUser(selectionInput: SelectionInput): UserOutput {
         logger.info { "updateUser" }
 
         return remotePeopleService.updateUserByPeopleService(selectionInput)
     }
 
-    fun createTeam(selectionInput: SelectionInput): ResultOutput {
+    fun createTeam(selectionInput: SelectionInput): TeamOutPut {
         logger.info { "createTeam" }
 
         return remotePeopleService.createTeam(selectionInput.teamInput!!)
     }
 
-    fun updateTeam(selectionInput: SelectionInput): ResultOutput {
+    fun updateTeam(selectionInput: SelectionInput): TeamOutPut {
         logger.info { "updateTeam" }
 
         return remotePeopleService.updateTeam(selectionInput.teamInput!!)

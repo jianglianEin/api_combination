@@ -49,7 +49,7 @@ class RemotePeopleService {
         return objectMapper.readValue(resp, ResultOutput::class.java)
     }
 
-    fun updateUserByPeopleService(selectionInput: SelectionInput): ResultOutput {
+    fun updateUserByPeopleService(selectionInput: SelectionInput): UserOutput {
         val url = remoteServiceProperties.peopleServiceUrl + "/user/update"
 
         val params = LinkedMultiValueMap<String, Any>()
@@ -58,10 +58,10 @@ class RemotePeopleService {
         params.add("icon", selectionInput.userInput?.icon)
         params.add("power", selectionInput.userInput?.power)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, ResultOutput::class.java)
+        return objectMapper.readValue(resp, UserOutput::class.java)
     }
 
-    fun createTeam(teamInput: TeamInput): ResultOutput {
+    fun createTeam(teamInput: TeamInput): TeamOutPut {
         val url = remoteServiceProperties.peopleServiceUrl + "/team/create"
 
         val params = LinkedMultiValueMap<String, Any>()
@@ -69,7 +69,7 @@ class RemotePeopleService {
         params.add("teamname", teamInput.teamname)
         params.add("description", teamInput.description)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, ResultOutput::class.java)
+        return objectMapper.readValue(resp, TeamOutPut::class.java)
     }
 
     fun sendEmailToInviteReceiver(emailInput: EmailInput): ResultOutput {
@@ -94,7 +94,7 @@ class RemotePeopleService {
         return objectMapper.readValue(resp, javaType)
     }
 
-    fun updateTeam(teamInput: TeamInput): ResultOutput {
+    fun updateTeam(teamInput: TeamInput): TeamOutPut {
         val url = remoteServiceProperties.peopleServiceUrl + "/team/update"
 
         val params = LinkedMultiValueMap<String, Any>()
@@ -104,6 +104,6 @@ class RemotePeopleService {
         params.add("description", teamInput.description)
 
         val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, ResultOutput::class.java)
+        return objectMapper.readValue(resp, TeamOutPut::class.java)
     }
 }

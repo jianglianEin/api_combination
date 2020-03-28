@@ -11,10 +11,10 @@ type Query{
 
 type Mutation {
     register(selectionInput: SelectionInput): ResultOutput
-    updateUser(selectionInput: SelectionInput): ResultOutput
+    updateUser(selectionInput: SelectionInput): UserOutput
 
-    createTeam(selectionInput: SelectionInput): ResultOutput
-    updateTeam(selectionInput: SelectionInput): ResultOutput
+    createTeam(selectionInput: SelectionInput): TeamOutput
+    updateTeam(selectionInput: SelectionInput): TeamOutput
 
     createProject(selectionInput: SelectionInput): ProjectOutput
     updateProject(selectionInput: SelectionInput): ProjectOutput
@@ -119,6 +119,13 @@ type CommitOutput{
 type ResultOutput{
     susses: Boolean
     message: String
+}
+
+type TeamOutput{
+    id: String
+    creator: String
+    teamname: String
+    description: String
 }
 
 type ProjectOutput{
