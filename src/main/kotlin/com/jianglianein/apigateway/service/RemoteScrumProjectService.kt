@@ -56,7 +56,7 @@ class RemoteScrumProjectService {
             params.add("teamId", projectInput.teamId)
         }
 
-        if (projectInput.colTitle == null) {
+        if (projectInput.colTitle == null || projectInput.colTitle.isEmpty()) {
             params.add("colTitle", "block, confirm, dev, test, sign off")
         } else {
             params.add("colTitle", projectInput.colTitle)
