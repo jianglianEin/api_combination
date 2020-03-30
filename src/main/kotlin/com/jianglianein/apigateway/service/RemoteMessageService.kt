@@ -50,7 +50,7 @@ class RemoteMessageService {
         return resultOutputList
     }
 
-    fun createCommit(commitInput: CommitInput): CommitOutput {
+    fun createCommit(commitInput: CommitInput): CommitType {
         val url = remoteServiceProperties.messageServiceUrl + "/commit/create"
 
         val params = LinkedMultiValueMap<String, Any>()
@@ -60,10 +60,10 @@ class RemoteMessageService {
         params.add("cardId", commitInput.cardId)
 
         val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, CommitOutput::class.java)
+        return objectMapper.readValue(resp, CommitType::class.java)
     }
 
-    fun updateCommit(commitInput: CommitInput): CommitOutput {
+    fun updateCommit(commitInput: CommitInput): CommitType {
         val url = remoteServiceProperties.messageServiceUrl + "/commit/update"
 
         val params = LinkedMultiValueMap<String, Any>()
@@ -72,7 +72,7 @@ class RemoteMessageService {
         params.add("commitId", commitInput.id)
 
         val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, CommitOutput::class.java)
+        return objectMapper.readValue(resp, CommitType::class.java)
 
     }
 
