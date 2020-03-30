@@ -68,8 +68,8 @@ input ProjectInput{
     projectName: String
     creator: String
     teamId: String
-    colTitle: [String]
-    rowTitle: [String]
+    colTitle: String
+    rowTitle: String
     iteration: Int
 }
 
