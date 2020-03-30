@@ -41,7 +41,7 @@ class RemoteMessageService {
             val commitPosResp = future.get()
             val commitPosType = objectMapper.readValue(commitPosResp, CommitPosType::class.java)
             for (commit in commitList) {
-                if (commit.cardId == commitPosType.cardId){
+                if (commit.cardId == commitPosType.cardId) {
                     resultOutputList.add(CommitOutput(commit, commitPosType))
                     break
                 }
@@ -84,5 +84,16 @@ class RemoteMessageService {
 
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, ResultOutput::class.java)
+    }
+
+    fun selectCommentsByCardId(cardId: String): MutableList<CommitType> {
+        val url = remoteServiceProperties.projectServiceUrl + "/commit/getByCardId"
+
+        val params = LinkedMultiValueMap<String, Any>()
+        params.add("cardId", cardId)
+
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        val javaType = objectMapper.typeFactory.constructParametricType(MutableList::class.java, CommitType::class.java)
+        return objectMapper.readValue(resp, javaType)
     }
 }
