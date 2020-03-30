@@ -2,6 +2,7 @@ type Query{
     login(selectionInput: SelectionInput): UserOutput
     logout(username: String): ResultOutput
     getCommitByReceiver(receiver: String): [CommitOutput]
+    selectCommentsByCardId(cardId: String): [CommitType]
     sendEmailToInviteReceiverJoinTeam(emailInput: EmailInput): ResultOutput
     selectTeamByUsername(username: String): [TeamOutput]
     selectUserBySubstring(usernameSubstring: String): [UserOutput]
