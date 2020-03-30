@@ -108,13 +108,24 @@ type UserOutput{
 }
 
 type CommitOutput{
+    commitType: CommitType
+    commitPos: CommitPosType
+}
+
+type CommitPosType{
+    cardId: String
+    boardId: String
+    projectId: String
+}
+
+type CommitType{
     id: String
     description: String
     announcer: String
     receiver: String
     updateTime: String
-    cardId: String
     read: Boolean
+    cardId: String
 }
 
 type ResultOutput{
