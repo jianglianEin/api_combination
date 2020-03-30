@@ -6,6 +6,7 @@ type Query{
     selectTeamByUsername(username: String): [TeamOutput]
     selectUserBySubstring(usernameSubstring: String): [UserOutput]
     selectProjectByCreator(creator: String): [ProjectOutput]
+    selectProjectById(projectId: String): ProjectOutput
     selectBoardsByProjectId(projectId: String): [BoardOutput]
     selectCardsByBoardId(boardId: String): [CardOutput]
 }

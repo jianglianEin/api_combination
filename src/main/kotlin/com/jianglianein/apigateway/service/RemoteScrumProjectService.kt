@@ -170,4 +170,14 @@ class RemoteScrumProjectService {
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, ResultOutput::class.java)
     }
+
+    fun selectProjectsById(projectId: String): ProjectOutput {
+        val url = remoteServiceProperties.projectServiceUrl + "/scrum_project/selectById"
+
+        val params = LinkedMultiValueMap<String, Any>()
+        params.add("projectId", projectId)
+
+        val resp = httpClientService.client(url, HttpMethod.POST, params)
+        return objectMapper.readValue(resp, ProjectOutput::class.java)
+    }
 }

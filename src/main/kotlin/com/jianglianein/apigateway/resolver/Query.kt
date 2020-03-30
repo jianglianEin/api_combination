@@ -72,6 +72,11 @@ class Query : GraphQLQueryResolver {
         return remoteScrumProjectService.selectBoardsByProjectId(projectId)
     }
 
+    fun selectProjectById(projectId: String): ProjectOutput{
+
+        return remoteScrumProjectService.selectProjectsById(projectId)
+    }
+
     fun selectCardsByBoardId(boardId: String): MutableList<CardOutput>{
         logger.info { "selectCardsByBoardId" }
 
