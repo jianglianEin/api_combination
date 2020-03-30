@@ -28,8 +28,8 @@ type Mutation {
     updateCard(selectionInput: SelectionInput): CardOutput
     removeCard(cardId: String): ResultOutput
 
-    createCommit(selectionInput: SelectionInput): CommitOutput
-    updateCommit(selectionInput: SelectionInput): CommitOutput
+    createCommit(selectionInput: SelectionInput): CommitType
+    updateCommit(selectionInput: SelectionInput): CommitType
     removeCommit(commitId: String): ResultOutput
 }
 
