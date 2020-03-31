@@ -1,8 +1,8 @@
 type Query{
     login(selectionInput: SelectionInput): UserOutput
     logout(username: String): ResultOutput
-    getCommitByReceiver(receiver: String): [CommitOutput]
-    selectCommentsByCardId(cardId: String): [CommitWithAnnouncerOutput]
+    getCommitByReceiver(receiver: String): [CommitPosOutput]
+    selectCommentsByCardId(cardId: String): [CommitTypeOutput]
     sendEmailToInviteReceiverJoinTeam(emailInput: EmailInput): ResultOutput
     selectTeamByUsername(username: String): [TeamOutput]
     selectUserBySubstring(usernameSubstring: String): [UserOutput]
@@ -30,8 +30,8 @@ type Mutation {
     updateCard(selectionInput: SelectionInput): CardOutput
     removeCard(cardId: String): ResultOutput
 
-    createCommit(selectionInput: SelectionInput): CommitType
-    updateCommit(selectionInput: SelectionInput): CommitType
+    createCommit(selectionInput: SelectionInput): CommitTypeOutput
+    updateCommit(selectionInput: SelectionInput): CommitTypeOutput
     removeCommit(commitId: String): ResultOutput
 }
 
@@ -109,7 +109,7 @@ type UserOutput{
     power: String
 }
 
-type CommitOutput{
+type CommitPosOutput{
     commitType: CommitType
     commitPos: CommitPosType
 }
@@ -130,7 +130,7 @@ type CommitType{
     cardId: String
 }
 
-type CommitWithAnnouncerOutput{
+type CommitTypeOutput{
     id: String
     description: String
     announcer: UserOutput

@@ -94,13 +94,13 @@ class Mutation : GraphQLMutationResolver {
         return remoteScrumProjectService.removeCard(cardId)
     }
 
-    fun createCommit(selectionInput: SelectionInput): CommitType {
+    fun createCommit(selectionInput: SelectionInput): CommitTypeOutput {
         logger.info { "createCommit" }
 
         return remoteMessageService.createCommit(selectionInput.commitInput!!)
     }
 
-    fun updateCommit(selectionInput: SelectionInput): CommitType {
+    fun updateCommit(selectionInput: SelectionInput): CommitTypeOutput {
         logger.info { "updateCommit" }
 
         return remoteMessageService.updateCommit(selectionInput.commitInput!!)

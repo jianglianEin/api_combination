@@ -20,7 +20,7 @@ class RemoteMessageService {
     @Autowired
     private lateinit var asyncHelperService: AsyncHelperService
 
-    fun getCommitByReceiver(receiver: String): MutableList<CommitOutput> {
+    fun getCommitByReceiver(receiver: String): MutableList<CommitPosOutput> {
         val url = remoteServiceProperties.messageServiceUrl + "/commit/getByReceiver"
 
         val params = LinkedMultiValueMap<String, Any>()
@@ -29,7 +29,7 @@ class RemoteMessageService {
         val javaType = objectMapper.typeFactory.constructParametricType(MutableList::class.java, CommitType::class.java)
         val commitList: MutableList<CommitType> = objectMapper.readValue(resp, javaType)
 
-        val resultOutputList = mutableListOf<CommitOutput>()
+        val resultOutputList = mutableListOf<CommitPosOutput>()
         val commitPosFutureRespList = mutableListOf<Future<String>>()
 
         commitList.map {
@@ -42,7 +42,7 @@ class RemoteMessageService {
             val commitPosType = objectMapper.readValue(commitPosResp, CommitPosType::class.java)
             for (commit in commitList) {
                 if (commit.cardId == commitPosType.cardId) {
-                    resultOutputList.add(CommitOutput(commit, commitPosType))
+                    resultOutputList.add(CommitPosOutput(commit, commitPosType))
                     break
                 }
             }
@@ -50,7 +50,7 @@ class RemoteMessageService {
         return resultOutputList
     }
 
-    fun createCommit(commitInput: CommitInput): CommitType {
+    fun createCommit(commitInput: CommitInput): CommitTypeOutput {
         val url = remoteServiceProperties.messageServiceUrl + "/commit/create"
 
         val params = LinkedMultiValueMap<String, Any>()
@@ -60,10 +60,15 @@ class RemoteMessageService {
         params.add("cardId", commitInput.cardId)
 
         val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, CommitType::class.java)
+        val commit = objectMapper.readValue(resp, CommitType::class.java)
+
+        val announcerRestFuture = asyncHelperService.selectAnnouncer(announcer = commit.announcer!!)
+        val announcer = objectMapper.readValue(announcerRestFuture.get(), UserOutput::class.java)
+
+        return CommitTypeOutput(commit, announcer)
     }
 
-    fun updateCommit(commitInput: CommitInput): CommitType {
+    fun updateCommit(commitInput: CommitInput): CommitTypeOutput {
         val url = remoteServiceProperties.messageServiceUrl + "/commit/update"
 
         val params = LinkedMultiValueMap<String, Any>()
@@ -72,7 +77,12 @@ class RemoteMessageService {
         params.add("commitId", commitInput.id)
 
         val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, CommitType::class.java)
+        val commit = objectMapper.readValue(resp, CommitType::class.java)
+
+        val announcerRestFuture = asyncHelperService.selectAnnouncer(announcer = commit.announcer!!)
+        val announcer = objectMapper.readValue(announcerRestFuture.get(), UserOutput::class.java)
+
+        return CommitTypeOutput(commit, announcer)
 
     }
 
@@ -86,7 +96,7 @@ class RemoteMessageService {
         return objectMapper.readValue(resp, ResultOutput::class.java)
     }
 
-    fun selectCommentsByCardId(cardId: String): MutableList<CommitWithAnnouncerOutput> {
+    fun selectCommentsByCardId(cardId: String): MutableList<CommitTypeOutput> {
         val url = remoteServiceProperties.messageServiceUrl + "/commit/getByCardId"
 
         val params = LinkedMultiValueMap<String, Any>()
@@ -96,7 +106,7 @@ class RemoteMessageService {
         val javaType = objectMapper.typeFactory.constructParametricType(MutableList::class.java, CommitType::class.java)
         val commitTypeList: MutableList<CommitType> = objectMapper.readValue(resp, javaType)
 
-        val resultOutputList = mutableListOf<CommitWithAnnouncerOutput>()
+        val resultOutputList = mutableListOf<CommitTypeOutput>()
         val announcerFutureRespList = mutableListOf<Future<String>>()
 
         findAnnouncerInfoAsync(commitTypeList, announcerFutureRespList, resultOutputList)
@@ -106,7 +116,7 @@ class RemoteMessageService {
 
     private fun findAnnouncerInfoAsync(commitTypeList: MutableList<CommitType>,
                                        announcerFutureRespList: MutableList<Future<String>>,
-                                       resultOutputList: MutableList<CommitWithAnnouncerOutput>) {
+                                       resultOutputList: MutableList<CommitTypeOutput>) {
         commitTypeList.map {
             val announcerFutureResp: Future<String> = asyncHelperService.selectAnnouncer(it.announcer!!)
             announcerFutureRespList.add(announcerFutureResp)
@@ -117,13 +127,8 @@ class RemoteMessageService {
             val announcer = objectMapper.readValue(announcerPosResp, UserOutput::class.java)
             for (commit in commitTypeList) {
                 if (commit.announcer == announcer.username) {
-                    resultOutputList.add(CommitWithAnnouncerOutput(id = commit.id,
-                            description = commit.description,
-                            announcer = announcer,
-                            receiver = commit.receiver,
-                            updateTime = commit.updateTime,
-                            read = commit.read,
-                            cardId = commit.cardId))
+                    resultOutputList.add(CommitTypeOutput(commit, announcer))
+                    commitTypeList.remove(commit)
                     break
                 }
             }

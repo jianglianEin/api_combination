@@ -42,7 +42,7 @@ class Query : GraphQLQueryResolver {
         return remotePeopleService.selectUserBySubstring(usernameSubstring)
     }
 
-    fun getCommitByReceiver(receiver: String): MutableList<CommitOutput> {
+    fun getCommitByReceiver(receiver: String): MutableList<CommitPosOutput> {
         logger.info { "getCommitByReceiver" }
 
         return remoteMessageService.getCommitByReceiver(receiver)
@@ -83,7 +83,7 @@ class Query : GraphQLQueryResolver {
         return remoteScrumProjectService.selectCardsByBoardId(boardId)
     }
 
-    fun selectCommentsByCardId(cardId: String): MutableList<CommitWithAnnouncerOutput>{
+    fun selectCommentsByCardId(cardId: String): MutableList<CommitTypeOutput>{
         logger.info { "selectCommentsByCardId" }
 
         return remoteMessageService.selectCommentsByCardId(cardId)
