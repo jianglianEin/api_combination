@@ -83,7 +83,7 @@ class Query : GraphQLQueryResolver {
         return remoteScrumProjectService.selectCardsByBoardId(boardId)
     }
 
-    fun selectCommentsByCardId(cardId: String): MutableList<CommitType>{
+    fun selectCommentsByCardId(cardId: String): MutableList<CommitWithAnnouncerOutput>{
         logger.info { "selectCommentsByCardId" }
 
         return remoteMessageService.selectCommentsByCardId(cardId)

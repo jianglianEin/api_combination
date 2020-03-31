@@ -86,7 +86,7 @@ class RemoteMessageService {
         return objectMapper.readValue(resp, ResultOutput::class.java)
     }
 
-    fun selectCommentsByCardId(cardId: String): MutableList<CommitType> {
+    fun selectCommentsByCardId(cardId: String): MutableList<CommitWithAnnouncerOutput> {
         val url = remoteServiceProperties.messageServiceUrl + "/commit/getByCardId"
 
         val params = LinkedMultiValueMap<String, Any>()
@@ -94,6 +94,39 @@ class RemoteMessageService {
 
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         val javaType = objectMapper.typeFactory.constructParametricType(MutableList::class.java, CommitType::class.java)
-        return objectMapper.readValue(resp, javaType)
+        val commitTypeList: MutableList<CommitType> = objectMapper.readValue(resp, javaType)
+
+        val resultOutputList = mutableListOf<CommitWithAnnouncerOutput>()
+        val announcerFutureRespList = mutableListOf<Future<String>>()
+
+        findAnnouncerInfoAsync(commitTypeList, announcerFutureRespList, resultOutputList)
+
+        return resultOutputList
+    }
+
+    private fun findAnnouncerInfoAsync(commitTypeList: MutableList<CommitType>,
+                                       announcerFutureRespList: MutableList<Future<String>>,
+                                       resultOutputList: MutableList<CommitWithAnnouncerOutput>) {
+        commitTypeList.map {
+            val announcerFutureResp: Future<String> = asyncHelperService.selectAnnouncer(it.announcer!!)
+            announcerFutureRespList.add(announcerFutureResp)
+        }
+
+        for (future in announcerFutureRespList) {
+            val announcerPosResp = future.get()
+            val announcer = objectMapper.readValue(announcerPosResp, UserOutput::class.java)
+            for (commit in commitTypeList) {
+                if (commit.announcer == announcer.username) {
+                    resultOutputList.add(CommitWithAnnouncerOutput(id = commit.id,
+                            description = commit.description,
+                            announcer = announcer,
+                            receiver = commit.receiver,
+                            updateTime = commit.updateTime,
+                            read = commit.read,
+                            cardId = commit.cardId))
+                    break
+                }
+            }
+        }
     }
 }

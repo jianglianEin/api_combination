@@ -25,4 +25,14 @@ class AsyncHelperService {
         val resp = httpClientService.client(projectUrl, HttpMethod.POST, selectCardPosParams)
         return AsyncResult<String>(resp)
     }
+
+    @Async
+    fun selectAnnouncer(announcer: String): Future<String>{
+        val peopleUrl = remoteServiceProperties.peopleServiceUrl + "/user/selectByName"
+        val selectCardPosParams = LinkedMultiValueMap<String, Any>()
+        selectCardPosParams.add("username", announcer)
+        val resp = httpClientService.client(peopleUrl, HttpMethod.POST, selectCardPosParams)
+        return AsyncResult<String>(resp)
+    }
+
 }

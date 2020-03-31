@@ -2,7 +2,7 @@ type Query{
     login(selectionInput: SelectionInput): UserOutput
     logout(username: String): ResultOutput
     getCommitByReceiver(receiver: String): [CommitOutput]
-    selectCommentsByCardId(cardId: String): [CommitType]
+    selectCommentsByCardId(cardId: String): [CommitWithAnnouncerOutput]
     sendEmailToInviteReceiverJoinTeam(emailInput: EmailInput): ResultOutput
     selectTeamByUsername(username: String): [TeamOutput]
     selectUserBySubstring(usernameSubstring: String): [UserOutput]
@@ -124,6 +124,16 @@ type CommitType{
     id: String
     description: String
     announcer: String
+    receiver: String
+    updateTime: String
+    read: Boolean
+    cardId: String
+}
+
+type CommitWithAnnouncerOutput{
+    id: String
+    description: String
+    announcer: UserOutput
     receiver: String
     updateTime: String
     read: Boolean
