@@ -77,7 +77,7 @@ class RemotePeopleService {
 
         val params = LinkedMultiValueMap<String, Any>()
         params.add("receiverMail", emailInput.receiverMail)
-        params.add("announcer", emailInput.receiver)
+        params.add("receiver", emailInput.receiver)
         params.add("teamId", emailInput.teamId)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, ResultOutput::class.java)
