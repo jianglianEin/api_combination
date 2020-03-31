@@ -60,6 +60,12 @@ class Query : GraphQLQueryResolver {
         return remotePeopleService.selectTeamByUsername(username)
     }
 
+    fun selectPeopleByTeamId(teamId: String): MutableList<UserOutput> {
+        logger.info { "selectPeopleByTeamId" }
+
+        return remotePeopleService.selectPeopleByTeam(teamId)
+    }
+
     fun selectProjectByCreator(creator: String): MutableList<ProjectOutput> {
         logger.info { "selectProjectByCreator" }
 

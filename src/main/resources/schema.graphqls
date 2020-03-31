@@ -5,6 +5,7 @@ type Query{
     selectCommentsByCardId(cardId: String): [CommitTypeOutput]
     sendEmailToInviteReceiverJoinTeam(emailInput: EmailInput): ResultOutput
     selectTeamByUsername(username: String): [TeamOutput]
+    selectPeopleByTeamId(teamId: String): [UserOutput]
     selectUserBySubstring(usernameSubstring: String): [UserOutput]
     selectProjectByCreator(creator: String): [ProjectOutput]
     selectProjectById(projectId: String): ProjectOutput
