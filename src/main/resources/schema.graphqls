@@ -47,7 +47,7 @@ input SelectionInput{
 
 input EmailInput{
     receiverMail: String
-    announcer: String
+    receiver: String
     teamId: String
 }
 
