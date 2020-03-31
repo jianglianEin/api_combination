@@ -1,7 +1,6 @@
 package com.jianglianein.apigateway.service
 
 import com.jianglianein.apigateway.config.microserviceproperty.RemoteServiceProperties
-import com.jianglianein.apigateway.model.type.CommitType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpMethod
 import org.springframework.scheduling.annotation.Async
@@ -18,10 +17,10 @@ class AsyncHelperService {
     private lateinit var httpClientService: HttpClientService
 
     @Async
-    fun selectCardPosAsync(it: CommitType): Future<String>{
+    fun selectCardPosAsync(cardId: String): Future<String>{
         val projectUrl = remoteServiceProperties.projectServiceUrl + "/card/selectCardPosById"
         val selectCardPosParams = LinkedMultiValueMap<String, Any>()
-        selectCardPosParams.add("cardId", it.cardId)
+        selectCardPosParams.add("cardId", cardId)
         val resp = httpClientService.client(projectUrl, HttpMethod.POST, selectCardPosParams)
         return AsyncResult<String>(resp)
     }

@@ -29,11 +29,21 @@ class RemoteMessageService {
         val javaType = objectMapper.typeFactory.constructParametricType(MutableList::class.java, CommitType::class.java)
         val commitList: MutableList<CommitType> = objectMapper.readValue(resp, javaType)
 
+        val commitTypeOutputList = mutableListOf<CommitTypeOutput>()
+        val announcerFutureRespList = mutableListOf<Future<String>>()
+
+        findAnnouncerInfoAsync(commitList, announcerFutureRespList, commitTypeOutputList)
+
+        val resultOutputList = findCardPosAsync(commitTypeOutputList)
+        return resultOutputList
+    }
+
+    private fun findCardPosAsync(commitList: MutableList<CommitTypeOutput>): MutableList<CommitPosOutput> {
         val resultOutputList = mutableListOf<CommitPosOutput>()
         val commitPosFutureRespList = mutableListOf<Future<String>>()
 
         commitList.map {
-            val commitPosFutureResp: Future<String> = asyncHelperService.selectCardPosAsync(it)
+            val commitPosFutureResp: Future<String> = asyncHelperService.selectCardPosAsync(it.cardId!!)
             commitPosFutureRespList.add(commitPosFutureResp)
         }
 
@@ -43,6 +53,7 @@ class RemoteMessageService {
             for (commit in commitList) {
                 if (commit.cardId == commitPosType.cardId) {
                     resultOutputList.add(CommitPosOutput(commit, commitPosType))
+                    commitList.remove(commit)
                     break
                 }
             }

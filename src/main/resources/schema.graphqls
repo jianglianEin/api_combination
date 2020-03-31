@@ -111,7 +111,7 @@ type UserOutput{
 }
 
 type CommitPosOutput{
-    commitType: CommitType
+    commitType: CommitTypeOutput
     commitPos: CommitPosType
 }
 
