@@ -87,7 +87,7 @@ class RemoteMessageService {
     }
 
     fun selectCommentsByCardId(cardId: String): MutableList<CommitType> {
-        val url = remoteServiceProperties.projectServiceUrl + "/commit/getByCardId"
+        val url = remoteServiceProperties.messageServiceUrl + "/commit/getByCardId"
 
         val params = LinkedMultiValueMap<String, Any>()
         params.add("cardId", cardId)
