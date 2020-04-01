@@ -37,4 +37,9 @@ class ApiGateWayResource {
         val targetFile = File(path, fileName)
         return uploadService.createFileAndReturnResult(icon, targetFile)
     }
+//
+//    @PostMapping("/api/checkAuth")
+//    fun checkAuth(@RequestParam("function") functionName: String): ResultOutput{
+//
+//    }
 }

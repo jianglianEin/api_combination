@@ -66,7 +66,7 @@ class Query : GraphQLQueryResolver {
         return remotePeopleService.selectPeopleByTeam(teamId)
     }
 
-    fun selectProjectByCreator(creator: String): MutableList<ProjectOutput> {
+    fun selectProjectByCreator(creator: String): ArrayList<ProjectOutput> {
         logger.info { "selectProjectByCreator" }
 
         return remoteScrumProjectService.selectProjectsByCreator(creator)

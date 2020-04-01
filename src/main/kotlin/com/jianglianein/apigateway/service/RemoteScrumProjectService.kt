@@ -22,7 +22,7 @@ class RemoteScrumProjectService {
     @Autowired
     private lateinit var asyncHelperService: AsyncHelperService
 
-    fun selectProjectsByCreator(creator: String): MutableList<ProjectOutput> {
+    fun selectProjectsByCreator(creator: String): ArrayList<ProjectOutput> {
         val url = remoteServiceProperties.projectServiceUrl + "/scrum_project/selectByCreator"
 
         val params = LinkedMultiValueMap<String, Any>()
@@ -43,7 +43,7 @@ class RemoteScrumProjectService {
         for (projectJoinByTeamRespFuture in projectJoinByTeamRespFutures){
             projectsResult.addAll(objectMapper.readValue(projectJoinByTeamRespFuture.get(), javaType))
         }
-        return projectsResult
+        return ArrayList<ProjectOutput>(LinkedHashSet<ProjectOutput>(projectsResult));
     }
 
     fun createProject(projectInput: ProjectInput): ProjectOutput {
