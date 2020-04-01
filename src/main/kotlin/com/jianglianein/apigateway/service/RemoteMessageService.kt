@@ -73,7 +73,7 @@ class RemoteMessageService {
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         val commit = objectMapper.readValue(resp, CommitType::class.java)
 
-        val announcerRestFuture = asyncHelperService.selectAnnouncer(announcer = commit.announcer!!)
+        val announcerRestFuture = asyncHelperService.selectAnnouncerAsync(announcer = commit.announcer!!)
         val announcer = objectMapper.readValue(announcerRestFuture.get(), UserOutput::class.java)
 
         return CommitTypeOutput(commit, announcer)
@@ -90,7 +90,7 @@ class RemoteMessageService {
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         val commit = objectMapper.readValue(resp, CommitType::class.java)
 
-        val announcerRestFuture = asyncHelperService.selectAnnouncer(announcer = commit.announcer!!)
+        val announcerRestFuture = asyncHelperService.selectAnnouncerAsync(announcer = commit.announcer!!)
         val announcer = objectMapper.readValue(announcerRestFuture.get(), UserOutput::class.java)
 
         return CommitTypeOutput(commit, announcer)
@@ -129,7 +129,7 @@ class RemoteMessageService {
                                        announcerFutureRespList: MutableList<Future<String>>,
                                        resultOutputList: MutableList<CommitTypeOutput>) {
         commitTypeList.map {
-            val announcerFutureResp: Future<String> = asyncHelperService.selectAnnouncer(it.announcer!!)
+            val announcerFutureResp: Future<String> = asyncHelperService.selectAnnouncerAsync(it.announcer!!)
             announcerFutureRespList.add(announcerFutureResp)
         }
 

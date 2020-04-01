@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
 import org.springframework.util.LinkedMultiValueMap
+import java.util.concurrent.Future
 
 @Service
 class RemoteScrumProjectService {
@@ -16,6 +17,10 @@ class RemoteScrumProjectService {
     private lateinit var objectMapper: ObjectMapper
     @Autowired
     private lateinit var httpClientService: HttpClientService
+    @Autowired
+    private lateinit var remotePeopleService: RemotePeopleService
+    @Autowired
+    private lateinit var asyncHelperService: AsyncHelperService
 
     fun selectProjectsByCreator(creator: String): MutableList<ProjectOutput> {
         val url = remoteServiceProperties.projectServiceUrl + "/scrum_project/selectByCreator"
@@ -24,7 +29,21 @@ class RemoteScrumProjectService {
         params.add("creator", creator)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         val javaType = objectMapper.typeFactory.constructParametricType(MutableList::class.java, ProjectOutput::class.java)
-        return objectMapper.readValue(resp, javaType)
+        val projectsResult: MutableList<ProjectOutput> = objectMapper.readValue(resp, javaType)
+
+        val teamsThatUserJoin = remotePeopleService.selectTeamByUsername(creator)
+
+        val projectUrl = remoteServiceProperties.projectServiceUrl + "/scrum_project/selectByTeam"
+        val projectJoinByTeamRespFutures = mutableListOf<Future<String>>()
+
+        teamsThatUserJoin.map {
+            projectJoinByTeamRespFutures.add(asyncHelperService.selectProjectByTeamAsync(it, projectUrl))
+        }
+
+        for (projectJoinByTeamRespFuture in projectJoinByTeamRespFutures){
+            projectsResult.addAll(objectMapper.readValue(projectJoinByTeamRespFuture.get(), javaType))
+        }
+        return projectsResult
     }
 
     fun createProject(projectInput: ProjectInput): ProjectOutput {
