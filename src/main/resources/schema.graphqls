@@ -1,16 +1,16 @@
 type Query{
     login(selectionInput: SelectionInput): UserOutput
-    logout(username: String): ResultOutput
-    getCommitByReceiver(receiver: String): [CommitPosOutput]
-    selectCommentsByCardId(cardId: String): [CommitTypeOutput]
-    sendEmailToInviteReceiverJoinTeam(emailInput: EmailInput): ResultOutput
-    selectTeamByUsername(username: String): [TeamOutput]
-    selectPeopleByTeamId(teamId: String): [UserOutput]
-    selectUserBySubstring(usernameSubstring: String): [UserOutput]
-    selectProjectByCreator(creator: String): [ProjectOutput]
-    selectProjectById(projectId: String): ProjectOutput
-    selectBoardsByProjectId(projectId: String): [BoardOutput]
-    selectCardsByBoardId(boardId: String): [CardOutput]
+    logout(selectionInput: SelectionInput): ResultOutput
+    selectUserBySubstring(selectionInput: SelectionInput): [UserOutput]
+    getCommitByReceiver(selectionInput: SelectionInput): [CommitPosOutput]
+    selectCommentsByCardId(selectionInput: SelectionInput): [CommitTypeOutput]
+    sendEmailToInviteReceiverJoinTeam(selectionInput: SelectionInput): ResultOutput
+    selectTeamByUsername(selectionInput: SelectionInput): [TeamOutput]
+    selectPeopleByTeamId(selectionInput: SelectionInput): [UserOutput]
+    selectProjectByCreator(selectionInput: SelectionInput): [ProjectOutput]
+    selectProjectById(selectionInput: SelectionInput): ProjectOutput
+    selectBoardsByProjectId(selectionInput: SelectionInput): [BoardOutput]
+    selectCardsByBoardId(selectionInput: SelectionInput): [CardOutput]
 }
 
 type Mutation {
@@ -22,18 +22,18 @@ type Mutation {
 
     createProject(selectionInput: SelectionInput): ProjectOutput
     updateProject(selectionInput: SelectionInput): ProjectOutput
-    removeProject(projectId: String): ResultOutput
+    removeProject(selectionInput: SelectionInput): ResultOutput
 
     createBoard(selectionInput: SelectionInput): BoardOutput
-    removeBoard(boardId: String): ResultOutput
+    removeBoard(selectionInput: SelectionInput): ResultOutput
 
     createCard(selectionInput: SelectionInput): CardOutput
     updateCard(selectionInput: SelectionInput): CardOutput
-    removeCard(cardId: String): ResultOutput
+    removeCard(selectionInput: SelectionInput): ResultOutput
 
     createCommit(selectionInput: SelectionInput): CommitTypeOutput
     updateCommit(selectionInput: SelectionInput): CommitTypeOutput
-    removeCommit(commitId: String): ResultOutput
+    removeCommit(selectionInput: SelectionInput): ResultOutput
 }
 
 input SelectionInput{
@@ -43,6 +43,7 @@ input SelectionInput{
     boardInput: BoardInput
     cardInput: CardInput
     commitInput: CommitInput
+    emailInput: EmailInput
 }
 
 input EmailInput{
@@ -77,6 +78,7 @@ input ProjectInput{
 }
 
 input BoardInput{
+    id: String
     projectId: String
 }
 

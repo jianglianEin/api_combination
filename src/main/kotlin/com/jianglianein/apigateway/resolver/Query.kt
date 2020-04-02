@@ -30,68 +30,68 @@ class Query : GraphQLQueryResolver {
         return remotePeopleService.loginByPeopleService(selectionInput)
     }
 
-    fun logout(username: String): ResultOutput {
+    fun logout(selectionInput: SelectionInput): ResultOutput {
         logger.info { "logout" }
 
-        return remotePeopleService.logoutByPeopleService(username)
+        return remotePeopleService.logoutByPeopleService(selectionInput.userInput!!.username!!)
     }
 
-    fun selectUserBySubstring(usernameSubstring: String): MutableList<UserOutput> {
+    fun selectUserBySubstring(selectionInput: SelectionInput): MutableList<UserOutput> {
         logger.info { "selectUserBySubstring" }
 
-        return remotePeopleService.selectUserBySubstring(usernameSubstring)
+        return remotePeopleService.selectUserBySubstring(selectionInput.userInput!!.username!!)
     }
 
-    fun getCommitByReceiver(receiver: String): MutableList<CommitPosOutput> {
+    fun getCommitByReceiver(selectionInput: SelectionInput): MutableList<CommitPosOutput> {
         logger.info { "getCommitByReceiver" }
 
-        return remoteMessageService.getCommitByReceiver(receiver)
+        return remoteMessageService.getCommitByReceiver(selectionInput.commitInput!!.receiver!!)
     }
     
-    fun sendEmailToInviteReceiverJoinTeam(emailInput: EmailInput): ResultOutput {
+    fun sendEmailToInviteReceiverJoinTeam(selectionInput: SelectionInput): ResultOutput {
         logger.info { "sendEmailToInviteReceiverJoinTeam" }
 
-        return remotePeopleService.sendEmailToInviteReceiver(emailInput)
+        return remotePeopleService.sendEmailToInviteReceiver(selectionInput.emailInput!!)
     }
 
-    fun selectTeamByUsername(username: String): MutableList<TeamOutPut> {
+    fun selectTeamByUsername(selectionInput: SelectionInput): MutableList<TeamOutPut> {
         logger.info { "selectTeamByUsername" }
 
-        return remotePeopleService.selectTeamByUsername(username)
+        return remotePeopleService.selectTeamByUsername(selectionInput.userInput!!.username!!)
     }
 
-    fun selectPeopleByTeamId(teamId: String): MutableList<UserOutput> {
+    fun selectPeopleByTeamId(selectionInput: SelectionInput): MutableList<UserOutput> {
         logger.info { "selectPeopleByTeamId" }
 
-        return remotePeopleService.selectPeopleByTeam(teamId)
+        return remotePeopleService.selectPeopleByTeam(selectionInput.teamInput!!.id!!)
     }
 
-    fun selectProjectByCreator(creator: String): ArrayList<ProjectOutput> {
+    fun selectProjectByCreator(selectionInput: SelectionInput): ArrayList<ProjectOutput> {
         logger.info { "selectProjectByCreator" }
 
-        return remoteScrumProjectService.selectProjectsByCreator(creator)
+        return remoteScrumProjectService.selectProjectsByCreator(selectionInput.projectInput!!.creator!!)
     }
 
-    fun selectBoardsByProjectId(projectId: String): MutableList<BoardOutput>{
+    fun selectBoardsByProjectId(selectionInput: SelectionInput): MutableList<BoardOutput>{
         logger.info { "selectBoardsByProjectId" }
 
-        return remoteScrumProjectService.selectBoardsByProjectId(projectId)
+        return remoteScrumProjectService.selectBoardsByProjectId(selectionInput.boardInput!!.projectId!!)
     }
 
-    fun selectProjectById(projectId: String): ProjectOutput{
+    fun selectProjectById(selectionInput: SelectionInput): ProjectOutput{
 
-        return remoteScrumProjectService.selectProjectsById(projectId)
+        return remoteScrumProjectService.selectProjectsById(selectionInput.projectInput!!.id!!)
     }
 
-    fun selectCardsByBoardId(boardId: String): MutableList<CardOutput>{
+    fun selectCardsByBoardId(selectionInput: SelectionInput): MutableList<CardOutput>{
         logger.info { "selectCardsByBoardId" }
 
-        return remoteScrumProjectService.selectCardsByBoardId(boardId)
+        return remoteScrumProjectService.selectCardsByBoardId(selectionInput.cardInput!!.boardId!!)
     }
 
-    fun selectCommentsByCardId(cardId: String): MutableList<CommitTypeOutput>{
+    fun selectCommentsByCardId(selectionInput: SelectionInput): MutableList<CommitTypeOutput>{
         logger.info { "selectCommentsByCardId" }
 
-        return remoteMessageService.selectCommentsByCardId(cardId)
+        return remoteMessageService.selectCommentsByCardId(selectionInput.commitInput!!.cardId!!)
     }
 }

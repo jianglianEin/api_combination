@@ -58,10 +58,10 @@ class Mutation : GraphQLMutationResolver {
         return remoteScrumProjectService.updateProject(selectionInput.projectInput!!)
     }
 
-    fun removeProject(projectId: String): ResultOutput {
+    fun removeProject(selectionInput: SelectionInput): ResultOutput {
         logger.info { "removeProject" }
 
-        return remoteScrumProjectService.removeProject(projectId)
+        return remoteScrumProjectService.removeProject(selectionInput.projectInput!!.id!!)
     }
 
     fun createBoard(selectionInput: SelectionInput): BoardOutput {
@@ -70,10 +70,10 @@ class Mutation : GraphQLMutationResolver {
         return remoteScrumProjectService.createBoard(selectionInput.boardInput!!)
     }
 
-    fun removeBoard(boardId: String): ResultOutput {
+    fun removeBoard(selectionInput: SelectionInput): ResultOutput {
         logger.info { "removeBoard" }
 
-        return remoteScrumProjectService.removeBoard(boardId)
+        return remoteScrumProjectService.removeBoard(selectionInput.boardInput!!.id!!)
     }
 
     fun createCard(selectionInput: SelectionInput): CardOutput {
@@ -88,10 +88,10 @@ class Mutation : GraphQLMutationResolver {
         return remoteScrumProjectService.updateCard(selectionInput.cardInput!!)
     }
 
-    fun removeCard(cardId: String): ResultOutput {
+    fun removeCard(selectionInput: SelectionInput): ResultOutput {
         logger.info { "removeCard" }
 
-        return remoteScrumProjectService.removeCard(cardId)
+        return remoteScrumProjectService.removeCard(selectionInput.cardInput!!.id!!)
     }
 
     fun createCommit(selectionInput: SelectionInput): CommitTypeOutput {
@@ -106,9 +106,9 @@ class Mutation : GraphQLMutationResolver {
         return remoteMessageService.updateCommit(selectionInput.commitInput!!)
     }
 
-    fun removeCommit(commitId: String): ResultOutput {
+    fun removeCommit(selectionInput: SelectionInput): ResultOutput {
         logger.info { "removeCommit" }
 
-        return remoteMessageService.removeCommit(commitId)
+        return remoteMessageService.removeCommit(selectionInput.commitInput!!.id!!)
     }
 }
