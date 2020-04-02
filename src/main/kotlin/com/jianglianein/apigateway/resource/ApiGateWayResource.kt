@@ -1,6 +1,9 @@
 package com.jianglianein.apigateway.resource
 
 import com.jianglianein.apigateway.config.EnvProperties
+import com.jianglianein.apigateway.model.enum.FunctionNameAuth0
+import com.jianglianein.apigateway.model.enum.FunctionNameAuth1
+import com.jianglianein.apigateway.model.enum.FunctionNameAuth2
 import com.jianglianein.apigateway.model.type.ResultOutput
 import com.jianglianein.apigateway.service.UploadService
 import mu.KotlinLogging
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
 import javax.servlet.http.HttpServletRequest
+
 
 
 @RestController
@@ -37,9 +41,29 @@ class ApiGateWayResource {
         val targetFile = File(path, fileName)
         return uploadService.createFileAndReturnResult(icon, targetFile)
     }
-//
-//    @PostMapping("/api/checkAuth")
-//    fun checkAuth(@RequestParam("function") functionName: String): ResultOutput{
-//
-//    }
+
+    @PostMapping("/api/checkAuth")
+    fun checkAuth(@RequestParam("functionName") functionName: String,
+                  @RequestParam("username") username: String?,
+                  @RequestParam("teamId") teamId: String?,
+                  @RequestParam("projectId") projectId: String?,
+                  @RequestParam("boardId") boardId: String?,
+                  @RequestParam("cardId") cardId: String?,
+                  @RequestParam("commentId") commentId: String?): ResultOutput{
+        when{
+            FunctionNameAuth0.values().contains(FunctionNameAuth0.valueOf(functionName)) -> {
+                return ResultOutput(true, "Auth0 ok")
+            }
+
+            FunctionNameAuth1.values().contains(FunctionNameAuth1.valueOf(functionName)) -> {
+                return ResultOutput(true, "Auth1 ok")
+            }
+
+            FunctionNameAuth2.values().contains(FunctionNameAuth2.valueOf(functionName)) -> {
+                return ResultOutput(true, "Auth2 ok")
+            }
+        }
+
+        return ResultOutput(false, "no function mapping")
+    }
 }
