@@ -52,26 +52,25 @@ class ApiGateWayResource {
                   @RequestParam("commentId") commentId: String?): ResultOutput{
 
 
-        when{
+        return when{
             FunctionNameAuth0.values().map {
-                it.toString()
+                it.functionName
             }.contains(functionName) -> {
-                return ResultOutput(true, "Auth0 ok")
+                ResultOutput(true, "Auth0 ok")
             }
 
             FunctionNameAuth1.values().map {
-                it.toString()
+                it.functionName
             }.contains(functionName) -> {
-                return ResultOutput(true, "Auth1 ok")
+                ResultOutput(true, "Auth1 ok")
             }
 
             FunctionNameAuth2.values().map {
-                it.toString()
+                it.functionName
             }.contains(functionName) -> {
-                return ResultOutput(true, "Auth2 ok")
+                ResultOutput(true, "Auth2 ok")
             }
+            else -> ResultOutput(false, "no function mapping")
         }
-
-        return ResultOutput(false, "no function mapping")
     }
 }

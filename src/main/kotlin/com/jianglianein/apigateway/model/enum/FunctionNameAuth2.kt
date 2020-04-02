@@ -1,39 +1,39 @@
 package com.jianglianein.apigateway.model.enum
 
-enum class FunctionNameAuth2 {
+enum class FunctionNameAuth2(val functionName: String) {
     /*
     *  0 everyone(no parameter
     *  1 after user login(cookie
     *  2 team project api(cookie and verify parameter
     * */
 //2
-    logout,
-    updateUser,
-    createTeam,
-    createProject,
-    createBoard,
-    createCard,
-    createCommit,
-    getCommitByReceiver,
-    selectTeamByUsername,
-    selectProjectByCreator,
+    LOGOUT("logout"),
+    UPDATE_USER("updateUser"),
+    CREATE_TEAM("createTeam"),
+    CREATE_PROJECT("createProject"),
+    CREATE_BOARD("createBoard"),
+    CREATE_CARD("createCard"),
+    CREATE_COMMIT("createCommit"),
+    GET_COMMIT_BY_RECEIVER("getCommitByReceiver"),
+    SELECT_TEAM_BY_USERNAME("selectTeamByUsername"),
+    SELECT_PROJECT_BY_CREATOR("selectProjectByCreator"),
 
-    updateTeam,
-    sendEmailToInviteReceiverJoinTeam,
-    selectPeopleByTeamId,
+    UPDATE_TEAM("updateTeam"),
+    SEND_EMAIL_TO_INVITE_RECEIVER_JOIN_TEAM("sendEmailToInviteReceiverJoinTeam"),
+    SELECT_PEOPLE_BY_TEAM_ID("selectPeopleByTeamId"),
 
-    updateProject,
-    removeProject,
-    selectProjectById,
-    selectBoardsByProjectId,
+    UPDATE_PROJECT("updateProject"),
+    REMOVE_PROJECT("removeProject"),
+    SELECT_PROJECT_BY_ID("selectProjectById"),
+    SELECT_BOARDS_BY_PROJECT_ID("selectBoardsByProjectId"),
 
-    removeBoard,
-    selectCardsByBoardId,
+    REMOVE_BOARD("removeBoard"),
+    SELECT_CARDS_BY_BOARD_ID("selectCardsByBoardId"),
 
-    updateCard,
-    removeCard,
-    selectCommentsByCardId,
+    UPDATE_CARD("updateCard"),
+    REMOVE_CARD("removeCard"),
+    SELECT_COMMENTS_BY_CARD_ID("selectCommentsByCardId"),
 
-    updateCommit,
-    removeCommit
+    UPDATE_COMMIT("updateCommit"),
+    REMOVE_COMMIT("removeCommit")
 }
