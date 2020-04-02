@@ -50,16 +50,24 @@ class ApiGateWayResource {
                   @RequestParam("boardId") boardId: String?,
                   @RequestParam("cardId") cardId: String?,
                   @RequestParam("commentId") commentId: String?): ResultOutput{
+
+
         when{
-            FunctionNameAuth0.values().contains(FunctionNameAuth0.valueOf(functionName)) -> {
+            FunctionNameAuth0.values().map {
+                it.toString()
+            }.contains(functionName) -> {
                 return ResultOutput(true, "Auth0 ok")
             }
 
-            FunctionNameAuth1.values().contains(FunctionNameAuth1.valueOf(functionName)) -> {
+            FunctionNameAuth1.values().map {
+                it.toString()
+            }.contains(functionName) -> {
                 return ResultOutput(true, "Auth1 ok")
             }
 
-            FunctionNameAuth2.values().contains(FunctionNameAuth2.valueOf(functionName)) -> {
+            FunctionNameAuth2.values().map {
+                it.toString()
+            }.contains(functionName) -> {
                 return ResultOutput(true, "Auth2 ok")
             }
         }
