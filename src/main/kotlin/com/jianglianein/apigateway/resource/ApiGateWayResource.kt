@@ -3,19 +3,16 @@ package com.jianglianein.apigateway.resource
 import com.jianglianein.apigateway.config.EnvProperties
 import com.jianglianein.apigateway.model.enum.FunctionNameAuth0
 import com.jianglianein.apigateway.model.enum.FunctionNameAuth1
-import com.jianglianein.apigateway.model.enum.FunctionNameAuth2
 import com.jianglianein.apigateway.model.type.ResultOutput
+import com.jianglianein.apigateway.service.AuthCheckService
 import com.jianglianein.apigateway.service.UploadService
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
 import javax.servlet.http.HttpServletRequest
-
+import javax.servlet.http.HttpServletResponse
 
 
 @RestController
@@ -24,6 +21,8 @@ class ApiGateWayResource {
     lateinit var env: EnvProperties
     @Autowired
     private lateinit var uploadService: UploadService
+    @Autowired
+    private lateinit var authCheckService: AuthCheckService
 
     private var logger = KotlinLogging.logger {}
 
@@ -49,26 +48,21 @@ class ApiGateWayResource {
                   @RequestParam("projectId") projectId: String?,
                   @RequestParam("boardId") boardId: String?,
                   @RequestParam("cardId") cardId: String?,
-                  @RequestParam("commentId") commentId: String?): ResultOutput{
+                  @RequestParam("commentId") commentId: String?,
+                  @CookieValue uid: String?,
+                  response: HttpServletResponse): ResultOutput {
 
-
-        return when{
+        return when {
             FunctionNameAuth0.values().map {
                 it.functionName
             }.contains(functionName) -> {
-                ResultOutput(true, "Auth0 ok")
+                authCheckService.checkAuth0(functionName, response)
             }
 
             FunctionNameAuth1.values().map {
                 it.functionName
             }.contains(functionName) -> {
-                ResultOutput(true, "Auth1 ok")
-            }
-
-            FunctionNameAuth2.values().map {
-                it.functionName
-            }.contains(functionName) -> {
-                ResultOutput(true, "Auth2 ok")
+                authCheckService.checkAuth1(functionName, uid!!, username, teamId, projectId, boardId, cardId, commentId)
             }
             else -> ResultOutput(false, "no function mapping")
         }

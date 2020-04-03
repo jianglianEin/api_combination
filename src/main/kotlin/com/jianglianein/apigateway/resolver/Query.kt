@@ -33,7 +33,7 @@ class Query : GraphQLQueryResolver {
     fun logout(selectionInput: SelectionInput): ResultOutput {
         logger.info { "logout" }
 
-        return remotePeopleService.logoutByPeopleService(selectionInput.userInput!!.username!!)
+        return remotePeopleService.logoutByPeopleService(selectionInput)
     }
 
     fun selectUserBySubstring(selectionInput: SelectionInput): MutableList<UserOutput> {

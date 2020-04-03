@@ -25,15 +25,17 @@ class RemotePeopleService {
         val params = LinkedMultiValueMap<String, Any>()
         params.add("username", selectionInput.userInput?.username)
         params.add("password", selectionInput.userInput?.password)
+        params.add("uid", selectionInput.uid)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, UserOutput::class.java)
     }
 
-    fun logoutByPeopleService(username: String): ResultOutput {
+    fun logoutByPeopleService(selectionInput: SelectionInput): ResultOutput {
         val url = remoteServiceProperties.peopleServiceUrl + "/user/logout"
 
         val params = LinkedMultiValueMap<String, Any>()
-        params.add("username", username)
+        params.add("username", selectionInput.userInput?.username)
+        params.add("uid", selectionInput.uid)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, ResultOutput::class.java)
     }

@@ -36,6 +36,10 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
+    // Redis
+    implementation("org.springframework.data:spring-data-redis")
+    implementation("redis.clients:jedis")
+
     // GraphQL
     implementation("com.graphql-java-kickstart:graphql-java-tools:5.4.1")
     implementation("com.graphql-java-kickstart:graphql-spring-boot-starter:5.3.1")
