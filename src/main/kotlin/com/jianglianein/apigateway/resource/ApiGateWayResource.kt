@@ -46,9 +46,6 @@ class ApiGateWayResource {
                   @RequestParam("username") username: String?,
                   @RequestParam("teamId") teamId: String?,
                   @RequestParam("projectId") projectId: String?,
-                  @RequestParam("boardId") boardId: String?,
-                  @RequestParam("cardId") cardId: String?,
-                  @RequestParam("commentId") commentId: String?,
                   @CookieValue uid: String?,
                   response: HttpServletResponse): ResultOutput {
 
@@ -62,7 +59,7 @@ class ApiGateWayResource {
             FunctionNameAuth1.values().map {
                 it.functionName
             }.contains(functionName) -> {
-                authCheckService.checkAuth1(functionName, uid!!, username, teamId, projectId, boardId, cardId, commentId)
+                authCheckService.checkAuth1(functionName, uid!!, username, teamId, projectId)
             }
             else -> ResultOutput(false, "no function mapping")
         }

@@ -15,12 +15,14 @@ class UserStatusRepository {
     private val statusField = "status"
     private val statusValue = "value"
     private val statusUpdateTime = "updateTime"
+    private val statusUser = "username"
 
-    fun update(statusType: UserStatusType, uid: String, timestamp: Long) {
+    fun update(statusType: UserStatusType, uid: String, timestamp: Long, username: String) {
         jedisPool.resource.use { jedis ->
             with(jedis) {
                 hset("$uidPrefix:$uid", "$statusField:$statusValue", statusType.toString())
                 hset("$uidPrefix:$uid", "$statusField:$statusUpdateTime", timestamp.toString())
+                hset("$uidPrefix:$uid", "$statusField:$statusUser", username)
             }
         }
     }
@@ -35,7 +37,8 @@ class UserStatusRepository {
         }
         val statusValue = UserStatusType.valueOf(userInfo["$statusField:$statusValue"]!!)
         val updateTime = userInfo["$statusField:$statusUpdateTime"]!!.toLong()
+        val username = userInfo["$statusField:$statusUser"]!!
 
-        return UserStatus(statusValue, uid, updateTime)
+        return UserStatus(statusValue, username, updateTime)
     }
 }
