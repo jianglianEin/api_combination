@@ -30,6 +30,7 @@ class AuthCheckService {
         if (functionName == FunctionNameAuth0.LOGIN.functionName){
             val time = System.currentTimeMillis().toString()
             val uid = toolService.encode(time + functionName + ThreadLocalRandom.current())
+            functionStatusRepository.update(uid, functionName)
 
             val cookie = Cookie("uid",uid)
             cookie.maxAge = 12 * 3600

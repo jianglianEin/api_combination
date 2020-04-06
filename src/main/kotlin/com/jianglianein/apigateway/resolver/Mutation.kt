@@ -29,10 +29,6 @@ class Mutation : GraphQLMutationResolver {
 
     fun register(selectionInput: SelectionInput): ResultOutput? {
         logger.info { "register" }
-        val functionName = FunctionNameAuth0.REGISTER.functionName
-        if (!authValidator.checkFunctionAuth(selectionInput.uid!!, functionName)){
-            return null
-        }
 
         return remotePeopleService.registerByPeopleService(selectionInput.userInput!!)
     }
