@@ -6,7 +6,6 @@ import com.jianglianein.apigateway.model.type.ResultOutput
 import com.jianglianein.apigateway.model.type.TeamOutPut
 import com.jianglianein.apigateway.repository.FunctionStatusRepository
 import com.jianglianein.apigateway.repository.UserStatusRepository
-import com.microservice.peopleservice.poko.UserStatus
 import com.microservice.peopleservice.poko.type.UserStatusType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -41,7 +40,6 @@ class AuthCheckService {
 
     fun checkAuth1(functionName: String,
                    uid: String,
-                   username: String?,
                    teamId: String?,
                    projectId: String?): ResultOutput {
         val userStatue = userStatusRepository.get(uid)
@@ -54,9 +52,6 @@ class AuthCheckService {
         val checkProjects = remoteScrumProjectService.selectProjectsByCreator(userStatue.updateBy).toMutableList()
 
         return when{
-            username != null -> {
-                checkUsername(userStatue, username, uid, functionName)
-            }
             teamId != null -> {
                 checkTeamId(checkTeams, teamId, uid, functionName)
             }
@@ -67,15 +62,6 @@ class AuthCheckService {
                 functionStatusRepository.update(uid, functionName)
                 ResultOutput(true, "Auth1 ok")
             }
-        }
-    }
-
-    private fun checkUsername(userStatue: UserStatus, username: String?, uid: String, functionName: String): ResultOutput {
-        return if (userStatue.updateBy == username) {
-            functionStatusRepository.update(uid, functionName)
-            ResultOutput(true, "Auth1 ok")
-        } else {
-            ResultOutput(false, "Auth1 failed")
         }
     }
 

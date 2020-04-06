@@ -13,9 +13,6 @@ enum class FunctionNameAuth1(val functionName: String) {
     UPDATE_USER("updateUser"),
     CREATE_TEAM("createTeam"),
     CREATE_PROJECT("createProject"),
-    CREATE_BOARD("createBoard"),
-    CREATE_CARD("createCard"),
-    CREATE_COMMIT("createCommit"),
     GET_COMMIT_BY_RECEIVER("getCommitByReceiver"),
     SELECT_TEAM_BY_USERNAME("selectTeamByUsername"),
     SELECT_PROJECT_BY_CREATOR("selectProjectByCreator"),
@@ -28,14 +25,14 @@ enum class FunctionNameAuth1(val functionName: String) {
     REMOVE_PROJECT("removeProject"),
     SELECT_PROJECT_BY_ID("selectProjectById"),
     SELECT_BOARDS_BY_PROJECT_ID("selectBoardsByProjectId"),
-
     REMOVE_BOARD("removeBoard"),
     SELECT_CARDS_BY_BOARD_ID("selectCardsByBoardId"),
-
     UPDATE_CARD("updateCard"),
     REMOVE_CARD("removeCard"),
     SELECT_COMMENTS_BY_CARD_ID("selectCommentsByCardId"),
-
     UPDATE_COMMIT("updateCommit"),
-    REMOVE_COMMIT("removeCommit")
+    REMOVE_COMMIT("removeCommit"),
+    CREATE_BOARD("createBoard"),
+    CREATE_CARD("createCard"),
+    CREATE_COMMIT("createCommit")
 }

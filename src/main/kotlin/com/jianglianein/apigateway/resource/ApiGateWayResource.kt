@@ -43,7 +43,6 @@ class ApiGateWayResource {
 
     @PostMapping("/api/checkAuth")
     fun checkAuth(@RequestParam("functionName") functionName: String,
-                  @RequestParam("username") username: String?,
                   @RequestParam("teamId") teamId: String?,
                   @RequestParam("projectId") projectId: String?,
                   @CookieValue uid: String?,
@@ -59,7 +58,7 @@ class ApiGateWayResource {
             FunctionNameAuth1.values().map {
                 it.functionName
             }.contains(functionName) -> {
-                authCheckService.checkAuth1(functionName, uid!!, username, teamId, projectId)
+                authCheckService.checkAuth1(functionName, uid!!, teamId, projectId)
             }
             else -> ResultOutput(false, "no function mapping")
         }
