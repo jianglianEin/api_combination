@@ -10,12 +10,13 @@ class FunctionStatusRepository {
     private lateinit var jedisPool: JedisPool
     private val functionUidPrefix = "functionUid"
     private val statusField = "status"
-    private val statusUpdateTime = "updateTime"
+    private val expireTime = 20
 
     fun update(uid: String, function: String) {
         jedisPool.resource.use { jedis ->
             with(jedis) {
                 hset("$functionUidPrefix:$uid$function", statusField, true.toString())
+                expire("$functionUidPrefix:$uid$function", expireTime)
             }
         }
     }
