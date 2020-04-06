@@ -2,8 +2,8 @@ package com.jianglianein.apigateway.service
 
 import com.jianglianein.apigateway.model.enum.FunctionNameAuth0
 import com.jianglianein.apigateway.model.type.ProjectOutput
-import com.jianglianein.apigateway.model.type.ResultOutput
 import com.jianglianein.apigateway.model.type.TeamOutPut
+import com.jianglianein.apigateway.model.type.ResultRestOutput
 import com.jianglianein.apigateway.repository.FunctionStatusRepository
 import com.jianglianein.apigateway.repository.UserStatusRepository
 import com.microservice.peopleservice.poko.type.UserStatusType
@@ -26,7 +26,7 @@ class AuthCheckService {
     @Autowired
     private lateinit var remoteScrumProjectService: RemoteScrumProjectService
 
-    fun checkAuth0(functionName: String, response: HttpServletResponse): ResultOutput{
+    fun checkAuth0(functionName: String, response: HttpServletResponse): ResultRestOutput {
         if (functionName == FunctionNameAuth0.LOGIN.functionName){
             val time = System.currentTimeMillis().toString()
             val uid = toolService.encode(time + functionName + ThreadLocalRandom.current())
@@ -35,18 +35,19 @@ class AuthCheckService {
             val cookie = Cookie("uid",uid)
             cookie.maxAge = 12 * 3600
             response.addCookie(cookie)
+            return ResultRestOutput(true, "Auth0 ok", uid)
         }
-        return ResultOutput(true, "Auth0 ok")
+        return ResultRestOutput(true, "Auth0 ok")
     }
 
     fun checkAuth1(functionName: String,
                    uid: String,
                    teamId: String?,
-                   projectId: String?): ResultOutput {
+                   projectId: String?): ResultRestOutput {
         val userStatue = userStatusRepository.get(uid)
         if (userStatue.value != UserStatusType.Online) {
 
-            return ResultOutput(false, "Auth1 failed")
+            return ResultRestOutput(false, "Auth1 failed")
         }
 
         val checkTeams = remotePeopleService.selectTeamByUsername(userStatue.updateBy)
@@ -61,7 +62,7 @@ class AuthCheckService {
             }
             else -> {
                 functionStatusRepository.update(uid, functionName)
-                ResultOutput(true, "Auth1 ok")
+                ResultRestOutput(true, "Auth1 ok")
             }
         }
     }
@@ -69,26 +70,26 @@ class AuthCheckService {
     private fun checkTeamId(checkTeams: MutableList<TeamOutPut>,
                             teamId: String?,
                             uid: String,
-                            functionName: String): ResultOutput {
+                            functionName: String): ResultRestOutput {
         for (check in checkTeams) {
             if (teamId == check.id) {
                 functionStatusRepository.update(uid, functionName)
-                return ResultOutput(true, "Auth1 ok")
+                return ResultRestOutput(true, "Auth1 ok")
             }
         }
-        return ResultOutput(false, "Auth1 failed")
+        return ResultRestOutput(false, "Auth1 failed")
     }
 
     private fun checkProjectId(checkProject: MutableList<ProjectOutput>,
                                projectId: String?,
                                uid: String,
-                               functionName: String): ResultOutput {
+                               functionName: String): ResultRestOutput {
         for (check in checkProject) {
             if (projectId == check.id) {
                 functionStatusRepository.update(uid, functionName)
-                return ResultOutput(true, "Auth1 ok")
+                return ResultRestOutput(true, "Auth1 ok")
             }
         }
-        return ResultOutput(false, "Auth1 failed")
+        return ResultRestOutput(false, "Auth1 failed")
     }
 }

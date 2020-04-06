@@ -4,12 +4,14 @@ import com.jianglianein.apigateway.config.EnvProperties
 import com.jianglianein.apigateway.model.enum.FunctionNameAuth0
 import com.jianglianein.apigateway.model.enum.FunctionNameAuth1
 import com.jianglianein.apigateway.model.type.ResultOutput
+import com.jianglianein.apigateway.model.type.ResultRestOutput
 import com.jianglianein.apigateway.service.AuthCheckService
 import com.jianglianein.apigateway.service.UploadService
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest
 import java.io.File
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -45,9 +47,11 @@ class ApiGateWayResource {
     fun checkAuth(@RequestParam("functionName") functionName: String,
                   @RequestParam("teamId") teamId: String?,
                   @RequestParam("projectId") projectId: String?,
-                  @CookieValue uid: String?,
-                  response: HttpServletResponse): ResultOutput {
+                  response: HttpServletResponse,
+                  request: HttpServletRequest): ResultRestOutput {
 
+        val authentication = (request as StandardMultipartHttpServletRequest).requestHeaders["authentication"]?.get(0)
+        val uid = authentication?.replace("Bearer ", "")
         return when {
             FunctionNameAuth0.values().map {
                 it.functionName
@@ -60,7 +64,7 @@ class ApiGateWayResource {
             }.contains(functionName) -> {
                 authCheckService.checkAuth1(functionName, uid!!, teamId, projectId)
             }
-            else -> ResultOutput(false, "no function mapping")
+            else -> ResultRestOutput(false, "no function mapping")
         }
     }
 }
