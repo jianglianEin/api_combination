@@ -50,8 +50,6 @@ class ApiGateWayResource {
                   response: HttpServletResponse,
                   request: HttpServletRequest): ResultRestOutput {
 
-        val authentication = (request as StandardMultipartHttpServletRequest).requestHeaders["authentication"]?.get(0)
-        val uid = authentication?.replace("Bearer ", "")
         return when {
             FunctionNameAuth0.values().map {
                 it.functionName
@@ -62,6 +60,8 @@ class ApiGateWayResource {
             FunctionNameAuth1.values().map {
                 it.functionName
             }.contains(functionName) -> {
+                val authentication = (request as StandardMultipartHttpServletRequest).requestHeaders["authentication"]?.get(0)
+                val uid = authentication?.replace("Bearer ", "")
                 authCheckService.checkAuth1(functionName, uid!!, teamId, projectId)
             }
             else -> ResultRestOutput(false, "no function mapping")
