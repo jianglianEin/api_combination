@@ -1,7 +1,6 @@
 package com.jianglianein.apigateway.resolver
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver
-import com.jianglianein.apigateway.model.enum.FunctionNameAuth0
 import com.jianglianein.apigateway.model.enum.FunctionNameAuth1
 import com.jianglianein.apigateway.model.graphql.SelectionInput
 import com.jianglianein.apigateway.model.type.*
