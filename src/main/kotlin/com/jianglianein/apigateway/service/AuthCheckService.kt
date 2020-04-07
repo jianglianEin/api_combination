@@ -22,9 +22,7 @@ class AuthCheckService {
     @Autowired
     private lateinit var functionStatusRepository: FunctionStatusRepository
     @Autowired
-    private lateinit var remotePeopleService: RemotePeopleService
-    @Autowired
-    private lateinit var remoteScrumProjectService: RemoteScrumProjectService
+    private lateinit var cacheService: CacheService
 
     fun checkAuth0(functionName: String, response: HttpServletResponse): ResultRestOutput {
         if (functionName == FunctionNameAuth0.LOGIN.functionName){
@@ -50,8 +48,8 @@ class AuthCheckService {
             return ResultRestOutput(false, "Auth1 failed")
         }
 
-        val checkTeams = remotePeopleService.selectTeamByUsername(userStatue.updateBy)
-        val checkProjects = remoteScrumProjectService.selectProjectsByCreator(userStatue.updateBy).toMutableList()
+        val  checkProjects = cacheService.getProjectsEvidence(userStatue)
+        val  checkTeams = cacheService.getTeamsEvidence(userStatue)
 
         return when{
             teamId != null -> {
@@ -68,7 +66,7 @@ class AuthCheckService {
     }
 
     private fun checkTeamId(checkTeams: MutableList<TeamOutPut>,
-                            teamId: String?,
+                            teamId: String,
                             uid: String,
                             functionName: String): ResultRestOutput {
         for (check in checkTeams) {
@@ -81,7 +79,7 @@ class AuthCheckService {
     }
 
     private fun checkProjectId(checkProject: MutableList<ProjectOutput>,
-                               projectId: String?,
+                               projectId: String,
                                uid: String,
                                functionName: String): ResultRestOutput {
         for (check in checkProject) {

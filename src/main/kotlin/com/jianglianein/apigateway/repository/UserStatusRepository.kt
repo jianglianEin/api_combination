@@ -1,7 +1,7 @@
 package com.jianglianein.apigateway.repository
 
 
-import com.microservice.peopleservice.poko.UserStatus
+import com.jianglianein.apigateway.poko.UserStatus
 import com.microservice.peopleservice.poko.type.UserStatusType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository

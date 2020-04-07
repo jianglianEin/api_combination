@@ -39,6 +39,7 @@ dependencies {
     // Redis
     implementation("org.springframework.data:spring-data-redis")
     implementation("redis.clients:jedis")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
     // GraphQL
     implementation("com.graphql-java-kickstart:graphql-java-tools:5.4.1")
@@ -56,7 +57,6 @@ dependencies {
     implementation("io.springfox:springfox-swagger2:2.9.2")
     implementation("io.springfox:springfox-swagger-ui:2.9.2")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     // Testing
     testImplementation("org.springframework.boot:spring-boot-starter-test") {

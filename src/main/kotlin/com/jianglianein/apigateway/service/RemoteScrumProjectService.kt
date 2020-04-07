@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.jianglianein.apigateway.config.microserviceproperty.RemoteServiceProperties
 import com.jianglianein.apigateway.model.type.*
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
 import org.springframework.util.LinkedMultiValueMap
@@ -43,9 +44,10 @@ class RemoteScrumProjectService {
         for (projectJoinByTeamRespFuture in projectJoinByTeamRespFutures){
             projectsResult.addAll(objectMapper.readValue(projectJoinByTeamRespFuture.get(), javaType))
         }
-        return ArrayList<ProjectOutput>(LinkedHashSet<ProjectOutput>(projectsResult));
+        return ArrayList<ProjectOutput>(LinkedHashSet<ProjectOutput>(projectsResult))
     }
 
+    @CacheEvict("projectsCheck", key = "#projectInput.creator")
     fun createProject(projectInput: ProjectInput): ProjectOutput {
         val url = remoteServiceProperties.projectServiceUrl + "/scrum_project/create"
         val params = initProjectCreateParams(projectInput)

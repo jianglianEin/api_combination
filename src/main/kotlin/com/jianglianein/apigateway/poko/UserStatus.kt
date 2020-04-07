@@ -1,4 +1,4 @@
-package com.microservice.peopleservice.poko
+package com.jianglianein.apigateway.poko
 
 import com.microservice.peopleservice.poko.type.UserStatusType
 import java.io.Serializable
