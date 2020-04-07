@@ -60,7 +60,7 @@ class ApiGateWayResource {
             FunctionNameAuth1.values().map {
                 it.functionName
             }.contains(functionName) -> {
-                val authentication = (request as StandardMultipartHttpServletRequest).requestHeaders["authentication"]?.get(0)
+                val authentication = request.getHeader("Authorization")
                 val uid = authentication?.replace("Bearer ", "")
                 authCheckService.checkAuth1(functionName, uid!!, teamId, projectId)
             }
