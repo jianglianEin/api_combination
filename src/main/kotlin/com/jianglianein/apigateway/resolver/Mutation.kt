@@ -11,7 +11,6 @@ import com.jianglianein.apigateway.validator.AuthValidator
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import org.springframework.web.bind.annotation.RequestParam
 
 @Component
 class Mutation : GraphQLMutationResolver {
