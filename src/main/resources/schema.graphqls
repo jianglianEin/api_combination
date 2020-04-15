@@ -19,6 +19,7 @@ type Mutation {
 
     createTeam(selectionInput: SelectionInput): TeamOutput
     updateTeam(selectionInput: SelectionInput): TeamOutput
+    removeTeam(selectionInput: SelectionInput): ResultOutput
 
     createProject(selectionInput: SelectionInput): ProjectOutput
     updateProject(selectionInput: SelectionInput): ProjectOutput

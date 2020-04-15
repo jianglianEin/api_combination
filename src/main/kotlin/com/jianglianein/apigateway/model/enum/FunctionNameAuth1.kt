@@ -20,6 +20,7 @@ enum class FunctionNameAuth1(val functionName: String) {
     UPDATE_TEAM("updateTeam"),
     SEND_EMAIL_TO_INVITE_RECEIVER_JOIN_TEAM("sendEmailToInviteReceiverJoinTeam"),
     SELECT_PEOPLE_BY_TEAM_ID("selectPeopleByTeamId"),
+    REMOVE_TEAM("removeTeam"),
 
     UPDATE_PROJECT("updateProject"),
     REMOVE_PROJECT("removeProject"),

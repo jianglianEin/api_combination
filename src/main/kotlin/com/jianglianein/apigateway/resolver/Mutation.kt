@@ -11,6 +11,7 @@ import com.jianglianein.apigateway.validator.AuthValidator
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import org.springframework.web.bind.annotation.RequestParam
 
 @Component
 class Mutation : GraphQLMutationResolver {
@@ -60,6 +61,16 @@ class Mutation : GraphQLMutationResolver {
         }
 
         return remotePeopleService.updateTeam(selectionInput.teamInput!!)
+    }
+
+    fun removeTeam(selectionInput: SelectionInput): ResultOutput? {
+        logger.info { "updateTeam" }
+        val functionName = FunctionNameAuth1.UPDATE_TEAM.functionName
+        if (!authValidator.checkFunctionAuth(selectionInput.uid!!, functionName)){
+            return null
+        }
+
+        return remotePeopleService.removeTeam(selectionInput.teamInput!!)
     }
 
     fun createProject(selectionInput: SelectionInput): ProjectOutput? {
