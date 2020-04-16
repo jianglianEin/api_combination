@@ -63,8 +63,8 @@ class Mutation : GraphQLMutationResolver {
     }
 
     fun removeTeam(selectionInput: SelectionInput): ResultOutput? {
-        logger.info { "updateTeam" }
-        val functionName = FunctionNameAuth1.UPDATE_TEAM.functionName
+        logger.info { "removeTeam" }
+        val functionName = FunctionNameAuth1.REMOVE_TEAM.functionName
         if (!authValidator.checkFunctionAuth(selectionInput.uid!!, functionName)){
             return null
         }
