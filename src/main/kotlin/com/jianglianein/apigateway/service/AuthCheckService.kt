@@ -61,8 +61,12 @@ class AuthCheckService {
             teamId != null -> {
                 checkTeamId(checkTeams, teamId, uid, functionName)
             }
-            projectId != null && !FunctionNameAuth1.isCommentFunction(functionName) -> {
-                checkProjectId(checkProjects, projectId, uid, functionName)
+            projectId != null -> {
+                if (FunctionNameAuth1.isCommentFunction(functionName)){
+                    ResultRestOutput(false, "Auth1 failed")
+                }else {
+                    checkProjectId(checkProjects, projectId, uid, functionName)
+                }
             }
             else -> {
                 functionStatusRepository.update(uid, functionName)
