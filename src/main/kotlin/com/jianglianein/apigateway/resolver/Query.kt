@@ -145,7 +145,8 @@ class Query : GraphQLQueryResolver {
         if (!authValidator.checkFunctionAuth(selectionInput.uid!!, functionName)){
             return null
         }
-
-        return remoteMessageService.selectCommentsByCardId(selectionInput.commitInput!!.cardId!!)
+        val commitTypeOutputList = remoteMessageService.selectCommentsByCardId(selectionInput.commitInput!!.cardId!!)
+        commitTypeOutputList.sortBy { it.id }
+        return commitTypeOutputList
     }
 }
