@@ -46,6 +46,7 @@ class ApiGateWayResource {
     fun checkAuth(@RequestParam("functionName") functionName: String,
                   @RequestParam("teamId") teamId: String?,
                   @RequestParam("projectId") projectId: String?,
+                  @RequestParam("username") username: String?,
                   response: HttpServletResponse,
                   request: HttpServletRequest): ResultRestOutput {
 
@@ -61,7 +62,7 @@ class ApiGateWayResource {
             }.contains(functionName) -> {
                 val authentication = request.getHeader("Authorization")
                 val uid = authentication?.replace("Bearer ", "")
-                authCheckService.checkAuth1(functionName, uid!!, teamId, projectId)
+                authCheckService.checkAuth1(functionName, uid!!, teamId, projectId, username)
             }
             else -> ResultRestOutput(false, "no function mapping")
         }

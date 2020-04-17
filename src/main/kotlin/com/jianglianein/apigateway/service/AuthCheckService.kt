@@ -4,6 +4,7 @@ import com.jianglianein.apigateway.model.enum.FunctionNameAuth0
 import com.jianglianein.apigateway.model.type.ProjectOutput
 import com.jianglianein.apigateway.model.type.TeamOutPut
 import com.jianglianein.apigateway.model.type.ResultRestOutput
+import com.jianglianein.apigateway.poko.UserStatus
 import com.jianglianein.apigateway.repository.FunctionStatusRepository
 import com.jianglianein.apigateway.repository.UserStatusRepository
 import com.microservice.peopleservice.poko.type.UserStatusType
@@ -41,7 +42,8 @@ class AuthCheckService {
     fun checkAuth1(functionName: String,
                    uid: String,
                    teamId: String?,
-                   projectId: String?): ResultRestOutput {
+                   projectId: String?,
+                   username: String?): ResultRestOutput {
         val userStatue = userStatusRepository.get(uid)
         if (userStatue.value != UserStatusType.Online) {
 
@@ -52,6 +54,9 @@ class AuthCheckService {
         val  checkTeams = cacheService.getTeamsEvidence(userStatue)
 
         return when{
+            username != null && projectId != null -> {
+                checkComment(checkProjects, projectId, uid, username, userStatue, functionName)
+            }
             teamId != null -> {
                 checkTeamId(checkTeams, teamId, uid, functionName)
             }
@@ -63,6 +68,18 @@ class AuthCheckService {
                 ResultRestOutput(true, "Auth1 ok")
             }
         }
+    }
+
+    private fun checkComment(checkProject: MutableList<ProjectOutput>,
+                             projectId: String,
+                             uid: String,
+                             username: String,
+                             userStatue: UserStatus,
+                             functionName: String): ResultRestOutput {
+        if (userStatue.updateBy == username){
+            return checkProjectId(checkProject, projectId, uid, functionName)
+        }
+        return ResultRestOutput(false, "Auth1 failed")
     }
 
     private fun checkTeamId(checkTeams: MutableList<TeamOutPut>,
