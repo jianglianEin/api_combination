@@ -1,6 +1,7 @@
 package com.jianglianein.apigateway.service
 
 import com.jianglianein.apigateway.model.enum.FunctionNameAuth0
+import com.jianglianein.apigateway.model.enum.FunctionNameAuth1
 import com.jianglianein.apigateway.model.type.ProjectOutput
 import com.jianglianein.apigateway.model.type.TeamOutPut
 import com.jianglianein.apigateway.model.type.ResultRestOutput
@@ -60,7 +61,7 @@ class AuthCheckService {
             teamId != null -> {
                 checkTeamId(checkTeams, teamId, uid, functionName)
             }
-            projectId != null -> {
+            projectId != null && !FunctionNameAuth1.isCommentFunction(functionName) -> {
                 checkProjectId(checkProjects, projectId, uid, functionName)
             }
             else -> {

@@ -35,5 +35,16 @@ enum class FunctionNameAuth1(val functionName: String) {
     REMOVE_COMMIT("removeCommit"),
     CREATE_BOARD("createBoard"),
     CREATE_CARD("createCard"),
-    CREATE_COMMIT("createCommit")
+    CREATE_COMMIT("createCommit");
+
+    companion object {
+
+        fun isCommentFunction(functionName: String): Boolean {
+            val commentFunction = mutableListOf(UPDATE_COMMIT, REMOVE_COMMIT)
+            if (commentFunction.map { it.functionName }.contains(functionName)){
+                return true
+            }
+            return false
+        }
+    }
 }
