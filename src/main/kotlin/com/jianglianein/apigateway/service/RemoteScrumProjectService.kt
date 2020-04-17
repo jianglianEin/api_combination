@@ -142,10 +142,14 @@ class RemoteScrumProjectService {
         val url = remoteServiceProperties.projectServiceUrl + "/card/create"
 
         val params = LinkedMultiValueMap<String, Any>()
+        if (cardInput.priority != null && cardInput.priority.isNotEmpty() && cardInput.priority.isNotBlank()){
+            params.add("priority", cardInput.priority)
+        }else {
+            params.add("priority", "lowest")
+        }
         params.add("title", cardInput.title)
         params.add("description", cardInput.description)
         params.add("storyPoints", cardInput.storyPoints)
-        params.add("priority", cardInput.priority)
         params.add("processor", cardInput.processor)
         params.add("founder", cardInput.founder)
         params.add("status", cardInput.status)

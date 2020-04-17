@@ -3,7 +3,7 @@ package com.jianglianein.apigateway.model.type
 data class CardInput (val id: String? = null,
                       val title: String? = null,
                       val description: String? = null,
-                      val priority: String? = "lowest",
+                      val priority: String? = null,
                       val storyPoints: Int? = null,
                       val processor: String? = null,
                       val founder: String? = null,
