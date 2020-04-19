@@ -9,4 +9,4 @@ data class CardOutput (val id: String? = null,
                        val processor: String? = null,
                        val founder: String? = null,
                        val status: String? = null,
-                       val number: String? = null)
+                       val number: Int? = null)

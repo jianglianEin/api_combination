@@ -183,5 +183,5 @@ type CardOutput{
     processor: String
     founder: String
     status: String
-    number: String
+    number: Int
 }
