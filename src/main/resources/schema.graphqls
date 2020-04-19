@@ -146,7 +146,7 @@ type CommitTypeOutput{
 }
 
 type ResultOutput{
-    susses: Boolean
+    success: Boolean
     message: String
 }
 
