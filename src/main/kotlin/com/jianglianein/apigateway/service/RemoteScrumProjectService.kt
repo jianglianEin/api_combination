@@ -147,9 +147,9 @@ class RemoteScrumProjectService {
         }else {
             params.add("priority", "lowest")
         }
+        checkStoryPointValid(cardInput, params)
         params.add("title", cardInput.title)
         params.add("description", cardInput.description)
-        params.add("storyPoints", cardInput.storyPoints)
         params.add("processor", cardInput.processor)
         params.add("founder", cardInput.founder)
         params.add("status", cardInput.status)
@@ -163,16 +163,26 @@ class RemoteScrumProjectService {
         val url = remoteServiceProperties.projectServiceUrl + "/card/update"
 
         val params = LinkedMultiValueMap<String, Any>()
+        checkStoryPointValid(cardInput, params)
         params.add("cardId", cardInput.id)
         params.add("title", cardInput.title)
         params.add("description", cardInput.description)
-        params.add("storyPoints", cardInput.storyPoints)
         params.add("priority", cardInput.priority)
         params.add("processor", cardInput.processor)
         params.add("status", cardInput.status)
 
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, CardOutput::class.java)
+    }
+
+    private fun checkStoryPointValid(cardInput: CardInput, params: LinkedMultiValueMap<String, Any>) {
+        if (cardInput.storyPoints != null) {
+            if (cardInput.storyPoints >= 1) {
+                params.add("storyPoints", cardInput.storyPoints)
+            } else {
+                params.add("storyPoints", 1)
+            }
+        }
     }
 
     fun selectCardsByBoardId(boardId: String): MutableList<CardOutput> {
