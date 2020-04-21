@@ -170,6 +170,7 @@ class RemoteScrumProjectService {
         params.add("priority", cardInput.priority)
         params.add("processor", cardInput.processor)
         params.add("status", cardInput.status)
+        params.add("boardId", cardInput.boardId)
 
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, CardOutput::class.java)
