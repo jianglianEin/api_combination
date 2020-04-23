@@ -26,11 +26,12 @@ class UploadService{
      fun checkAndReturnFileName(icon: MultipartFile, request: HttpServletRequest): String {
          val originalFileName = icon.originalFilename
          val contentType: String = (request as AbstractMultipartHttpServletRequest).multiFileMap["icon"]?.get(0)?.contentType!!
+         val imageType = contentType.split("/").last()
 
          val d = Date()
          val sdf = SimpleDateFormat("yyyyMMddHHmmss")
          val date = sdf.format(d)
-         return "$date$originalFileName.$contentType"
+         return "$date$originalFileName.$imageType"
      }
 
      fun createFileAndReturnResult(icon: MultipartFile, targetFile: File): ResultOutput { //在指定路径下创建一个文件
