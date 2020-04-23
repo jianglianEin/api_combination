@@ -15,10 +15,8 @@ class HttpClientService {
     @Autowired
     private lateinit var client: RestTemplate
 
-    fun client(url: String, method: HttpMethod, params: LinkedMultiValueMap<String, Any>): String? {
-        val headers = HttpHeaders()
-
-        headers.contentType = MediaType.MULTIPART_FORM_DATA
+    fun client(url: String, method: HttpMethod, params: LinkedMultiValueMap<String, Any>, headers: HttpHeaders? = HttpHeaders()): String? {
+        headers!!.contentType = MediaType.MULTIPART_FORM_DATA
         val requestEntity = HttpEntity(params, headers)
 
         val response = client.exchange(url, method, requestEntity, String::class.java)

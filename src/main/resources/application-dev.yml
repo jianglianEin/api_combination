@@ -8,6 +8,11 @@ microservice:
   messageservice:
     url: https://jianglianeinmessageservice.cfapps.io
 
+otherservice:
+  picture-bed:
+    url: https://sm.ms/api/v2/
+    token: wAMMGwZaekU6LgDzLX0sO0crpjvhD1tz
+
 spring:
   servlet:
     multipart:

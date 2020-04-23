@@ -9,6 +9,7 @@ import com.jianglianein.apigateway.service.AuthCheckService
 import com.jianglianein.apigateway.service.UploadService
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.core.io.FileSystemResource
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
@@ -39,7 +40,10 @@ class ApiGateWayResource {
         val path = uploadService.checkAndReturnFilePath(request)
         val fileName = uploadService.checkAndReturnFileName(icon, request)
         val targetFile = File(path, fileName)
-        return uploadService.createFileAndReturnResult(icon, targetFile)
+        uploadService.createFileAndReturnResult(icon, targetFile)
+        val resource = FileSystemResource(targetFile)
+        val url = uploadService.uploadImageToSmMsSite(resource)
+        return ResultOutput(true, url)
     }
 
     @PostMapping("/api/checkAuth")
