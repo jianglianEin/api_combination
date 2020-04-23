@@ -37,7 +37,7 @@ class ApiGateWayResource {
     @PostMapping("/api/uploadImage")
     fun uploadImage(@RequestParam("icon") icon: MultipartFile, request: HttpServletRequest): ResultOutput? {
         val path = uploadService.checkAndReturnFilePath(request)
-        val fileName = uploadService.checkAndReturnFileName(icon)
+        val fileName = uploadService.checkAndReturnFileName(icon, request)
         val targetFile = File(path, fileName)
         return uploadService.createFileAndReturnResult(icon, targetFile)
     }

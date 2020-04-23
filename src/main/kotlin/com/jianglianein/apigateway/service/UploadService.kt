@@ -3,6 +3,7 @@ package com.jianglianein.apigateway.service
 import com.jianglianein.apigateway.model.type.ResultOutput
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.multipart.support.AbstractMultipartHttpServletRequest
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -22,14 +23,14 @@ class UploadService{
         return path
     }
 
-     fun checkAndReturnFileName(icon: MultipartFile): String {
+     fun checkAndReturnFileName(icon: MultipartFile, request: HttpServletRequest): String {
          val originalFileName = icon.originalFilename
-         val type = "jpg"
+         val contentType: String = (request as AbstractMultipartHttpServletRequest).multiFileMap["icon"]?.get(0)?.contentType!!
 
          val d = Date()
          val sdf = SimpleDateFormat("yyyyMMddHHmmss")
          val date = sdf.format(d)
-         return "$date$originalFileName.$type"
+         return "$date$originalFileName.$contentType"
      }
 
      fun createFileAndReturnResult(icon: MultipartFile, targetFile: File): ResultOutput { //在指定路径下创建一个文件
