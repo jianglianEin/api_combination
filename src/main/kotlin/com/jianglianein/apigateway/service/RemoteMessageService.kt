@@ -21,7 +21,7 @@ class RemoteMessageService {
     private lateinit var asyncHelperService: AsyncHelperService
 
     fun getCommitByReceiver(receiver: String): MutableList<CommitPosOutput> {
-        val url = remoteServiceProperties.messageServiceUrl + "/commit/getByReceiver"
+        val url = remoteServiceProperties.messageServiceUrl + "/commit/getByReceiverContaining"
 
         val params = LinkedMultiValueMap<String, Any>()
         params.add("receiver", receiver)
