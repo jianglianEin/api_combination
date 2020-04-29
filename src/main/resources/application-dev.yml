@@ -2,11 +2,11 @@ env: "dev"
 
 microservice:
   peopleservice:
-    url: https://jianglianeinpeopleservice.cfapps.io
+    url: https://jianglianzweipeopleservice.cfapps.io
   scrumprojectservice:
-    url: https://jianglianeinscrumprojectservice.cfapps.io
+    url: https://jianglianzweiscrumprojectservice.cfapps.io
   messageservice:
-    url: https://jianglianeinmessageservice.cfapps.io
+    url: https://jianglianzweimessageservice.cfapps.io
 
 otherservice:
   picture-bed:
