@@ -2,11 +2,11 @@ env: "dev"
 
 microservice:
   peopleservice:
-    url: https://jianglianzweipeopleservice.cfapps.io
+    url: https://scrum-board-people-service.herokuapp.com
   scrumprojectservice:
-    url: https://jianglianzweiscrumprojectservice.cfapps.io
+    url: https://scrum-board-project-service.herokuapp.com
   messageservice:
-    url: https://jianglianzweimessageservice.cfapps.io
+    url: https://scrum-board-message-service.herokuapp.com
 
 otherservice:
   picture-bed:
