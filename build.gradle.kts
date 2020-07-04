@@ -136,7 +136,7 @@ tasks.bootRun {
     systemProperty("otherservice.picture-bed.url", pictureBedUrl)
     systemProperty("otherservice.picture-bed.token", pictureBedToken)
     systemProperty("spring.redis.host", redisHost)
-    systemProperty("spring.redis.port", redisPort)
+    systemProperty("spring.redis.port", redisPort.toInt())
     systemProperty("spring.redis.password", redisPassword)
-    systemProperty("server.port", serverPort)
+    systemProperty("server.port", serverPort.toInt())
 }
