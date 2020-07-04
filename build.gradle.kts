@@ -117,9 +117,26 @@ tasks.build {
 }
 
 tasks.bootRun {
-    val activeProfiles = System.getenv("SPRING_PROFILES_ACTIVE") ?: "local"
-    val env = System.getenv("env") ?: "local"
+    val env = System.getenv("SPRING_PROFILES_ACTIVE") ?: "local"
+    val peopleServiceUrl = System.getenv("peopleservice_url") ?: "http://localhost:8000"
+    val projectServiceUrl = System.getenv("scrumprojectservice_url") ?: "http://localhost:8001"
+    val messageServiceUrl = System.getenv("messageservice_url") ?: "http://localhost:8002"
+    val pictureBedUrl = System.getenv("picture_bed_url") ?: "http://localhost:8003"
+    val pictureBedToken = System.getenv("picture_bed_token") ?: ""
+    val redisHost = System.getenv("redis_host") ?: ""
+    val redisPort = System.getenv("redis_port") ?: ""
+    val redisPassword = System.getenv("redis_password") ?: ""
+    val serverPort = System.getenv("server_port") ?: ""
+
     System.out.println(env)
-    systemProperty("spring.profiles.active", activeProfiles)
-    systemProperty("env", env)
+    systemProperty("spring.profiles.active", env)
+    systemProperty("microservice.peopleservice.url", peopleServiceUrl)
+    systemProperty("microservice.scrumprojectservice.url", projectServiceUrl)
+    systemProperty("microservice.messageservice.url", messageServiceUrl)
+    systemProperty("otherservice.picture-bed.url", pictureBedUrl)
+    systemProperty("otherservice.picture-bed.token", pictureBedToken)
+    systemProperty("spring.redis.host", redisHost)
+    systemProperty("spring.redis.port", redisPort)
+    systemProperty("spring.redis.password", redisPassword)
+    systemProperty("server.port", serverPort)
 }
