@@ -117,7 +117,9 @@ tasks.build {
 }
 
 tasks.bootRun {
-    val env = System.getenv("SPRING_PROFILES_ACTIVE") ?: "local"
+    val activeProfiles = System.getenv("SPRING_PROFILES_ACTIVE") ?: "local"
+    val env = System.getenv("env") ?: "local"
     System.out.println(env)
-    systemProperty("spring.profiles.active", env)
+    systemProperty("spring.profiles.active", activeProfiles)
+    systemProperty("env", env)
 }
