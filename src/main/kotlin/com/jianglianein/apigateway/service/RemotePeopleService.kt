@@ -6,6 +6,7 @@ import com.jianglianein.apigateway.model.graphql.SelectionInput
 import com.jianglianein.apigateway.model.type.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Caching
 import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
 import org.springframework.util.LinkedMultiValueMap
@@ -31,11 +32,12 @@ class RemotePeopleService {
         return objectMapper.readValue(resp, UserOutput::class.java)
     }
 
+    @CacheEvict(value = ["projectsCheck", "teamsCheck"], key = "#selectionInput.userInput.username")
     fun logoutByPeopleService(selectionInput: SelectionInput): ResultOutput {
         val url = remoteServiceProperties.peopleServiceUrl + "/user/logout"
 
         val params = LinkedMultiValueMap<String, Any>()
-        params.add("username", selectionInput.userInput?.username)
+        params.add("username", selectionInput.userInput!!.username)
         params.add("uid", selectionInput.uid)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, ResultOutput::class.java)
