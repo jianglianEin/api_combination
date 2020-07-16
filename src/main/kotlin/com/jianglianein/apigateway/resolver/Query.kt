@@ -1,7 +1,7 @@
 package com.jianglianein.apigateway.resolver
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver
-import com.jianglianein.apigateway.model.enum.FunctionNameAuth0
+import com.jianglianein.apigateway.config.security.Unsecured
 import com.jianglianein.apigateway.model.enum.FunctionNameAuth1
 import com.jianglianein.apigateway.model.graphql.SelectionInput
 import com.jianglianein.apigateway.model.type.*
@@ -30,12 +30,9 @@ class Query : GraphQLQueryResolver {
 
     private var logger = KotlinLogging.logger {}
 
+    @Unsecured
     fun login(selectionInput: SelectionInput): UserOutput? {
         logger.info { "login in" }
-        val functionName = FunctionNameAuth0.LOGIN.functionName
-        if (!authValidator.checkFunctionAuth(selectionInput.uid!!, functionName)){
-            return null
-        }
 
         return remotePeopleService.loginByPeopleService(selectionInput)
     }
@@ -52,10 +49,6 @@ class Query : GraphQLQueryResolver {
 
     fun selectUserBySubstring(selectionInput: SelectionInput): MutableList<UserOutput>? {
         logger.info { "selectUserBySubstring" }
-        val functionName = FunctionNameAuth1.SELECT_USER_BY_SUBSTRING.functionName
-        if (!authValidator.checkFunctionAuth(selectionInput.uid!!, functionName)){
-            return null
-        }
 
         return remotePeopleService.selectUserBySubstring(selectionInput.userInput!!.username!!)
     }

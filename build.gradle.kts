@@ -50,13 +50,20 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.2.3")
     implementation("io.github.microutils:kotlin-logging:1.7.6")
 
-//    // Spring cloud
+    // Spring cloud
 //    implementation("org.springframework.cloud:spring-cloud-starter-hystrix")
+//    implementation("org.springframework.cloud:spring-cloud-starter-zuul:1.4.7.RELEASE")
 
     // DevOps
     implementation("io.springfox:springfox-swagger2:2.9.2")
     implementation("io.springfox:springfox-swagger-ui:2.9.2")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+
+    // AOP
+    implementation("org.springframework.boot:spring-boot-starter-aop")
+
+    // Security
+    implementation("org.springframework.boot:spring-boot-starter-security")
 
     // Testing
     testImplementation("org.springframework.boot:spring-boot-starter-test") {

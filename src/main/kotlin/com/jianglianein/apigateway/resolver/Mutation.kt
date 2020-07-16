@@ -1,6 +1,7 @@
 package com.jianglianein.apigateway.resolver
 
 import com.coxautodev.graphql.tools.GraphQLMutationResolver
+import com.jianglianein.apigateway.config.security.Unsecured
 import com.jianglianein.apigateway.model.enum.FunctionNameAuth1
 import com.jianglianein.apigateway.model.graphql.SelectionInput
 import com.jianglianein.apigateway.model.type.*
@@ -26,6 +27,7 @@ class Mutation : GraphQLMutationResolver {
 
     private var logger = KotlinLogging.logger {}
 
+    @Unsecured
     fun register(selectionInput: SelectionInput): ResultOutput? {
         logger.info { "register" }
 
