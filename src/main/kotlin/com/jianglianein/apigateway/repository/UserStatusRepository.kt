@@ -11,20 +11,18 @@ import redis.clients.jedis.JedisPool
 class UserStatusRepository {
     @Autowired
     private lateinit var jedisPool: JedisPool
-    private val uidPrefix = "uid"
+    private val jwtTokenPrefix = "jwt"
     private val statusField = "status"
-    private val statusValue = "value"
+    private val statusValue = "jwt-token"
     private val statusUpdateTime = "updateTime"
     private val statusUser = "username"
     private val expireTime = 3600 * 12
 
-    fun update(statusType: UserStatusType, uid: String, timestamp: Long, username: String) {
+    fun update(token: String, secure: String) {
         jedisPool.resource.use { jedis ->
             with(jedis) {
-                hset("$uidPrefix:$uid", "$statusField:$statusValue", statusType.toString())
-                hset("$uidPrefix:$uid", "$statusField:$statusUpdateTime", timestamp.toString())
-                hset("$uidPrefix:$uid", "$statusField:$statusUser", username)
-                expire("$uidPrefix:$uid", expireTime)
+                hset("$jwtTokenPrefix:$token", "$statusField:$statusValue", secure)
+                expire("$jwtTokenPrefix:$token", expireTime)
             }
         }
     }
@@ -32,7 +30,7 @@ class UserStatusRepository {
     fun get(uid: String): UserStatus {
         var userInfo = mutableMapOf<String, String>()
         jedisPool.resource.use {
-            userInfo = it.hgetAll("$uidPrefix:$uid")
+            userInfo = it.hgetAll("$jwtTokenPrefix:$uid")
         }
         if (userInfo.isEmpty()) {
             return UserStatus()

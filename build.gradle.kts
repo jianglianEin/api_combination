@@ -64,6 +64,8 @@ dependencies {
 
     // Security
     implementation("org.springframework.boot:spring-boot-starter-security")
+    // Jwt
+    implementation("com.auth0:java-jwt:3.10.3")
 
     // Testing
     testImplementation("org.springframework.boot:spring-boot-starter-test") {

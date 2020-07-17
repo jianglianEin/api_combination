@@ -1,6 +1,5 @@
 package com.jianglianein.apigateway.service
 
-import com.jianglianein.apigateway.model.enum.FunctionNameAuth0
 import com.jianglianein.apigateway.model.enum.FunctionNameAuth1
 import com.jianglianein.apigateway.model.enum.StatusCode
 import com.jianglianein.apigateway.model.type.ProjectOutput
@@ -12,9 +11,6 @@ import com.jianglianein.apigateway.repository.UserStatusRepository
 import com.microservice.peopleservice.poko.type.UserStatusType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.util.concurrent.ThreadLocalRandom
-import javax.servlet.http.Cookie
-import javax.servlet.http.HttpServletResponse
 
 @Service
 class AuthCheckService {
@@ -26,20 +22,6 @@ class AuthCheckService {
     private lateinit var functionStatusRepository: FunctionStatusRepository
     @Autowired
     private lateinit var cacheService: CacheService
-
-    fun checkAuth0(functionName: String, response: HttpServletResponse): ResultRestOutput {
-        if (functionName == FunctionNameAuth0.LOGIN.functionName){
-            val time = System.currentTimeMillis().toString()
-            val uid = toolService.encode(time + functionName + ThreadLocalRandom.current())
-            functionStatusRepository.update(uid, functionName)
-
-            val cookie = Cookie("uid",uid)
-            cookie.maxAge = 12 * 3600
-            response.addCookie(cookie)
-            return ResultRestOutput(true, StatusCode.SUCCESS.code.toString(), uid)
-        }
-        return ResultRestOutput(true, StatusCode.SUCCESS.code.toString())
-    }
 
     fun checkAuth1(functionName: String,
                    uid: String,

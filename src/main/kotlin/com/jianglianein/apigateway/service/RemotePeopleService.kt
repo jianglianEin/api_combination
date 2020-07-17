@@ -20,7 +20,7 @@ class RemotePeopleService {
     @Autowired
     private lateinit var httpClientService: HttpClientService
 
-    fun loginByPeopleService(selectionInput: SelectionInput): UserOutput {
+    fun loginByPeopleService(selectionInput: SelectionInput): LoginOutput {
         val url = remoteServiceProperties.peopleServiceUrl + "/user/login"
 
         val params = LinkedMultiValueMap<String, Any>()
@@ -28,7 +28,9 @@ class RemotePeopleService {
         params.add("password", selectionInput.userInput?.password)
         params.add("uid", selectionInput.uid)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, UserOutput::class.java)
+
+        val loginOutput = LoginOutput(objectMapper.readValue(resp, UserOutput::class.java), "jwt")
+        return loginOutput
     }
 
     @CacheEvict(value = ["projectsCheck", "teamsCheck"], key = "#selectionInput.userInput.username")

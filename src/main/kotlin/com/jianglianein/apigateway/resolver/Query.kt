@@ -31,7 +31,7 @@ class Query : GraphQLQueryResolver {
     private var logger = KotlinLogging.logger {}
 
     @Unsecured
-    fun login(selectionInput: SelectionInput): UserOutput? {
+    fun login(selectionInput: SelectionInput): LoginOutput? {
         logger.info { "login in" }
 
         return remotePeopleService.loginByPeopleService(selectionInput)

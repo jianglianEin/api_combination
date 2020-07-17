@@ -1,31 +1,40 @@
 package com.jianglianein.apigateway.config.aop
 
-import com.jianglianein.apigateway.config.security.iauthentication.IAuthentication
-import com.jianglianein.apigateway.model.type.UserOutput
+import com.jianglianein.apigateway.config.security.JwtHandler
+import com.jianglianein.apigateway.model.type.LoginOutput
+import com.jianglianein.apigateway.repository.UserStatusRepository
 import com.jianglianein.apigateway.service.ToolService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.core.authority.SimpleGrantedAuthority
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
-import java.util.concurrent.ThreadLocalRandom
 
 @Component
 class UnsecuredHandler {
     @Autowired
     private lateinit var toolService: ToolService
 
+    @Autowired
+    private lateinit var jwtHandler: JwtHandler
+
+    @Autowired
+    private lateinit var userStatusRepository: UserStatusRepository
+
     fun afterReturnHandle(methodName: String?, result: Any) {
         val login = "login"
-        if (login == methodName && !(result as UserOutput).username.isNullOrEmpty()){
-            val authorities = mutableListOf(SimpleGrantedAuthority("ROLE_USER"))
-            val time = System.currentTimeMillis().toString()
-            val uid = toolService.encode(time + result.username + ThreadLocalRandom.current())
-            val principal = mutableMapOf<String, String?>()
-            principal["uid"] = uid
-            principal["username"] = result.username
-            val credentials = "testCredentials"
+        if (login == methodName){
+            afterLoginHandle(result)
+        }
+    }
 
-            SecurityContextHolder.getContext().authentication = IAuthentication(principal, credentials, authorities)
+    private fun afterLoginHandle(result: Any) {
+        if (!(result as LoginOutput).userOutput.username.isNullOrEmpty()) {
+            val secure = result.userOutput.password + System.currentTimeMillis()
+            val claimsMap = mutableMapOf<String, Any>()
+            claimsMap["username"] = result.userOutput.username!!
+
+            val token = jwtHandler.sign(claimsMap, secure)
+            userStatusRepository.update(token, secure)
+
+            (result as LoginOutput).token = token
         }
     }
 }

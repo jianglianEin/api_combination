@@ -1,7 +1,6 @@
 package com.jianglianein.apigateway.resource
 
 import com.jianglianein.apigateway.config.EnvProperties
-import com.jianglianein.apigateway.model.enum.FunctionNameAuth0
 import com.jianglianein.apigateway.model.enum.FunctionNameAuth1
 import com.jianglianein.apigateway.model.type.ResultOutput
 import com.jianglianein.apigateway.model.type.ResultRestOutput
@@ -55,11 +54,6 @@ class ApiGateWayResource {
                   request: HttpServletRequest): ResultRestOutput {
 
         return when {
-            FunctionNameAuth0.values().map {
-                it.functionName
-            }.contains(functionName) -> {
-                authCheckService.checkAuth0(functionName, response)
-            }
 
             FunctionNameAuth1.values().map {
                 it.functionName

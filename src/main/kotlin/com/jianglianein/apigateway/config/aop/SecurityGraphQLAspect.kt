@@ -43,11 +43,13 @@ class SecurityGraphQLAspect {
     }
 
     @AfterReturning(returning="result", value= "isMethodAnnotatedAsUnsecured()")
-    fun afterUnsecuredFunctionReturning(joinPoint: JoinPoint, result: Any) {
+    fun afterUnsecuredFunctionReturning(joinPoint: JoinPoint, result: Any): Any {
         logger.info { "afterUnsecuredFunctionReturning" }
 
         val methodName = joinPoint.signature.name
         unsecuredHandler.afterReturnHandle(methodName, result)
+
+        return result
     }
 
     @Pointcut("within(com.jianglianein.apigateway.resolver.*)args(…)")

@@ -1,5 +1,5 @@
 type Query{
-    login(selectionInput: SelectionInput): UserOutput
+    login(selectionInput: SelectionInput): LoginOutput
     logout(selectionInput: SelectionInput): ResultOutput
     selectUserBySubstring(selectionInput: SelectionInput): [UserOutput]
     getCommitByReceiver(selectionInput: SelectionInput): [CommitPosOutput]
@@ -184,4 +184,9 @@ type CardOutput{
     founder: String
     status: String
     number: Int
+}
+
+type LoginOutput{
+    userOutput: UserOutput
+    token: String
 }
