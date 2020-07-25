@@ -3,7 +3,7 @@ package com.jianglianein.apigateway.service
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.jianglianein.apigateway.config.microserviceproperty.RemoteServiceProperties
 import com.jianglianein.apigateway.model.graphql.SelectionInput
-import com.jianglianein.apigateway.model.type.*
+import com.jianglianein.apigateway.model.graphql.type.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.http.HttpMethod
@@ -26,7 +26,6 @@ class RemotePeopleService {
         val params = LinkedMultiValueMap<String, Any>()
         params.add("username", selectionInput.userInput?.username)
         params.add("password", selectionInput.userInput?.password)
-        params.add("uid", selectionInput.uid)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
 
         val loginOutput = LoginOutput(objectMapper.readValue(resp, UserOutput::class.java), "jwt")
@@ -39,7 +38,6 @@ class RemotePeopleService {
 
         val params = LinkedMultiValueMap<String, Any>()
         params.add("username", selectionInput.userInput!!.username)
-        params.add("uid", selectionInput.uid)
         val resp = httpClientService.client(url, HttpMethod.POST, params)
         return objectMapper.readValue(resp, ResultOutput::class.java)
     }

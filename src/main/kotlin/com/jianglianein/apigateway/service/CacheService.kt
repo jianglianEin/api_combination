@@ -1,8 +1,7 @@
 package com.jianglianein.apigateway.service
 
-import com.jianglianein.apigateway.model.type.ProjectOutput
-import com.jianglianein.apigateway.model.type.TeamOutPut
-import com.jianglianein.apigateway.poko.UserStatus
+import com.jianglianein.apigateway.model.graphql.type.ProjectOutput
+import com.jianglianein.apigateway.model.graphql.type.TeamOutPut
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
@@ -14,16 +13,16 @@ class CacheService {
     @Autowired
     private lateinit var remoteScrumProjectService: RemoteScrumProjectService
 
-    @Cacheable("teamsCheck", key = "#userStatue.updateBy")
-    fun getTeamsEvidence(userStatue: UserStatus): MutableList<TeamOutPut> {
-        val checkTeams = remotePeopleService.selectTeamByUsername(userStatue.updateBy)
+    @Cacheable("teamsCheck", key = "#username")
+    fun getTeamsEvidence(username: String): MutableList<TeamOutPut> {
+        val checkTeams = remotePeopleService.selectTeamByUsername(username)
 
         return checkTeams
 }
 
-    @Cacheable("projectsCheck", key = "#userStatue.updateBy")
-    fun getProjectsEvidence(userStatue: UserStatus): MutableList<ProjectOutput> {
-        val checkProjects = remoteScrumProjectService.selectProjectsByCreator(userStatue.updateBy).toMutableList()
+    @Cacheable("projectsCheck", key = "#username")
+    fun getProjectsEvidence(username: String): MutableList<ProjectOutput> {
+        val checkProjects = remoteScrumProjectService.selectProjectsByCreator(username).toMutableList()
 
         return checkProjects
     }

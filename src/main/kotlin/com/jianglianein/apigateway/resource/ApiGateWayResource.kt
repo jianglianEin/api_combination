@@ -1,10 +1,7 @@
 package com.jianglianein.apigateway.resource
 
 import com.jianglianein.apigateway.config.EnvProperties
-import com.jianglianein.apigateway.model.enum.FunctionNameAuth1
-import com.jianglianein.apigateway.model.type.ResultOutput
-import com.jianglianein.apigateway.model.type.ResultRestOutput
-import com.jianglianein.apigateway.service.AuthCheckService
+import com.jianglianein.apigateway.model.graphql.type.ResultOutput
 import com.jianglianein.apigateway.service.UploadService
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,8 +10,6 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
 import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
-
 
 @RestController
 class ApiGateWayResource {
@@ -22,8 +17,6 @@ class ApiGateWayResource {
     lateinit var env: EnvProperties
     @Autowired
     private lateinit var uploadService: UploadService
-    @Autowired
-    private lateinit var authCheckService: AuthCheckService
 
     private var logger = KotlinLogging.logger {}
 
@@ -45,24 +38,4 @@ class ApiGateWayResource {
         return ResultOutput(true, url)
     }
 
-    @PostMapping("/api/checkAuth")
-    fun checkAuth(@RequestParam("functionName") functionName: String,
-                  @RequestParam("teamId") teamId: String?,
-                  @RequestParam("projectId") projectId: String?,
-                  @RequestParam("username") username: String?,
-                  response: HttpServletResponse,
-                  request: HttpServletRequest): ResultRestOutput {
-
-        return when {
-
-            FunctionNameAuth1.values().map {
-                it.functionName
-            }.contains(functionName) -> {
-                val authentication = request.getHeader("Authorization")
-                val uid = authentication?.replace("Bearer ", "")
-                authCheckService.checkAuth1(functionName, uid!!, teamId, projectId, username)
-            }
-            else -> ResultRestOutput(false, "no function mapping")
-        }
-    }
 }

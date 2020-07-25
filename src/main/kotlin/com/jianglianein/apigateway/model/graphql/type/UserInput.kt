@@ -1,4 +1,4 @@
-package com.jianglianein.apigateway.model.type
+package com.jianglianein.apigateway.model.graphql.type
 
 data class UserInput (val username: String? = null,
                       val password: String? = null,

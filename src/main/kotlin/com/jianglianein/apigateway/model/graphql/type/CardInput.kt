@@ -1,4 +1,4 @@
-package com.jianglianein.apigateway.model.type
+package com.jianglianein.apigateway.model.graphql.type
 
 data class CardInput (val id: String? = null,
                       val title: String? = null,

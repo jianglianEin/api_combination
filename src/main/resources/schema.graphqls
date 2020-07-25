@@ -45,7 +45,7 @@ input SelectionInput{
     cardInput: CardInput
     commitInput: CommitInput
     emailInput: EmailInput
-    uid: String
+    authCheckInput: AuthCheckInput
 }
 
 input EmailInput{

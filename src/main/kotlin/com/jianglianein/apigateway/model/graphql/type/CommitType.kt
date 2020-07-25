@@ -1,4 +1,4 @@
-package com.jianglianein.apigateway.model.type
+package com.jianglianein.apigateway.model.graphql.type
 
 data class CommitType (val id: String? = null,
                        val description: String? = null,

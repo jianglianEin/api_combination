@@ -1,5 +1,6 @@
 package com.jianglianein.apigateway.config.aop
 
+import com.jianglianein.apigateway.model.graphql.SelectionInput
 import mu.KotlinLogging
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.annotation.AfterReturning
@@ -9,9 +10,9 @@ import org.aspectj.lang.annotation.Pointcut
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.annotation.Order
 import org.springframework.security.access.AccessDeniedException
-import org.springframework.security.authentication.AnonymousAuthenticationToken
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Component
+import org.springframework.web.context.request.RequestContextHolder
+import org.springframework.web.context.request.ServletRequestAttributes
 
 @Component
 @Aspect
@@ -22,22 +23,29 @@ class SecurityGraphQLAspect {
     @Autowired
     private lateinit var unsecuredHandler: UnsecuredHandler
 
-    @Before("allGraphQLResolverMethods() && isDefinedInApplication() && !isMethodAnnotatedAsUnsecured()")
-    fun doSecurityCheck() {
-        logger.info { "doSecurityCheck" }
+    @Autowired
+    private lateinit var securityCheckHandler: SecurityCheckHandler
 
-        if (SecurityContextHolder.getContext().authentication == null ||
-                !SecurityContextHolder.getContext().authentication.isAuthenticated ||
-                AnonymousAuthenticationToken::class.java.isAssignableFrom(SecurityContextHolder.getContext().authentication.javaClass)) {
+    @Before("allGraphQLResolverMethods() && isDefinedInApplication() && !isMethodAnnotatedAsUnsecured()")
+    fun doSecurityCheck(joinPoint: JoinPoint) {
+        logger.info { "doSecurityCheck" }
+        val authCheckInput = (joinPoint.args[0] as SelectionInput).authCheckInput
+
+        val currentRequestAttributes = RequestContextHolder.currentRequestAttributes()
+        val request = (currentRequestAttributes as ServletRequestAttributes).request
+//        val response = (currentRequestAttributes as ServletRequestAttributes).response
+        val authentication = request.getHeader("Authorization")
+        val token = authentication?.replace("Bearer ", "")
+
+        if (token.isNullOrEmpty()){
+            throw AccessDeniedException("User not authenticated")
+        }else if (!securityCheckHandler.authCheck(token, authCheckInput!!)) {
             throw AccessDeniedException("User not authenticated")
         }
     }
 
     @Before("isMethodAnnotatedAsUnsecured()")
     fun doUnsecuredFunction() {
-//        val currentRequestAttributes = RequestContextHolder.currentRequestAttributes()
-//        val request = (currentRequestAttributes as ServletRequestAttributes).request
-//        val response = (currentRequestAttributes as ServletRequestAttributes).response
 
         logger.info { "doUnsecuredFunction" }
     }

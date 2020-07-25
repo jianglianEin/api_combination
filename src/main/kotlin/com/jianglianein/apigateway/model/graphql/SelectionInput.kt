@@ -1,6 +1,6 @@
 package com.jianglianein.apigateway.model.graphql
 
-import com.jianglianein.apigateway.model.type.*
+import com.jianglianein.apigateway.model.graphql.type.*
 
 data class SelectionInput (val userInput: UserInput? = null,
                            val teamInput: TeamInput? = null,
@@ -9,4 +9,4 @@ data class SelectionInput (val userInput: UserInput? = null,
                            val cardInput: CardInput? = null,
                            val commitInput: CommitInput? = null,
                            val emailInput: EmailInput? = null,
-                           val uid: String? = null)
+                           val authCheckInput: AuthCheckInput? = null)

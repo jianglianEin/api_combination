@@ -1,4 +1,4 @@
-package com.jianglianein.apigateway.model.type
+package com.jianglianein.apigateway.model.graphql.type
 
 data class TeamInput (val id: String? = null,
                       val creator: String? = null,

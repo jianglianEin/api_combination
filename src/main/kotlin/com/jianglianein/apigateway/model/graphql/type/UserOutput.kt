@@ -1,4 +1,4 @@
-package com.jianglianein.apigateway.model.type
+package com.jianglianein.apigateway.model.graphql.type
 
 data class UserOutput (val id: String? = null,
                        val username: String? = null,

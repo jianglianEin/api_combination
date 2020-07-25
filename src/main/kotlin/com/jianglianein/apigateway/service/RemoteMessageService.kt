@@ -2,7 +2,7 @@ package com.jianglianein.apigateway.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.jianglianein.apigateway.config.microserviceproperty.RemoteServiceProperties
-import com.jianglianein.apigateway.model.type.*
+import com.jianglianein.apigateway.model.graphql.type.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service

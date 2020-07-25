@@ -1,7 +1,7 @@
 package com.jianglianein.apigateway.service
 
 import com.jianglianein.apigateway.config.microserviceproperty.RemoteServiceProperties
-import com.jianglianein.apigateway.model.type.TeamOutPut
+import com.jianglianein.apigateway.model.graphql.type.TeamOutPut
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpMethod
 import org.springframework.scheduling.annotation.Async
@@ -41,6 +41,34 @@ class AsyncHelperService {
         selectByTeamParams.add("teamId", it.id)
         val projectJoinByTeamResp = httpClientService.client(projectUrl, HttpMethod.POST, selectByTeamParams)
         return AsyncResult<String>(projectJoinByTeamResp)
+    }
+
+    @Async
+    fun getPeopleServiceClaim(username: String): Future<String> {
+        val authClaimUrl = remoteServiceProperties.peopleServiceUrl + "/auth/claim"
+        val peopleClaimParams = LinkedMultiValueMap<String, Any>()
+        peopleClaimParams.add("username", username)
+        val resp = httpClientService.client(authClaimUrl, HttpMethod.POST, peopleClaimParams)
+        return AsyncResult<String>(resp)
+    }
+
+    @Async
+    fun getProjectServiceClaim(username: String, teams: String): Future<String> {
+        val authClaimUrl = remoteServiceProperties.projectServiceUrl + "/auth/claim"
+        val projectClaimParams = LinkedMultiValueMap<String, Any>()
+        projectClaimParams.add("username", username)
+        projectClaimParams.add("teams", teams)
+        val resp = httpClientService.client(authClaimUrl, HttpMethod.POST, projectClaimParams)
+        return AsyncResult<String>(resp)
+    }
+
+    @Async
+    fun getCommentServiceClaim(username: String): Future<String> {
+        val authClaimUrl = remoteServiceProperties.messageServiceUrl + "/auth/claim"
+        val commentClaimParams = LinkedMultiValueMap<String, Any>()
+        commentClaimParams.add("username", username)
+        val resp = httpClientService.client(authClaimUrl, HttpMethod.POST, commentClaimParams)
+        return AsyncResult<String>(resp)
     }
 
 }

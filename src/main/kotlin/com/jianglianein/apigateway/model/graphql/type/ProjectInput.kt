@@ -1,4 +1,4 @@
-package com.jianglianein.apigateway.model.type
+package com.jianglianein.apigateway.model.graphql.type
 
 data class ProjectInput (val id: String? = null,
                          val projectName: String? = null,

@@ -1,4 +1,4 @@
-package com.jianglianein.apigateway.model.type
+package com.jianglianein.apigateway.model.graphql.type
 
 data class CommitTypeOutput (var id: String? = null,
                              var description: String? = null,

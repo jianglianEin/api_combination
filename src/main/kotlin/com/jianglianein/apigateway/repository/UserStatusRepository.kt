@@ -1,8 +1,5 @@
 package com.jianglianein.apigateway.repository
 
-
-import com.jianglianein.apigateway.poko.UserStatus
-import com.microservice.peopleservice.poko.type.UserStatusType
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 import redis.clients.jedis.JedisPool
@@ -14,8 +11,6 @@ class UserStatusRepository {
     private val jwtTokenPrefix = "jwt"
     private val statusField = "status"
     private val statusValue = "jwt-token"
-    private val statusUpdateTime = "updateTime"
-    private val statusUser = "username"
     private val expireTime = 3600 * 12
 
     fun update(token: String, secure: String) {
@@ -27,18 +22,14 @@ class UserStatusRepository {
         }
     }
 
-    fun get(uid: String): UserStatus {
-        var userInfo = mutableMapOf<String, String>()
+    fun get(token: String): String {
+        var secureInfo = mutableMapOf<String, String>()
         jedisPool.resource.use {
-            userInfo = it.hgetAll("$jwtTokenPrefix:$uid")
+            secureInfo = it.hgetAll("$jwtTokenPrefix:$token")
         }
-        if (userInfo.isEmpty()) {
-            return UserStatus()
+        if (secureInfo.isEmpty()) {
+            return ""
         }
-        val statusValue = UserStatusType.valueOf(userInfo["$statusField:$statusValue"]!!)
-        val updateTime = userInfo["$statusField:$statusUpdateTime"]!!.toLong()
-        val username = userInfo["$statusField:$statusUser"]!!
-
-        return UserStatus(statusValue, username, updateTime)
+        return secureInfo["$statusField:$statusValue"]!!
     }
 }

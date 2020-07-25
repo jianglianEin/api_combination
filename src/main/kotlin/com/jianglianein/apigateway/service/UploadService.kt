@@ -2,7 +2,7 @@ package com.jianglianein.apigateway.service
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.jianglianein.apigateway.config.OtherServiceProperties
-import com.jianglianein.apigateway.model.type.ResultOutput
+import com.jianglianein.apigateway.model.graphql.type.ResultOutput
 import com.jianglianein.apigateway.poko.SmPictureBedResult
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.FileSystemResource
