@@ -50,6 +50,7 @@ class Query : GraphQLQueryResolver {
         return remoteMessageService.getCommitByReceiver(selectionInput.commitInput!!.receiver!!)
     }
 
+    @Unsecured
     fun sendEmailToInviteReceiverJoinTeam(selectionInput: SelectionInput): ResultOutput? {
         logger.info { "sendEmailToInviteReceiverJoinTeam" }
 

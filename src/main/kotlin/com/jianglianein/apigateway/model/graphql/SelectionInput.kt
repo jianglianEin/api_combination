@@ -8,5 +8,4 @@ data class SelectionInput (val userInput: UserInput? = null,
                            val boardInput: BoardInput? = null,
                            val cardInput: CardInput? = null,
                            val commitInput: CommitInput? = null,
-                           val emailInput: EmailInput? = null,
-                           val authCheckInput: AuthCheckInput? = null)
+                           val emailInput: EmailInput? = null)

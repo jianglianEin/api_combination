@@ -1,6 +1,5 @@
-package com.jianglianein.apigateway.config.aop
+package com.jianglianein.apigateway.config.security
 
-import com.jianglianein.apigateway.config.security.JwtHandler
 import com.jianglianein.apigateway.model.graphql.type.LoginOutput
 import com.jianglianein.apigateway.repository.UserStatusRepository
 import com.jianglianein.apigateway.service.AuthCheckService
@@ -32,13 +31,15 @@ class UnsecuredHandler {
             val username = result.userOutput.username!!
 
             val claimsMap = mutableMapOf<String, Any>()
+            val accessibleResource  = mutableMapOf<String, List<String>>()
             claimsMap["username"] = username
-            for ((key, value) in authCheckService.getJwtClaim(username)) {
-                claimsMap[key] = value
+            for ((key, value) in authCheckService.getAccessibleResources(username)) {
+                accessibleResource[key] = value
             }
 
             val token = jwtHandler.sign(claimsMap, secure)
-            userStatusRepository.update(token, secure)
+            userStatusRepository.updateJwt(token, secure)
+            userStatusRepository.updateAccessibleResource(token, accessibleResource)
             result.token = token
         }
     }

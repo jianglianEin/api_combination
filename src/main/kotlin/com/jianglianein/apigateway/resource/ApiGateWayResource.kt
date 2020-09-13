@@ -27,6 +27,7 @@ class ApiGateWayResource {
         return "hello world\n" + env.env
     }
 
+    // TODO: add jwt to control api
     @PostMapping("/api/uploadImage")
     fun uploadImage(@RequestParam("icon") icon: MultipartFile, request: HttpServletRequest): ResultOutput? {
         val path = uploadService.checkAndReturnFilePath(request)

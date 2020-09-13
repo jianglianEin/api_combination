@@ -44,7 +44,7 @@ class AsyncHelperService {
     }
 
     @Async
-    fun getPeopleServiceClaim(username: String): Future<String> {
+    fun getPeopleServiceAccessibleResources(username: String): Future<String> {
         val authClaimUrl = remoteServiceProperties.peopleServiceUrl + "/auth/claim"
         val peopleClaimParams = LinkedMultiValueMap<String, Any>()
         peopleClaimParams.add("username", username)
@@ -53,7 +53,7 @@ class AsyncHelperService {
     }
 
     @Async
-    fun getProjectServiceClaim(username: String, teams: String): Future<String> {
+    fun getProjectServiceAccessibleResources(username: String, teams: String): Future<String> {
         val authClaimUrl = remoteServiceProperties.projectServiceUrl + "/auth/claim"
         val projectClaimParams = LinkedMultiValueMap<String, Any>()
         projectClaimParams.add("username", username)
@@ -63,7 +63,7 @@ class AsyncHelperService {
     }
 
     @Async
-    fun getCommentServiceClaim(username: String): Future<String> {
+    fun getCommentServiceAccessibleResources(username: String): Future<String> {
         val authClaimUrl = remoteServiceProperties.messageServiceUrl + "/auth/claim"
         val commentClaimParams = LinkedMultiValueMap<String, Any>()
         commentClaimParams.add("username", username)
