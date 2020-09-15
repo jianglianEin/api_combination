@@ -29,7 +29,7 @@ class SecurityGraphQLAspect {
     @Autowired
     private lateinit var securityHandler: SecurityHandler
 
-    @Before("allGraphQLResolverMethods() && isDefinedInApplication() && !isMethodAnnotatedAsUnsecured()")
+    @Before("allGraphQLResolverMethods() && allRestfulResolverMethods && isDefinedInApplication() && !isMethodAnnotatedAsUnsecured()")
     fun doSecurityCheck(joinPoint: JoinPoint) {
         logger.info { "doSecurityCheck" }
         val input = joinPoint.args[0] as SelectionInput
@@ -41,9 +41,9 @@ class SecurityGraphQLAspect {
         val authentication = request.getHeader("Authorization")
         val token = authentication?.replace("Bearer ", "")
 
-        if (token.isNullOrEmpty()){
+        if (token.isNullOrEmpty()) {
             throw AccessDeniedException("User not authenticated")
-        }else if (!securityHandler.authCheck(token, input, methodName)) {
+        } else if (!securityHandler.authCheck(token, input, methodName)) {
             throw AccessDeniedException("User not authenticated")
         }
     }
@@ -54,7 +54,7 @@ class SecurityGraphQLAspect {
         logger.info { "doUnsecuredFunction" }
     }
 
-    @AfterReturning(returning="result", value= "isMethodAnnotatedAsUnsecured()")
+    @AfterReturning(returning = "result", value = "isMethodAnnotatedAsUnsecured()")
     fun afterUnsecuredFunctionReturning(joinPoint: JoinPoint, result: Any): Any {
         logger.info { "afterUnsecuredFunctionReturning" }
 
@@ -67,6 +67,11 @@ class SecurityGraphQLAspect {
     @Pointcut("within(com.jianglianein.apigateway.resolver.*)args(…)")
     fun allGraphQLResolverMethods() {
         logger.info { "allGraphQLResolverMethods" }
+    }
+
+    @Pointcut("within(com.jianglianein.apigateway.resource.*)args(…)")
+    fun allRestfulResolverMethods() {
+        logger.info { "allRestfulResolverMethods" }
     }
 
     @Pointcut("within(com.jianglianein.apigateway..*)")

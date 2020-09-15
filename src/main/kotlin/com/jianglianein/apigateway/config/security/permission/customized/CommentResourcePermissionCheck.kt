@@ -9,13 +9,11 @@ class CommentResourcePermissionCheck : PermissionCheckInterface {
         val receiverCheck = accessibleResource["username"]?.contains(commentInput.receiver)
         val cardIdCheck = accessibleResource["cards"]?.contains(commentInput.cardId)
         val commentIdCheck = accessibleResource["comment"]?.contains(commentInput.id)
-        if (receiverCheck != null && receiverCheck) {
-            return receiverCheck
-        } else if (cardIdCheck != null && cardIdCheck) {
-            return cardIdCheck
-        } else if (commentIdCheck != null && commentIdCheck) {
-            return commentIdCheck
+        return when {
+            receiverCheck != null && receiverCheck -> receiverCheck
+            cardIdCheck != null && cardIdCheck -> cardIdCheck
+            commentIdCheck != null && commentIdCheck -> commentIdCheck
+            else -> false
         }
-        return false
     }
 }

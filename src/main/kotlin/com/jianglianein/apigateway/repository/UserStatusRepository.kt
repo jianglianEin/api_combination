@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 import redis.clients.jedis.JedisPool
 
-// TODO: split value from jwt and save value by username
 @Repository
 class UserStatusRepository {
     @Autowired

@@ -1,6 +1,7 @@
 package com.jianglianein.apigateway.resource
 
 import com.jianglianein.apigateway.config.EnvProperties
+import com.jianglianein.apigateway.config.security.Unsecured
 import com.jianglianein.apigateway.model.graphql.type.ResultOutput
 import com.jianglianein.apigateway.service.UploadService
 import mu.KotlinLogging
@@ -20,6 +21,7 @@ class ApiGateWayResource {
 
     private var logger = KotlinLogging.logger {}
 
+    @Unsecured
     @GetMapping()
     fun hello(): String {
         logger.info { "run in PeopleService" }
@@ -27,7 +29,6 @@ class ApiGateWayResource {
         return "hello world\n" + env.env
     }
 
-    // TODO: add jwt to control api
     @PostMapping("/api/uploadImage")
     fun uploadImage(@RequestParam("icon") icon: MultipartFile, request: HttpServletRequest): ResultOutput? {
         val path = uploadService.checkAndReturnFilePath(request)
