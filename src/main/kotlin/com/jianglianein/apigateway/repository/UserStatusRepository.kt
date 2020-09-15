@@ -56,11 +56,11 @@ class UserStatusRepository {
     fun getAccessibleResource(token: String): MutableMap<String, List<String>> {
         val accessibleResource = mutableMapOf<String, List<String>>()
         jedisPool.resource.use {
-            accessibleResource.put(teamFiled, it.lrange("$jwtTokenPrefix:$token-$teamFiled", 0, -1))
-            accessibleResource.put(projectFiled, it.lrange("$jwtTokenPrefix:$token-$projectFiled", 0, -1))
-            accessibleResource.put(cardFiled, it.lrange("$jwtTokenPrefix:$token-$cardFiled", 0, -1))
-            accessibleResource.put(boardFiled, it.lrange("$jwtTokenPrefix:$token-$boardFiled", 0, -1))
-            accessibleResource.put(commentFiled, it.lrange("$jwtTokenPrefix:$token-$commentFiled", 0, -1))
+            accessibleResource[teamFiled] = it.lrange("$jwtTokenPrefix:$token-$teamFiled", 0, -1)
+            accessibleResource[projectFiled] = it.lrange("$jwtTokenPrefix:$token-$projectFiled", 0, -1)
+            accessibleResource[cardFiled] = it.lrange("$jwtTokenPrefix:$token-$cardFiled", 0, -1)
+            accessibleResource[boardFiled] = it.lrange("$jwtTokenPrefix:$token-$boardFiled", 0, -1)
+            accessibleResource[commentFiled] = it.lrange("$jwtTokenPrefix:$token-$commentFiled", 0, -1)
         }
 
         return accessibleResource

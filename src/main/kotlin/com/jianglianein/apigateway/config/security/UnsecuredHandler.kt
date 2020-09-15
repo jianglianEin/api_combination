@@ -33,6 +33,7 @@ class UnsecuredHandler {
             val claimsMap = mutableMapOf<String, Any>()
             val accessibleResource  = mutableMapOf<String, List<String>>()
             claimsMap["username"] = username
+            accessibleResource["username"] = mutableListOf(username)
             for ((key, value) in authCheckService.getAccessibleResources(username)) {
                 accessibleResource[key] = value
             }
