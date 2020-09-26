@@ -6,7 +6,8 @@ import org.springframework.stereotype.Component
 @Component
 interface PermissionCheckInterface {
 
-    fun check(accessibleResource: MutableMap<String, List<String>>, input: SelectionInput): Boolean
+    fun check(username: String, input: SelectionInput): Boolean
+
     companion object {
         fun mappingToPermission(methodName: String): PermissionCheckInterface {
             return MethodMappingToPermission.mappingToPermission(methodName)

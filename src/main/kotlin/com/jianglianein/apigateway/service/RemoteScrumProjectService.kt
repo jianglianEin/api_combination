@@ -41,13 +41,13 @@ class RemoteScrumProjectService {
             projectJoinByTeamRespFutures.add(asyncHelperService.selectProjectByTeamAsync(it, projectUrl))
         }
 
-        for (projectJoinByTeamRespFuture in projectJoinByTeamRespFutures){
+        for (projectJoinByTeamRespFuture in projectJoinByTeamRespFutures) {
             projectsResult.addAll(objectMapper.readValue(projectJoinByTeamRespFuture.get(), javaType))
         }
         return ArrayList<ProjectOutput>(LinkedHashSet<ProjectOutput>(projectsResult))
     }
 
-    @CacheEvict("projectsCheck", key = "#projectInput.creator")
+    @CacheEvict(value = ["accessibleProject"], key = "#projectInput.creator")
     fun createProject(projectInput: ProjectInput): ProjectOutput {
         val url = remoteServiceProperties.projectServiceUrl + "/scrum_project/create"
         val params = initProjectCreateParams(projectInput)
@@ -142,9 +142,9 @@ class RemoteScrumProjectService {
         val url = remoteServiceProperties.projectServiceUrl + "/card/create"
 
         val params = LinkedMultiValueMap<String, Any>()
-        if (cardInput.priority != null && cardInput.priority.isNotEmpty() && cardInput.priority.isNotBlank()){
+        if (cardInput.priority != null && cardInput.priority.isNotEmpty() && cardInput.priority.isNotBlank()) {
             params.add("priority", cardInput.priority)
-        }else {
+        } else {
             params.add("priority", "lowest")
         }
         checkStoryPointValid(cardInput, params)

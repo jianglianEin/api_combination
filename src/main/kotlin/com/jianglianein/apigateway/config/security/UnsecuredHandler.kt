@@ -31,16 +31,11 @@ class UnsecuredHandler {
             val username = result.userOutput.username!!
 
             val claimsMap = mutableMapOf<String, Any>()
-            val accessibleResource  = mutableMapOf<String, List<String>>()
             claimsMap["username"] = username
-            accessibleResource["username"] = mutableListOf(username)
-            for ((key, value) in authCheckService.getAccessibleResources(username)) {
-                accessibleResource[key] = value
-            }
+            authCheckService.getAccessibleResources(username)
 
             val token = jwtHandler.sign(claimsMap, secure)
             userStatusRepository.updateJwt(token, secure)
-            userStatusRepository.updateAccessibleResource(token, accessibleResource)
             result.token = token
         }
     }

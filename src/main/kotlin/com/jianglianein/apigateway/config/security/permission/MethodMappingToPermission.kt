@@ -8,42 +8,35 @@ import org.springframework.stereotype.Component
 class MethodMappingToPermission {
     companion object {
         private val noResourcePermissionCheck: NoResourcePermissionCheck = NoResourcePermissionCheck()
-        private val commentResourcePermissionCheck: CommentResourcePermissionCheck = CommentResourcePermissionCheck()
-        private val userResourcePermissionCheck: UserResourcePermissionCheck = UserResourcePermissionCheck()
-        private val teamResourcePermissionCheck: TeamResourcePermissionCheck = TeamResourcePermissionCheck()
-        private val projectResourcePermissionCheck: ProjectResourcePermissionCheck = ProjectResourcePermissionCheck()
-        private val boardResourcePermissionCheck: BoardResourcePermissionCheck = BoardResourcePermissionCheck()
-        private val cardResourcePermissionCheck: CardResourcePermissionCheck = CardResourcePermissionCheck()
+        private val commentReceiverPermissionCheck: CommentReceiverPermissionCheck = CommentReceiverPermissionCheck()
         private val methodMap = mutableMapOf<String, PermissionCheckInterface>()
 
         init {
             methodMap["logout"] = noResourcePermissionCheck
             methodMap["selectUserBySubstring"] = noResourcePermissionCheck
-            methodMap["getCommitByReceiver"] = commentResourcePermissionCheck
-            methodMap["selectTeamByUsername"] = userResourcePermissionCheck
-            methodMap["selectPeopleByTeamId"] = teamResourcePermissionCheck
-
+            methodMap["getCommitByReceiver"] = commentReceiverPermissionCheck
+            methodMap["selectTeamByUsername"] = noResourcePermissionCheck
+            methodMap["selectPeopleByTeamId"] = noResourcePermissionCheck
             methodMap["selectProjectByCreator"] = noResourcePermissionCheck
-
-            methodMap["selectBoardsByProjectId"] = projectResourcePermissionCheck
-            methodMap["selectProjectById"] = projectResourcePermissionCheck
-            methodMap["selectCardsByBoardId"] = boardResourcePermissionCheck
-            methodMap["selectCommentsByCardId"] = cardResourcePermissionCheck
-            methodMap["updateUser"] = userResourcePermissionCheck
+            methodMap["selectBoardsByProjectId"] = noResourcePermissionCheck
+            methodMap["selectProjectById"] = noResourcePermissionCheck
+            methodMap["selectCardsByBoardId"] = noResourcePermissionCheck
+            methodMap["selectCommentsByCardId"] = noResourcePermissionCheck
+            methodMap["updateUser"] = noResourcePermissionCheck
             methodMap["createTeam"] = noResourcePermissionCheck
-            methodMap["updateTeam"] = teamResourcePermissionCheck
-            methodMap["removeTeam"] = teamResourcePermissionCheck
+            methodMap["updateTeam"] = noResourcePermissionCheck
+            methodMap["removeTeam"] = noResourcePermissionCheck
             methodMap["createProject"] = noResourcePermissionCheck
-            methodMap["updateProject"] = projectResourcePermissionCheck
-            methodMap["removeProject"] = projectResourcePermissionCheck
-            methodMap["createBoard"] = boardResourcePermissionCheck
-            methodMap["removeBoard"] = boardResourcePermissionCheck
-            methodMap["createCard"] = cardResourcePermissionCheck
-            methodMap["updateCard"] = cardResourcePermissionCheck
-            methodMap["removeCard"] = cardResourcePermissionCheck
-            methodMap["createCommit"] = commentResourcePermissionCheck
-            methodMap["updateCommit"] = commentResourcePermissionCheck
-            methodMap["removeCommit"] = commentResourcePermissionCheck
+            methodMap["updateProject"] = noResourcePermissionCheck
+            methodMap["removeProject"] = noResourcePermissionCheck
+            methodMap["createBoard"] = noResourcePermissionCheck
+            methodMap["removeBoard"] = noResourcePermissionCheck
+            methodMap["createCard"] = noResourcePermissionCheck
+            methodMap["updateCard"] = noResourcePermissionCheck
+            methodMap["removeCard"] = noResourcePermissionCheck
+            methodMap["createCommit"] = noResourcePermissionCheck
+            methodMap["updateCommit"] = noResourcePermissionCheck
+            methodMap["removeCommit"] = noResourcePermissionCheck
         }
 
         fun mappingToPermission(methodName: String): PermissionCheckInterface {

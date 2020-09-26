@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 @Component
 class NoResourcePermissionCheck: PermissionCheckInterface {
 
-    override fun check(accessibleResource: MutableMap<String, List<String>>, input: SelectionInput): Boolean {
+    override fun check(username: String, input: SelectionInput): Boolean {
         return true
     }
 }

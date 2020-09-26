@@ -32,7 +32,7 @@ class RemotePeopleService {
         return loginOutput
     }
 
-    @CacheEvict(value = ["projectsCheck", "teamsCheck"], key = "#selectionInput.userInput.username")
+    @CacheEvict(value = ["accessibleProject"], key = "#selectionInput.userInput.username")
     fun logoutByPeopleService(selectionInput: SelectionInput): ResultOutput {
         val url = remoteServiceProperties.peopleServiceUrl + "/user/logout"
 
@@ -65,7 +65,7 @@ class RemotePeopleService {
         return objectMapper.readValue(resp, UserOutput::class.java)
     }
 
-    @CacheEvict("teamsCheck", key = "#teamInput.creator")
+
     fun createTeam(teamInput: TeamInput): TeamOutPut {
         val url = remoteServiceProperties.peopleServiceUrl + "/team/create"
 

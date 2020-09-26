@@ -44,15 +44,9 @@ class JwtHandler {
         }
     }
 
-    fun parseToken(token: String): MutableMap<String, Any> {
+    fun parseToken(token: String): MutableMap<String, String> {
         val jwt = JWT.decode(token)
-        val claimsMap = mutableMapOf<String, Any>()
-
-        claimsMap[JwtClaim.PROJECTS.claimName] = jwt.getClaim(JwtClaim.PROJECTS.claimName).`as`(mutableListOf<String>().javaClass)
-        claimsMap[JwtClaim.BOARDS.claimName] = jwt.getClaim(JwtClaim.BOARDS.claimName).`as`(mutableListOf<String>().javaClass)
-        claimsMap[JwtClaim.CARDS.claimName] = jwt.getClaim(JwtClaim.CARDS.claimName).`as`(mutableListOf<String>().javaClass)
-        claimsMap[JwtClaim.COMMENT.claimName] = jwt.getClaim(JwtClaim.COMMENT.claimName).`as`(mutableListOf<String>().javaClass)
-        claimsMap[JwtClaim.TEAMS.claimName] = jwt.getClaim(JwtClaim.TEAMS.claimName).`as`(mutableListOf<String>().javaClass)
+        val claimsMap = mutableMapOf<String, String>()
         claimsMap[JwtClaim.USERNAME.claimName] = jwt.getClaim(JwtClaim.USERNAME.claimName).asString()
 
         return claimsMap

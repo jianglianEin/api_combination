@@ -14,7 +14,7 @@ class RestTemplateConfig {
     @Bean
     fun restTemplate(factory: ClientHttpRequestFactory?): RestTemplate {
         val restTemplate = RestTemplate(factory!!)
-        restTemplate.messageConverters.set(1, StringHttpMessageConverter(StandardCharsets.UTF_8))
+        restTemplate.messageConverters[1] = StringHttpMessageConverter(StandardCharsets.UTF_8)
         return restTemplate
     }
 

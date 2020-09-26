@@ -29,7 +29,7 @@ class SecurityGraphQLAspect {
     @Autowired
     private lateinit var securityHandler: SecurityHandler
 
-    @Before("allGraphQLResolverMethods() && allRestfulResolverMethods && isDefinedInApplication() && !isMethodAnnotatedAsUnsecured()")
+    @Before("allGraphQLResolverMethods() && isDefinedInApplication() && !isMethodAnnotatedAsUnsecured()")
     fun doSecurityCheck(joinPoint: JoinPoint) {
         logger.info { "doSecurityCheck" }
         val input = joinPoint.args[0] as SelectionInput

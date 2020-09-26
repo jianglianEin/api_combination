@@ -23,9 +23,9 @@ class SecurityHandler {
         if (secure.isEmpty() || !jwtHandler.verify(secure, token)){
             return false
         }
+        val username = jwtHandler.parseToken(token)["username"]!!
+//        val accessibleResource = authCheckService.getAccessibleResources()
 
-        val accessibleResource = userStatusRepository.getAccessibleResource(token)
-
-        return authCheckService.permissionCheck(accessibleResource, input, methodName)
+        return authCheckService.permissionCheck(username, input, methodName)
     }
 }

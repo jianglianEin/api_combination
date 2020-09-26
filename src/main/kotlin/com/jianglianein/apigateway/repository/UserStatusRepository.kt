@@ -17,7 +17,7 @@ class UserStatusRepository {
     private val projectFiled = "projects"
     private val cardFiled = "cards"
     private val boardFiled = "boards"
-    private val commentFiled = "comment"
+    private val commentFiled = "comments"
 
     fun updateJwt(token: String, secure: String) {
         jedisPool.resource.use { jedis ->
@@ -44,7 +44,7 @@ class UserStatusRepository {
             with(jedis) {
                 for (accessibleResource in accessibleResources) {
                     accessibleResource.value.forEach {
-                        lpush("$jwtTokenPrefix:$token-${accessibleResource.key}", it)
+                        sadd("$jwtTokenPrefix:$token-${accessibleResource.key}", it)
                     }
                 }
                 expire("$jwtTokenPrefix:$token", expireTime)

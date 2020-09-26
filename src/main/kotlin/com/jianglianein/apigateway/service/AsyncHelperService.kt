@@ -45,26 +45,26 @@ class AsyncHelperService {
 
     @Async
     fun getPeopleServiceAccessibleResources(username: String): Future<String> {
-        val authClaimUrl = remoteServiceProperties.peopleServiceUrl + "/auth/claim"
-        val peopleClaimParams = LinkedMultiValueMap<String, Any>()
-        peopleClaimParams.add("username", username)
-        val resp = httpClientService.client(authClaimUrl, HttpMethod.POST, peopleClaimParams)
+        val permissionUrl = remoteServiceProperties.peopleServiceUrl + "/auth/permission"
+        val peoplePermissionParams = LinkedMultiValueMap<String, Any>()
+        peoplePermissionParams.add("username", username)
+        val resp = httpClientService.client(permissionUrl, HttpMethod.POST, peoplePermissionParams)
         return AsyncResult<String>(resp)
     }
 
     @Async
     fun getProjectServiceAccessibleResources(username: String, teams: String): Future<String> {
-        val authClaimUrl = remoteServiceProperties.projectServiceUrl + "/auth/claim"
-        val projectClaimParams = LinkedMultiValueMap<String, Any>()
-        projectClaimParams.add("username", username)
-        projectClaimParams.add("teams", teams)
-        val resp = httpClientService.client(authClaimUrl, HttpMethod.POST, projectClaimParams)
+        val permissionUrl = remoteServiceProperties.projectServiceUrl + "/auth/permission"
+        val projectPermissionParams = LinkedMultiValueMap<String, Any>()
+        projectPermissionParams.add("username", username)
+        projectPermissionParams.add("teams", teams)
+        val resp = httpClientService.client(permissionUrl, HttpMethod.POST, projectPermissionParams)
         return AsyncResult<String>(resp)
     }
 
     @Async
     fun getCommentServiceAccessibleResources(username: String): Future<String> {
-        val authClaimUrl = remoteServiceProperties.messageServiceUrl + "/auth/claim"
+        val authClaimUrl = remoteServiceProperties.messageServiceUrl + "/auth/permission"
         val commentClaimParams = LinkedMultiValueMap<String, Any>()
         commentClaimParams.add("username", username)
         val resp = httpClientService.client(authClaimUrl, HttpMethod.POST, commentClaimParams)
