@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository
 import redis.clients.jedis.JedisPool
 
 @Repository
-class UserStatusRepository {
+class RedisRepository {
     @Autowired
     private lateinit var jedisPool: JedisPool
     private val jwtTokenPrefix = "jwt"

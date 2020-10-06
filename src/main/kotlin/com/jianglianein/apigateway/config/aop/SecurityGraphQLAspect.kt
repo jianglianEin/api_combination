@@ -38,8 +38,8 @@ class SecurityGraphQLAspect {
         val currentRequestAttributes = RequestContextHolder.currentRequestAttributes()
         val request = (currentRequestAttributes as ServletRequestAttributes).request
 //        val response = (currentRequestAttributes as ServletRequestAttributes).response
-        val authentication = request.getHeader("Authorization")
-        val token = authentication?.replace("Bearer ", "")
+        val authorization = request.getHeader("Authorization")
+        val token = authorization?.replace("Bearer ", "")
 
         if (token.isNullOrEmpty()) {
             throw AccessDeniedException("User not authenticated")
