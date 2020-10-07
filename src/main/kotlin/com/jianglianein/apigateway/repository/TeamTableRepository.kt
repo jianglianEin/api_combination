@@ -5,26 +5,28 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 import redis.clients.jedis.JedisPool
 
+
 @Repository
-class CardTableRepository {
-    private final val cardTable: String = "card"
+class TeamTableRepository {
+    private final val peopleTable: String = "people"
+    private final val teamTable: String = "team"
     @Autowired
     private lateinit var jedisPool: JedisPool
 
     @Autowired
     private lateinit var authCheckService: AuthCheckService
 
-    fun selectAccessibleSonComments(cardId: String): MutableSet<String>? {
+    fun selectAccessibleTeam(username: String): MutableSet<String>? {
         jedisPool.resource.use { jedis ->
             jedis.select(0)
-            return jedis.smembers("$cardTable:$cardId")
+            return jedis.smembers("$peopleTable:$username")
         }
     }
 
-    fun selectAccessibleParentBoards(cardId: String): MutableSet<String>? {
+    fun selectAccessibleUserNames(teamId: String): MutableSet<String>? {
         jedisPool.resource.use { jedis ->
             jedis.select(1)
-            return jedis.smembers("$cardTable:$cardId")
+            return jedis.smembers("$teamTable:$teamId")
         }
     }
 }

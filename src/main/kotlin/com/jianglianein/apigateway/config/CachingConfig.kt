@@ -22,7 +22,7 @@ class CachingConfig {
     fun jedisConnectionFactory(): JedisConnectionFactory {
         val redisStandaloneConfiguration = RedisStandaloneConfiguration(redisProperties.host, redisProperties.port)
         redisStandaloneConfiguration.password = RedisPassword.of(redisProperties.password)
-        redisStandaloneConfiguration.database = 1
+        redisStandaloneConfiguration.database = 2
         return JedisConnectionFactory(redisStandaloneConfiguration)
     }
 

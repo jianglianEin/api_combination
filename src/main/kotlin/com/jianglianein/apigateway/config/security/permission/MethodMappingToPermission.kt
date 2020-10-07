@@ -27,8 +27,7 @@ class MethodMappingToPermission {
             methodMap["selectBoardsByProjectId"] = projectAccessPermissionCheck
             methodMap["selectProjectById"] = projectAccessPermissionCheck
             methodMap["selectCardsByBoardId"] = boardAccessPermissionCheck
-            // TODO: create write and read inner class
-            methodMap["selectCommentsByCardId"] = commentAccessPermissionCheck
+            methodMap["selectCommentsByCardId"] = cardAccessPermissionCheck
             methodMap["updateUser"] = noResourcePermissionCheck
             methodMap["createTeam"] = noResourcePermissionCheck
             methodMap["updateTeam"] = teamAccessPermissionCheck

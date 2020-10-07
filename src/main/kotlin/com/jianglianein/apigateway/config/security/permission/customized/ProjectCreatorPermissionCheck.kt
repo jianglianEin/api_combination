@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component
 class ProjectCreatorPermissionCheck: PermissionCheckInterface {
 
     override fun check(username: String, input: SelectionInput): Boolean {
-        val commentInput = input.commitInput!!
-        if (username == commentInput.receiver) {
+        val creator = input.projectInput?.creator!!
+        if (username == creator) {
             return true
         }
         return false

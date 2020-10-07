@@ -7,16 +7,17 @@ import redis.clients.jedis.JedisPool
 
 @Repository
 class CommentTableRepository {
-    private final val cardTable: String = "card"
+    private final val comment: String = "comment"
     @Autowired
     private lateinit var jedisPool: JedisPool
 
     @Autowired
     private lateinit var authCheckService: AuthCheckService
 
-    fun selectAccessibleComment(cardId: String): MutableSet<String>? {
+    fun selectAccessibleParentCards(commentId: String): MutableSet<String>? {
         jedisPool.resource.use { jedis ->
-            return jedis.smembers("$cardTable:$cardId")
+            jedis.select(1)
+            return jedis.smembers("$comment:$commentId")
         }
     }
 }
