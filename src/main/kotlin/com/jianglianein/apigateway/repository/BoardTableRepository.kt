@@ -1,6 +1,5 @@
 package com.jianglianein.apigateway.repository
 
-import com.jianglianein.apigateway.service.AuthCheckService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Repository
 import redis.clients.jedis.JedisPool
@@ -11,9 +10,6 @@ class BoardTableRepository {
 
     @Autowired
     private lateinit var jedisPool: JedisPool
-
-    @Autowired
-    private lateinit var authCheckService: AuthCheckService
 
     fun selectAccessibleSonCards(boardId: String): MutableSet<String>? {
         jedisPool.resource.use { jedis ->
