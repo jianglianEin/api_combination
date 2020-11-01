@@ -2,7 +2,7 @@ package com.jianglianein.apigateway.service
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.jianglianein.apigateway.config.security.permission.PermissionCheckInterface
+import com.jianglianein.apigateway.config.security.permission.MethodMappingToPermission
 import com.jianglianein.apigateway.model.graphql.SelectionInput
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.Cacheable
@@ -14,6 +14,9 @@ class AuthCheckService {
     private lateinit var asyncHelperService: AsyncHelperService
     @Autowired
     private lateinit var objectMapper: ObjectMapper
+    @Autowired
+    private lateinit var methodMappingToPermission: MethodMappingToPermission
+
 
     @Cacheable("accessibleProject", key = "#username")
     fun getAccessibleResources(username: String): MutableList<String> {
@@ -34,7 +37,7 @@ class AuthCheckService {
     }
 
     fun permissionCheck(username: String, input: SelectionInput, methodName: String): Boolean {
-        return PermissionCheckInterface.mappingToPermission(methodName).check(username, input)
-    }
-
+        val permission = methodMappingToPermission.mappingToPermission(methodName)
+        return permission.check(username, input)
+}
 }

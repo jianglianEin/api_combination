@@ -62,13 +62,13 @@ class AsyncHelperService {
         return AsyncResult<String>(resp)
     }
 
-    @Async
-    fun getCommentServiceAccessibleResources(username: String): Future<String> {
-        val authClaimUrl = remoteServiceProperties.messageServiceUrl + "/auth/permission"
-        val commentClaimParams = LinkedMultiValueMap<String, Any>()
-        commentClaimParams.add("username", username)
-        val resp = httpClientService.client(authClaimUrl, HttpMethod.POST, commentClaimParams)
-        return AsyncResult<String>(resp)
-    }
+//    @Async
+//    fun getCommentServiceAccessibleResources(username: String): Future<String> {
+//        val authClaimUrl = remoteServiceProperties.messageServiceUrl + "/auth/permission"
+//        val commentClaimParams = LinkedMultiValueMap<String, Any>()
+//        commentClaimParams.add("username", username)
+//        val resp = httpClientService.client(authClaimUrl, HttpMethod.POST, commentClaimParams)
+//        return AsyncResult<String>(resp)
+//    }
 
 }

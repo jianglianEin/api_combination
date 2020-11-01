@@ -5,7 +5,7 @@ import com.jianglianein.apigateway.model.graphql.SelectionInput
 import org.springframework.stereotype.Component
 
 @Component
-class ProjectCreatorPermissionCheck: PermissionCheckInterface {
+class ProjectCreatorPermissionCheck : PermissionCheckInterface {
 
     override fun check(username: String, input: SelectionInput): Boolean {
         val creator = input.projectInput?.creator!!
