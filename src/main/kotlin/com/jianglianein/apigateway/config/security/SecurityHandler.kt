@@ -24,8 +24,13 @@ class SecurityHandler {
             return false
         }
         val username = jwtHandler.parseToken(token)["username"]!!
-//        val accessibleResource = authCheckService.getAccessibleResources()
 
         return authCheckService.permissionCheck(username, input, methodName)
+    }
+
+    fun afterReturnHandle(methodName: String, token: String) {
+        if (methodName == "logout") {
+            redisRepository.removeJwt(token)
+        }
     }
 }

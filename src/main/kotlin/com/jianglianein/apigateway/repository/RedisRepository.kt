@@ -13,6 +13,16 @@ class RedisRepository {
     private val statusValue = "jwt-token"
     private val expireTime = 3600 * 12
 
+    fun removeJwt(token: String) {
+        jedisPool.resource.use { jedis ->
+            with(jedis) {
+                jedis.select(3)
+                hdel("$jwtTokenPrefix:$token", "$statusField:$statusValue")
+                expire("$jwtTokenPrefix:$token", expireTime)
+            }
+        }
+    }
+
     fun updateJwt(token: String, secure: String) {
         jedisPool.resource.use { jedis ->
             with(jedis) {

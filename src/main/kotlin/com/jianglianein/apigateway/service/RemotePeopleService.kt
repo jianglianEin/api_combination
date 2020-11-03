@@ -34,12 +34,8 @@ class RemotePeopleService {
 
     @CacheEvict(value = ["accessibleProject"], key = "#selectionInput.userInput.username")
     fun logoutByPeopleService(selectionInput: SelectionInput): ResultOutput {
-        val url = remoteServiceProperties.peopleServiceUrl + "/user/logout"
 
-        val params = LinkedMultiValueMap<String, Any>()
-        params.add("username", selectionInput.userInput!!.username)
-        val resp = httpClientService.client(url, HttpMethod.POST, params)
-        return objectMapper.readValue(resp, ResultOutput::class.java)
+        return ResultOutput(true, "logout success")
     }
 
     fun registerByPeopleService(userInput: UserInput): ResultOutput {

@@ -64,6 +64,19 @@ class SecurityGraphQLAspect {
         return result
     }
 
+    @AfterReturning(returning = "result", value = "allGraphQLResolverMethods()")
+    fun afterSecurityCheck(joinPoint: JoinPoint, result: Any) {
+        logger.info { "afterSecurityCheck" }
+
+        val currentRequestAttributes = RequestContextHolder.currentRequestAttributes()
+        val request = (currentRequestAttributes as ServletRequestAttributes).request
+        val authorization = request.getHeader("Authorization")
+        val token = authorization.replace("Bearer ", "")
+
+        val methodName = joinPoint.signature.name
+        securityHandler.afterReturnHandle(methodName, token)
+    }
+
     @Pointcut("within(com.jianglianein.apigateway.resolver.*)args(…)")
     fun allGraphQLResolverMethods() {
         logger.info { "allGraphQLResolverMethods" }
